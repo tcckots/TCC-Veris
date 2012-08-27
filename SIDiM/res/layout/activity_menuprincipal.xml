@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/Button03"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="Pesquisar Imóvel" />
+
+    <Button
+        android:id="@+id/Button02"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="Favoritos" />
+
+    <Button
+        android:id="@+id/Button01"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="Perfil" />
+
+    <Button
+        android:id="@+id/menuPrincipalBtConfig"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="Configurações" />
+
+</LinearLayout>

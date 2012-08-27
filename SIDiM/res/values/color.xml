@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <color name="gray_hard">#373636</color>
+    <color name="grayzeewe">#1f1f1f</color>
+    <color name="gray_light">#ABABAB</color>
+    <color name="white">#FFFFFF</color>
+    <color name="opacity_black">#88000000</color>
+    <color name="color_selector">#FF9912</color>
+    
+    <color name="color_background_screens">#FFDAB9</color>
+    <color name="color_text_color">#a9a9a9</color>
+    <color name="color_edittext_bckgorund">#f5f5f5</color>
+    
+    
+    
+    
+    
+    
+</resources>

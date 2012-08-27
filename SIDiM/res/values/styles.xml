@@ -1,0 +1,56 @@
+<resources>
+
+    <style name="AppTheme" parent="android:Theme.Light" />
+      
+    <style name="EditTextClean">
+        <item name="android:layout_height">26dp</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:textColor">#a9a9a9</item>
+        <item name="android:ems">10</item>
+        <item name="android:padding">2dp</item>
+        <item name="android:background">#f5f5f5</item>
+    </style>
+    
+    <style name="ButtonCleanOrange">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:textColor">#ffffff</item>
+    <item name="android:gravity">center</item>
+    <item name="android:layout_margin">3dp</item>
+    <item name="android:textStyle">bold</item>
+    <item name="android:shadowColor">#000000</item>
+    <item name="android:shadowDx">1</item>
+    <item name="android:shadowDy">1</item>
+    <item name="android:shadowRadius">2</item>
+</style>
+
+ <style name="ButtonCleanWhite">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:textColor">#a9a9a9</item>
+    <item name="android:gravity">center</item>
+    <item name="android:layout_margin">3dp</item>
+    <item name="android:textStyle">bold</item>
+    <item name="android:shadowRadius">2</item>
+</style>
+
+     <style name="myDialogStyle" parent="@android:style/Theme.Dialog">
+        
+        <item name="android:textColor">#a9a9a9</item>
+    </style>
+    
+    <style name="myDialogStyleSearch" parent="@android:style/Theme.Dialog">
+        <item name="android:background">#FFFFFF</item>    
+        <item name="android:textColor">#a9a9a9</item>
+    </style>
+    
+     <style name="MyTabHost" parent="@android:style/Theme.Light">
+   	 <item name="android:tabWidgetStyle">@style/LightTabWidget</item>
+	</style>
+
+	<style name="LightTabWidget" parent="@android:style/Widget.TabWidget">
+	    <!-- set textColor to red, so you can verify that it applied. -->
+	    <item name="android:textColor">#f00</item>
+	</style>
+
+</resources>
