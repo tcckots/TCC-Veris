@@ -54,6 +54,9 @@ public class CriarContaActivity extends Activity {
 					if(validaEmail(email) && validaSenha(senha, confSenha)){
 						gravarDadosPreferences(email, confSenha, nome, telefone, cidade);
 						startActivity(new Intent(instance, MenuPrincipalActivity.class));
+						
+						//Criar no Servidor
+						
 						finish();
 					}
 					
@@ -131,6 +134,8 @@ public class CriarContaActivity extends Activity {
 		if(ValidacaoGeral.validaCampoVazio(cidade)){
 			editor.putString(ConfigGlobal.SHARED_PREFERENCES_CIDADE_USER,cidade);
 		}
+		
+		editor.putBoolean(ConfigGlobal.SHARED_PREFERENCES_SENT_USER_PROFILE, false);
 		
 		editor.commit();
 		

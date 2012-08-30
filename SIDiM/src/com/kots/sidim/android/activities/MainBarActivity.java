@@ -1,18 +1,23 @@
 package com.kots.sidim.android.activities;
 
 import android.app.Activity;
+import android.database.DataSetObserver;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import com.kots.sidim.android.R;
+import com.kots.sidim.android.config.ConfigGlobal;
 import com.kots.sidim.android.views.MyHorizontalScrollView;
 import com.kots.sidim.android.views.MyHorizontalScrollView.SizeCallback;
 
@@ -28,7 +33,8 @@ public class MainBarActivity extends Activity {
     Handler handler = new Handler();
     int btnWidth;
     static boolean menuOn = false;
-    
+    ListView listMenu;
+    int indexActivity;
 
 	@Override
 	public void setContentView(int layoutResID) {		
@@ -47,6 +53,9 @@ public class MainBarActivity extends Activity {
         linear.addView(bar);
         linear.addView(app);
         
+        listMenu = (ListView) menu.findViewById(R.id.menuListView);
+        listMenu.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,ConfigGlobal.menuList));
+        
         
         
         ViewGroup tabBar = (ViewGroup) bar.findViewById(R.id.layoutBarApp);
@@ -60,8 +69,15 @@ public class MainBarActivity extends Activity {
         // Scroll to app (view[1]) when layout finished.
         int scrollToViewIdx = 1;
         scrollView.initViews(children, scrollToViewIdx, new SizeCallbackForMenu(btnSlide));
-        
-        
+                
+	}
+	
+	public void setContentView(int layoutResID, int indexActivity) {
+		
+		this.setContentView(layoutResID);
+		this.indexActivity = indexActivity;	
+		listMenu.setSelection(indexActivity);
+		listMenu.setItemChecked(indexActivity, true);
 	}
 
 	@Override
@@ -85,6 +101,22 @@ public class MainBarActivity extends Activity {
 	}
 
 
+	
+	private void setListviewSelection(final ListView list, final int pos) {
+		list.post(new Runnable() 
+		   {
+		    @Override
+		    public void run() 
+		      {
+		        list.setSelection(pos);
+		        View v = list.getChildAt(pos);
+		        if (v != null) 
+		        {
+		            v.requestFocus();
+		        }
+		    }
+		});
+		}
 
 
 
@@ -109,7 +141,7 @@ public class MainBarActivity extends Activity {
         @Override
         public void onClick(View v) {                    
 
-            int menuWidth = menu.getMeasuredWidth();
+            int menuWidth = menu.getMeasuredWidth();            
 
             // Ensure menu is visible
             menu.setVisibility(View.VISIBLE);
@@ -126,6 +158,7 @@ public class MainBarActivity extends Activity {
                 menuOn = false;
             }
             menuOut = !menuOut;
+            
         }
     }
 

@@ -9,8 +9,8 @@
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="12dp"
+        android:layout_gravity="top"
+        android:layout_margin="8dp"
         android:background="@drawable/round_bounds" >
 
         <LinearLayout
@@ -42,7 +42,7 @@
                     android:text="Senha" />
 
                 <EditText
-                    android:id="@+id/editText1"
+                    android:id="@+id/configInputSenha"
                     style="@style/EditTextClean"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
                     android:textColor="@color/color_text_color" />
 
                 <EditText
-                    android:id="@+id/EditText01"
+                    android:id="@+id/configInputNovaSenha"
                     style="@style/EditTextClean"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
                     android:textColor="@color/color_text_color" />
 
                 <EditText
-                    android:id="@+id/editText2"
+                    android:id="@+id/configInputConfSenha"
                     style="@style/EditTextClean"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
                     android:text="Alterar E-mail" />
 
                 <EditText
-                    android:id="@+id/editText3"
+                    android:id="@+id/configInputEmail"
                     style="@style/EditTextClean"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -113,7 +113,7 @@
                     android:textColor="@color/color_text_color" />
 
                 <EditText
-                    android:id="@+id/editText4"
+                    android:id="@+id/configInputCidade"
                     style="@style/EditTextClean"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -131,7 +131,7 @@
                     android:textColor="@color/color_text_color" />
 
                 <EditText
-                    android:id="@+id/editText5"
+                    android:id="@+id/configInputTelefone"
                     style="@style/EditTextClean"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -141,7 +141,7 @@
                     android:textColor="@color/color_text_color" />
 
                 <CheckBox
-                    android:id="@+id/checkBox1"
+                    android:id="@+id/configCheckNotific"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Receber Notificações" />
@@ -155,7 +155,7 @@
                     android:layout_marginTop="3dp" >
 
                     <Button
-                        android:id="@+id/button2"
+                        android:id="@+id/configBtCancel"
                         style="@style/ButtonCleanOrange"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -164,7 +164,7 @@
                         android:text="Cancelar" />
 
                     <Button
-                        android:id="@+id/button1"
+                        android:id="@+id/configBtSalvar"
                         style="@style/ButtonCleanOrange"
                         android:layout_width="70dp"
                         android:layout_height="40dp"
