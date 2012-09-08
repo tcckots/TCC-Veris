@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background_screens"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/round_bounds" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="7dp"
+            android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <com.kots.sidim.android.views.WheelView
+                    android:id="@+id/pesquisaWhellUf"
+                    android:layout_width="0dip"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTextView1"
+            style="@style/EditTextClean"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="7dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Cidade"
+            android:textSize="25dp" />
+
+        <LinearLayout
+            android:id="@+id/pesquisarLinearBairro"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@drawable/item_selector_bairro" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Bairro: Todos"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <com.kots.sidim.android.views.WheelView
+                    android:id="@+id/pesquisarWhellIntencao"
+                    android:layout_width="0dip"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp" />
+
+        <SeekBar
+            android:id="@+id/seekBar1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:id="@+id/labelDorm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="Dorm:"
+                android:textColor="@color/color_text_color" />
+
+            <EditText
+                android:id="@+id/pesquisarInputQtdDorm"
+                style="@style/EditTextClean"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/labelDorm"
+                android:ems="10"
+                android:inputType="number"
+                android:textSize="25dp" >
+
+                <requestFocus />
+            </EditText>
+
+            <TextView
+                android:id="@+id/labelSuite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@id/pesquisarInputQtdDorm"
+                android:text="Suítes:"
+                android:textColor="@color/color_text_color" />
+
+            <EditText
+                android:id="@+id/pesquisarInputQtdSuites"
+                style="@style/EditTextClean"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/labelSuite"
+                android:layout_below="@+id/labelSuite"
+                android:ems="10"
+                android:inputType="number"
+                android:textSize="25dp" />
+
+            <TextView
+                android:id="@+id/labelGaragem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="false"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@id/pesquisarInputQtdSuites"
+                android:text="Garagens:"
+                android:textColor="@color/color_text_color" />
+
+            <EditText
+                android:id="@+id/pesquisarInputGaragem"
+                style="@style/EditTextClean"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/labelGaragem"
+                android:layout_below="@+id/labelGaragem"
+                android:ems="10"
+                android:inputType="number"
+                android:textSize="25dp" />
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/button1"
+            style="@style/ButtonCleanOrange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginBottom="7dp"
+            android:text="Pesquisar" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -3,6 +3,7 @@
     android:id="@+id/menu"
     android:layout_width="1dp"
     android:layout_height="1dp"
+    android:background="@color/color_background_screens"
     android:orientation="vertical" >
 
     <ListView

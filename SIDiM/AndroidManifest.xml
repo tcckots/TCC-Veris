@@ -32,6 +32,11 @@
         <activity
             android:name=".activities.ConfiguracoesActivity" />
         
+        <activity
+            android:name=".activities.FavoritosActivity" />
+        
+        <activity
+            android:name=".activities.PesquisarImovelActivity" />
         
         
         

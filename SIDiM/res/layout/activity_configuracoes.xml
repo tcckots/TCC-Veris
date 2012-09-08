@@ -25,20 +25,11 @@
                 android:orientation="vertical" >
 
                 <TextView
-                    android:id="@+id/textView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Configurações"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/color_text_color" />
-
-                <TextView
                     android:id="@+id/textView2"
+                    style="@style/TextClean"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:background="@color/gray_light"
                     android:text="Senha" />
 
                 <EditText
@@ -47,7 +38,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:background="@color/color_edittext_bckgorund"
                     android:ems="10"
                     android:hint="Senha Atual"
                     android:inputType="textPassword"
@@ -59,7 +49,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:background="@color/color_edittext_bckgorund"
                     android:ems="10"
                     android:hint="Nova Senha"
                     android:inputType="textPassword"
@@ -71,19 +60,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:background="@color/color_edittext_bckgorund"
                     android:ems="10"
                     android:hint="Confirmar Senha"
                     android:inputType="textPassword"
-                    android:textColor="@color/color_text_color" />
+                    android:textColor="@color/color_text_color"
+                    android:typeface="normal" />
 
                 <TextView
                     android:id="@+id/textView3"
+                    style="@style/TextClean"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:background="@color/gray_light"
-                    android:text="Alterar E-mail" />
+                    android:layout_marginTop="5dp"
+                    android:text="E-mail" />
 
                 <EditText
                     android:id="@+id/configInputEmail"
@@ -91,17 +80,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:background="@color/color_edittext_bckgorund"
                     android:ems="10"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/color_text_color" />
+                    android:inputType="textEmailAddress" />
 
                 <TextView
                     android:id="@+id/textView4"
+                    style="@style/TextClean"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:background="@color/gray_light"
+                    android:layout_marginTop="5dp"
                     android:text="Outras Informações" />
 
                 <TextView
@@ -110,7 +97,8 @@
                     android:layout_height="wrap_content"
                     android:text="Cidade"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/color_text_color" />
+                    android:textColor="@color/color_text_color"
+                    android:textSize="12dp" />
 
                 <EditText
                     android:id="@+id/configInputCidade"
@@ -118,9 +106,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:background="@color/color_edittext_bckgorund"
-                    android:ems="10"
-                    android:textColor="@color/color_text_color" />
+                    android:ems="10" />
 
                 <TextView
                     android:id="@+id/textView6"
@@ -128,31 +114,37 @@
                     android:layout_height="wrap_content"
                     android:text="Telefone"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/color_text_color" />
+                    android:textColor="@color/color_text_color"
+                    android:textSize="12dp" />
 
                 <EditText
                     android:id="@+id/configInputTelefone"
                     style="@style/EditTextClean"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/color_edittext_bckgorund"
                     android:ems="10"
-                    android:inputType="phone"
-                    android:textColor="@color/color_text_color" />
+                    android:inputType="phone" />
 
                 <CheckBox
                     android:id="@+id/configCheckNotific"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Receber Notificações" />
+                    android:text="Receber Notificações"
+                    android:textColor="@color/color_text_color" />
+
+                <CheckBox
+                    android:id="@+id/configCheckAutoLogin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Login Auto"
+                    android:textColor="@color/color_text_color" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:layout_marginLeft="3dp"
-                    android:layout_marginRight="3dp"
-                    android:layout_marginTop="3dp" >
+                    android:layout_marginRight="3dp" >
 
                     <Button
                         android:id="@+id/configBtCancel"

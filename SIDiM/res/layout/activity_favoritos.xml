@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background_screens"
+    android:orientation="vertical" >
+    
+        <com.kots.sidim.android.views.ListView3d
+            android:id="@+id/favorlist3dImoveis"
+            android:layout_width="320dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:cacheColorHint="#00000000" >
+
+    	</com.kots.sidim.android.views.ListView3d>
+    
+    
+
+</LinearLayout>

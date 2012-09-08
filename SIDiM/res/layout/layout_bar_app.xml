@@ -33,4 +33,14 @@
         android:scaleType="fitXY"
         android:src="@drawable/menu" />
 
+    <TextView
+        android:id="@+id/barTextCurrentScreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/barImgBtSlideMenu"
+        android:text="Home"
+        android:textColor="@color/gray_light"
+        android:textSize="9dp" />
+
 </RelativeLayout>

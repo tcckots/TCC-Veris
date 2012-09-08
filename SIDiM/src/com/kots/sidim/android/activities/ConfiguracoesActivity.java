@@ -19,7 +19,7 @@ public class ConfiguracoesActivity extends MainBarActivity {
 	Activity instance;
 	EditText edSenhaAtual, edNovaSenha, edConfirmaSenha, edEmail, edCidade, edTelefone;
 	Button btSalvar, btCancel;
-	CheckBox chNotific;
+	CheckBox chNotific, chAutoLogin;
 
 	SharedPreferences globalPrefs;
 	SharedPreferences.Editor editor;
@@ -52,7 +52,7 @@ public class ConfiguracoesActivity extends MainBarActivity {
 			public void onClick(View v) {
 			
 				
-				
+				editor.putBoolean(ConfigGlobal.SHARED_PREFERENCES_LOGIN_AUTO, chAutoLogin.isChecked());
 				editor.putBoolean(ConfigGlobal.SHARED_PREFERENCES_RECEBER_NOTIFIC, chNotific.isChecked());
 				editor.putString(ConfigGlobal.SHARED_PREFERENCES_CIDADE_USER, edCidade.getText().toString());
 				editor.putString(ConfigGlobal.SHARED_PREFERENCES_TELEFONE_USER, edTelefone.getText().toString());
@@ -89,6 +89,7 @@ public class ConfiguracoesActivity extends MainBarActivity {
 		btCancel = (Button) findViewById(R.id.configBtCancel);
 		
 		chNotific = (CheckBox) findViewById(R.id.configCheckNotific);
+		chAutoLogin = (CheckBox) findViewById(R.id.configCheckAutoLogin);
 		
 		edEmail.setEnabled(false);
 	}
@@ -98,7 +99,8 @@ public class ConfiguracoesActivity extends MainBarActivity {
 		edEmail.setText(globalPrefs.getString(ConfigGlobal.SHARED_PREFERENCES_EMAIL_USER, ""));
 		edCidade.setText(globalPrefs.getString(ConfigGlobal.SHARED_PREFERENCES_CIDADE_USER, ""));
 		edTelefone.setText(globalPrefs.getString(ConfigGlobal.SHARED_PREFERENCES_TELEFONE_USER, ""));
-		chNotific.setChecked(globalPrefs.getBoolean(ConfigGlobal.SHARED_PREFERENCES_RECEBER_NOTIFIC, false));				
+		chNotific.setChecked(globalPrefs.getBoolean(ConfigGlobal.SHARED_PREFERENCES_RECEBER_NOTIFIC, false));
+		chAutoLogin.setChecked(globalPrefs.getBoolean(ConfigGlobal.SHARED_PREFERENCES_LOGIN_AUTO, false));
 		
 	}
 	

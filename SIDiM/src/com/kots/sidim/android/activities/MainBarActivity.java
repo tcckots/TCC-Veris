@@ -1,7 +1,7 @@
 package com.kots.sidim.android.activities;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.database.DataSetObserver;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,17 +9,18 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.kots.sidim.android.R;
+import com.kots.sidim.android.adapter.MenuAdapter;
 import com.kots.sidim.android.config.ConfigGlobal;
 import com.kots.sidim.android.views.MyHorizontalScrollView;
 import com.kots.sidim.android.views.MyHorizontalScrollView.SizeCallback;
+
 
 public class MainBarActivity extends Activity {
 	
@@ -36,11 +37,13 @@ public class MainBarActivity extends Activity {
     ListView listMenu;
     int indexActivity;
 
+	
 	@Override
 	public void setContentView(int layoutResID) {		
 		
 		LayoutInflater inflater = LayoutInflater.from(this);
         scrollView = (MyHorizontalScrollView) inflater.inflate(R.layout.horz_scroll_with_list_menu, null);
+        scrollView.setBackgroundColor(R.color.color_background_screens);
         setContentView(scrollView);				
 		
 		menu = inflater.inflate(R.layout.horz_scroll_menu, null);
@@ -52,9 +55,11 @@ public class MainBarActivity extends Activity {
         linear.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         linear.addView(bar);
         linear.addView(app);
+        linear.setBackgroundColor(R.color.color_background_screens);
         
         listMenu = (ListView) menu.findViewById(R.id.menuListView);
-        listMenu.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,ConfigGlobal.menuList));
+        //listMenu.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,ConfigGlobal.menuList));
+        listMenu.setAdapter(new MenuAdapter(this, ConfigGlobal.menuList));
         
         
         
@@ -63,8 +68,12 @@ public class MainBarActivity extends Activity {
         btnSlide = (ImageButton) tabBar.findViewById(R.id.barImgBtSlideMenu);
         btnSlide.setOnClickListener(new ClickListenerForScrolling(scrollView, menu));
         
+        TextView currentScreen = (TextView) tabBar.findViewById(R.id.barTextCurrentScreen);
+        currentScreen.setText(ConfigGlobal.menuList[indexActivity]);
+        
         
         final View[] children = new View[] { menu, linear};
+        
 
         // Scroll to app (view[1]) when layout finished.
         int scrollToViewIdx = 1;
@@ -74,8 +83,8 @@ public class MainBarActivity extends Activity {
 	
 	public void setContentView(int layoutResID, int indexActivity) {
 		
-		this.setContentView(layoutResID);
 		this.indexActivity = indexActivity;	
+		this.setContentView(layoutResID);		
 		listMenu.setSelection(indexActivity);
 		listMenu.setItemChecked(indexActivity, true);
 	}

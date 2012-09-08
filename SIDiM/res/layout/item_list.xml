@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/item_selector"
-    android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
+    android:background="#FBEDD2"
+    android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,11 +15,13 @@
         android:orientation="vertical" >
 
         <FrameLayout
+            android:id="@+id/favorItemLayoutImg"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_selector_preview_content" >
 
             <ImageView
-                android:id="@+id/imgPreviewContent"
+                android:id="@+id/favorItemImgFoto"
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
                 android:adjustViewBounds="false"
@@ -33,14 +36,15 @@
                 android:orientation="vertical" >
 
                 <TextView
-                    android:id="@+id/txtTitleContent"
+                    android:id="@+id/favorItemInputTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
                     android:layout_marginRight="3dp"
                     android:text="Jd. Aurélia, Casa 3 Dorm. Garagem, Amplo quintal"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="16dp" />
 
             </LinearLayout>
 
@@ -50,30 +54,34 @@
         </FrameLayout>
 
         <RelativeLayout
+            android:id="@+id/favorItemLayoutDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white" >
+            android:background="@color/gray_hard"
+            android:gravity="center" >
 
             <TextView
-                android:id="@+id/txtDescriptionContent"
+                android:id="@+id/favorItemInputCity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_margin="5dp"
                 android:text="Campinas - SP"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/gray_hard"
+                android:textColor="@color/white"
                 android:textSize="13dp"
-                android:textStyle="bold"
                 android:typeface="normal" />
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/favorItemInputPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="R$ 130.000,00" />
+                android:layout_marginRight="5dp"
+                android:text="Venda: R$ 130.000,00"
+                android:textColor="@color/white"
+                android:textSize="10dp" />
 
         </RelativeLayout>
        

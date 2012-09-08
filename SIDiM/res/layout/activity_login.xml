@@ -22,12 +22,13 @@
 
             <ImageView
                 android:id="@+id/loginImgLogin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:src="@drawable/login" />
 
             <EditText
                 android:id="@+id/loginInputLogin"
+                style="@style/EditTextClean"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -40,14 +41,15 @@
 
             <ImageView
                 android:id="@+id/loginImgSenhaLogin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_below="@id/loginImgLogin"
                 android:layout_marginTop="5dp"
                 android:src="@drawable/senha" />
 
             <EditText
                 android:id="@+id/loginInputSenhaLogin"
+                style="@style/EditTextClean"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/loginInputLogin"

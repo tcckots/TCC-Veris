@@ -1,5 +1,6 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
-    <solid android:color="#ededed" />
-    <stroke android:width="0.5dip" android:color="#c9c9c9" />
+    <solid android:color="@color/color_edittext_bckgorund" />
+    <stroke android:width="0.5dip" android:color="@color/color_edittext_bckgorund" />
+    
 </shape>
