@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.maps.MapActivity;
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.adapter.MenuAdapter;
 import com.kots.sidim.android.config.ConfigGlobal;
@@ -22,7 +23,7 @@ import com.kots.sidim.android.views.MyHorizontalScrollView;
 import com.kots.sidim.android.views.MyHorizontalScrollView.SizeCallback;
 
 
-public class MainBarActivity extends Activity {
+public class MainBarActivity extends MapActivity {
 	
 	MyHorizontalScrollView scrollView;
     View menu;
@@ -200,6 +201,12 @@ public class MainBarActivity extends Activity {
             }
         }
     }
+
+	@Override
+	protected boolean isRouteDisplayed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
     
     
 

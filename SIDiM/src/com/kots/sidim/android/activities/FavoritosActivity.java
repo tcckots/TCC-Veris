@@ -15,6 +15,7 @@ import com.kots.sidim.android.model.Cidade;
 import com.kots.sidim.android.model.Estado;
 import com.kots.sidim.android.model.Imovel;
 import com.kots.sidim.android.model.TipoImovel;
+import com.kots.sidim.android.views.CoverFlow;
 
 public class FavoritosActivity extends MainBarActivity {
 	
@@ -42,10 +43,19 @@ public class FavoritosActivity extends MainBarActivity {
 		imoveis.add(getNewImovel());
 		
 		ImovelAdapter adapter = new ImovelAdapter(this, imoveis);
+//		
+//		ListView list = (ListView) findViewById(R.id.favorlist3dImoveis);
+//		list.setDivider( null ); 
+//        list.setAdapter(adapter);
 		
-		ListView list = (ListView) findViewById(R.id.favorlist3dImoveis);
-		list.setDivider( null ); 
-        list.setAdapter(adapter);
+	  CoverFlow coverFlow = (CoverFlow) findViewById(R.id.favorlist3dImoveis);	
+      
+      coverFlow.setAdapter(adapter);
+      
+      coverFlow.setSpacing(-25);
+      coverFlow.setSelection(4, true);
+      coverFlow.setAnimationDuration(1000);
+
 						
 	
 	}

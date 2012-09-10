@@ -64,7 +64,7 @@ public class MenuAdapter extends BaseAdapter {
 		text.setText(item);				
 		
 		ImageView imgOption = (ImageView) v.findViewById(R.id.menuImgIcon);
-		imgOption.setImageResource(ConfigGlobal.getResourceMenu(arg0));													
+		imgOption.setImageResource(ConfigGlobal.getResourceMenu(item));													
 		
 		return v;
 		

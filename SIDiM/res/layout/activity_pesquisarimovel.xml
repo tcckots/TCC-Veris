@@ -63,12 +63,13 @@
             android:background="@drawable/item_selector_bairro" >
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/pesquisarTextBairros"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Bairro: Todos"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="12dp" />
 
         </LinearLayout>
 
@@ -97,11 +98,23 @@
             </LinearLayout>
         </LinearLayout>
 
-        <Spinner
-            android:id="@+id/spinner1"
+        <LinearLayout
+            android:id="@+id/pesquisarLinearTipoImovel"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp" />
+            android:layout_height="35dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/item_selector_bairro" >
+
+            <TextView
+                android:id="@+id/pesquisarTxtTipoImovel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Tipo Imóvel: Todos"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="12dp" />
+
+        </LinearLayout>
 
         <SeekBar
             android:id="@+id/seekBar1"

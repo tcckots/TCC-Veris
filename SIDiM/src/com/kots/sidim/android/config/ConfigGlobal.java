@@ -1,14 +1,22 @@
 package com.kots.sidim.android.config;
 
-import com.kots.sidim.android.R;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.kots.sidim.android.R;
+
 public class ConfigGlobal {
-	
-	public static final String[] menuList = {"Home","Pesquisar Imóvel","Favoritos","Perfil","Configurações","Contato"};
+			
+	public static final String MENU_HOME = "Home";
+	public static final String MENU_PESQUISAR_IMOVEL = "Pesquisar Imóvel";
+	public static final String MENU_FAVORITOS = "Favoritos";
+	public static final String MENU_PERFIL = "Perfil";
+	public static final String MENU_CONFIGURACOES = "Configurações";
+	public static final String MENU_CONTATO = "Contato";
 	
 	public static final int MENU_INDEX_HOME = 0;
 	public static final int MENU_INDEX_PESQUISAR_IMOVEL = 1;
@@ -17,6 +25,11 @@ public class ConfigGlobal {
 	public static final int MENU_INDEX_CONFIGURACOES = 4;
 	public static final int MENU_INDEX_CONTATO = 5;
 	
+public static final String[] menuList = {MENU_HOME,MENU_PESQUISAR_IMOVEL,MENU_FAVORITOS,MENU_PERFIL,MENU_CONFIGURACOES,MENU_CONTATO};
+	
+	public static final String[] menuPrincipalList = {MENU_PESQUISAR_IMOVEL,MENU_FAVORITOS,MENU_PERFIL,MENU_CONFIGURACOES,MENU_CONTATO};
+	
+	public static Map<String,Integer> resourcesImages = new HashMap<String, Integer>();
 	
 	
 	public static final String GLOBAL_SHARED_PREFERENCES        = "preferences_sidim";
@@ -31,6 +44,8 @@ public class ConfigGlobal {
 	public static final String SHARED_PREFERENCES_RECEBER_NOTIFIC    = "recebe_notific";
 	
 	public static final String SHARED_PREFERENCES_SENT_USER_PROFILE    = "sent_user_profile";
+	
+	public static final String SHARED_PREFERENCES_LAST_SEARCH_BAIRROS    = "last_search_bairros";
 	
 	
 	public static String getUserEmail(Activity activity){
@@ -47,21 +62,20 @@ public class ConfigGlobal {
 			
 	}
 	
-	public static int getResourceMenu(int position){
+	public static int getResourceMenu(String menu){
 		
-		switch(position){
-			case MENU_INDEX_HOME: return R.drawable.homemenu;
-			case MENU_INDEX_CONTATO: return R.drawable.contactmenu;
-			case MENU_INDEX_FAVORITOS: return R.drawable.favormenu;
-			case MENU_INDEX_PERFIL: return R.drawable.perfilmenu;
-			case MENU_INDEX_PESQUISAR_IMOVEL: return R.drawable.searchmenu;
-			case MENU_INDEX_CONFIGURACOES: return R.drawable.configmenu;		
+		if(resourcesImages.isEmpty()){
+			resourcesImages.put(MENU_CONFIGURACOES, R.drawable.configmenu);
+			resourcesImages.put(MENU_CONTATO, R.drawable.contactmenu);
+			resourcesImages.put(MENU_FAVORITOS, R.drawable.favormenu);
+			resourcesImages.put(MENU_HOME, R.drawable.homemenu);
+			resourcesImages.put(MENU_PERFIL, R.drawable.perfilmenu);
+			resourcesImages.put(MENU_PESQUISAR_IMOVEL, R.drawable.searchmenu);
 		}
 		
-		return R.drawable.homemenu;
+		return resourcesImages.get(menu);				
 		
 	}
-		
 	
 	
 

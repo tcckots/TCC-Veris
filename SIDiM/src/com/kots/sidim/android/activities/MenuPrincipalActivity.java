@@ -54,7 +54,7 @@ public class MenuPrincipalActivity extends Activity {
 		
 		
         ListView listMenu = (ListView) findViewById(R.id.menuListOptionHome);
-        listMenu.setAdapter(new MenuAdapter(this, ConfigGlobal.menuList));
+        listMenu.setAdapter(new MenuAdapter(this, ConfigGlobal.menuPrincipalList));
 		
 		ListView list = (ListView) findViewById(R.id.menulist3dImoveis);
 		list.setDivider( null ); 
@@ -80,10 +80,11 @@ public class MenuPrincipalActivity extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				
-				switch(arg2){
+				switch(arg2+1){
 				case ConfigGlobal.MENU_INDEX_FAVORITOS: startActivity(new Intent(instance,FavoritosActivity.class)); break;
 				case ConfigGlobal.MENU_INDEX_CONFIGURACOES: startActivity(new Intent(instance,ConfiguracoesActivity.class)); break;
 				case ConfigGlobal.MENU_INDEX_PESQUISAR_IMOVEL: startActivity(new Intent(instance,PesquisarImovelActivity.class)); break;
+				case ConfigGlobal.MENU_INDEX_CONTATO: startActivity(new Intent(instance,ContatoActivity.class)); break;
 				
 				}
 				

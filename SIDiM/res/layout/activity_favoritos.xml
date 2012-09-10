@@ -5,14 +5,23 @@
     android:background="@color/color_background_screens"
     android:orientation="vertical" >
     
-        <com.kots.sidim.android.views.ListView3d
+<!--         <com.kots.sidim.android.views.ListView3d -->
+<!--             android:id="@+id/favorlist3dImoveis" -->
+<!--             android:layout_width="320dip" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:layout_gravity="center_horizontal" -->
+<!--             android:cacheColorHint="#00000000" > -->
+
+<!--     	</com.kots.sidim.android.views.ListView3d> -->
+
+		<com.kots.sidim.android.views.CoverFlow
             android:id="@+id/favorlist3dImoveis"
-            android:layout_width="320dip"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:cacheColorHint="#00000000" >
+             >
 
-    	</com.kots.sidim.android.views.ListView3d>
+    	</com.kots.sidim.android.views.CoverFlow>
     
     
 
