@@ -24,7 +24,7 @@ public class SiDIMSQLiteHelper extends SQLiteOpenHelper {
     public static final int COLUMN_ESTADO_INDEX = 1;
     
     public static final String COLUMN_TIPO_IMOVEL = "tipomovel";
-    public static final int COLUMN_EXP_DATE_INDEX = 2;
+    public static final int COLUMN_TIPO_IMOVEL_INDEX = 2;
     
     public static final String COLUMN_CIDADE = "cidade";
     public static final int COLUMN_CIDADE_INDEX = 3;
