@@ -86,14 +86,14 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#a9a9a9"
                     android:textStyle="bold" />
-
+
                 <EditText
                     android:id="@+id/criarContaInputSenha"
                     style="@style/EditTextClean"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPersonName"
+                    android:inputType="textPassword"
                     android:textColor="#a9a9a9" />
 
             </LinearLayout>
@@ -113,14 +113,14 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#a9a9a9"
                     android:textStyle="normal|bold" />
-
+
                 <EditText
                     android:id="@+id/criarContaInputConfSenha"
                     style="@style/EditTextClean"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPersonName"
+                    android:inputType="textPassword"
                     android:textColor="#a9a9a9" />
 
             </LinearLayout>

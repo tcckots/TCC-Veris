@@ -9,6 +9,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kots.sidim.android.R;
@@ -63,6 +64,27 @@ public class LoginActivity extends Activity {
 			}
 		});
 		
+		TextView textCriarConta = (TextView) findViewById(R.id.loginTextCriarConta);
+		textCriarConta.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+			
+				startActivity(new Intent(instance,CriarContaActivity.class));
+				
+			}
+		});
+		
+		TextView textEnviarSenha = (TextView) findViewById(R.id.loginTextEnviarSenha);
+		textEnviarSenha.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+			
+				
+				
+			}
+		});
 		
 		
 

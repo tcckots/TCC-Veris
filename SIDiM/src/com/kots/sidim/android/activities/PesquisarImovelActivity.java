@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,6 +18,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +41,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 	
 	ArrayList<TipoImovelMobile> tipos = new ArrayList<TipoImovelMobile>();
 
-	TextView txtBairros, txtTipos;
+	TextView txtBairros, txtTipos, txtPreco;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +85,54 @@ public class PesquisarImovelActivity extends MainBarActivity {
 				showDialogTipos();
 			}
 		});
-
+		
+		txtPreco = (TextView) findViewById(R.id.pesquisarTxtPreco);
+		
+		SeekBar barPreco = (SeekBar) findViewById(R.id.pesquisarSeekBarPreco);
+		barPreco.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				
+				
+			}
+			
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				
+				if(progress < 30){
+					txtPreco.setText("Até R$ 150.000,00");
+				} else if(progress >= 30 && progress < 60){
+					txtPreco.setText("Até R$ 200.000,00");
+				} else if(progress >= 60 && progress < 80 ){
+					txtPreco.setText("Até R$ 400.000,00");
+				} else if(progress >= 80 && progress < 98){
+					txtPreco.setText("Até R$ 800.000,00");
+				} else if(progress >= 98){
+					txtPreco.setText("Qualquer Preço");
+				} 
+				
+				
+			}
+		});
+		
+		Button btPesquisar = (Button) findViewById(R.id.pesquisarBtPesquisar);
+		btPesquisar.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				startActivity(new Intent(getBaseContext(),ResultPesquisaActivity.class));
+				
+			}
+		});
 	}
 	
 	private void showDialogTipos(){

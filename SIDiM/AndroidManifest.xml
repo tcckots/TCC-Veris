@@ -52,8 +52,13 @@
         <activity
             android:name=".activities.ContatoActivity" />
         
+        <activity
+            android:name=".activities.ResultPesquisaActivity" />
         
+        <activity
+            android:name=".activities.VisualizarImovelActivity" />
         
+                
     </application>
 
 </manifest>

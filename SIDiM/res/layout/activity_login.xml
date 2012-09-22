@@ -86,13 +86,25 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/loginTextEnviarSenha"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/loginLayoutButtonLogin"
-                android:layout_centerHorizontal="true"
-                android:layout_marginRight="15dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="5dp"
                 android:text="Enviar Senha" />
+
+            <TextView
+                android:id="@+id/loginTextCriarConta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentRight="false"
+                android:layout_below="@id/loginLayoutButtonLogin"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/loginTextEnviarSenha"
+                android:text="Criar Conta"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
         </RelativeLayout>
 

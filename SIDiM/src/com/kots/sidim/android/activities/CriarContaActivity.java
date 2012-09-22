@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kots.sidim.android.R;
@@ -73,6 +74,8 @@ public class CriarContaActivity extends Activity {
 					
 				}
 			});
+			
+			
 									
 	}
 	
@@ -106,6 +109,7 @@ public class CriarContaActivity extends Activity {
 			if(senha.equals(confirmarSenha)){
 				return true;
 			} else {
+				Toast.makeText(this, "Campo Senha e Confirmar Senha n‹o conferem", Toast.LENGTH_LONG).show();
 				return false;
 			}
 			
@@ -137,7 +141,7 @@ public class CriarContaActivity extends Activity {
 		
 		editor.putBoolean(ConfigGlobal.SHARED_PREFERENCES_SENT_USER_PROFILE, false);
 		
-		editor.commit();
+		editor.commit();	
 		
 	}
 	

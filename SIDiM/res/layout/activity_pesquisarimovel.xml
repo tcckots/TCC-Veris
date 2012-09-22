@@ -53,7 +53,7 @@
             android:layout_margin="7dp"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Cidade"
+            android:hint="Todas Cidade"
             android:textSize="25dp" />
 
         <LinearLayout
@@ -116,8 +116,15 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/pesquisarTxtPreco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Até R$ 150.000,00"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
         <SeekBar
-            android:id="@+id/seekBar1"
+            android:id="@+id/pesquisarSeekBarPreco"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp" />
@@ -194,7 +201,7 @@
         </RelativeLayout>
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/pesquisarBtPesquisar"
             style="@style/ButtonCleanOrange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

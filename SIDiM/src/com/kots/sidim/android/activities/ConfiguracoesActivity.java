@@ -52,13 +52,9 @@ public class ConfiguracoesActivity extends MainBarActivity {
 			public void onClick(View v) {
 			
 				
-				editor.putBoolean(ConfigGlobal.SHARED_PREFERENCES_LOGIN_AUTO, chAutoLogin.isChecked());
-				editor.putBoolean(ConfigGlobal.SHARED_PREFERENCES_RECEBER_NOTIFIC, chNotific.isChecked());
-				editor.putString(ConfigGlobal.SHARED_PREFERENCES_CIDADE_USER, edCidade.getText().toString());
-				editor.putString(ConfigGlobal.SHARED_PREFERENCES_TELEFONE_USER, edTelefone.getText().toString());
-				editor.putBoolean(ConfigGlobal.SHARED_PREFERENCES_SENT_USER_PROFILE, false);
 				
-				editor.commit();
+				
+				
 				
 				//Atualizar no Servidor
 				
@@ -111,9 +107,17 @@ public class ConfiguracoesActivity extends MainBarActivity {
 		if(ValidacaoGeral.validaCampoVazio(senhaAtual)){
 			String senhaValida = globalPrefs.getString(ConfigGlobal.SHARED_PREFERENCES_SENHA_USER, "");
 			if(senhaValida.equals(senhaAtual)){
-				if(novaSenha.length() > 6){
+				if(novaSenha.length() >= 6){
 					if(novaSenha.equals(confirmaSenha)){
 						editor.putString(ConfigGlobal.SHARED_PREFERENCES_SENHA_USER, edNovaSenha.getText().toString());
+						
+						editor.putBoolean(ConfigGlobal.SHARED_PREFERENCES_LOGIN_AUTO, chAutoLogin.isChecked());
+						editor.putBoolean(ConfigGlobal.SHARED_PREFERENCES_RECEBER_NOTIFIC, chNotific.isChecked());
+						editor.putString(ConfigGlobal.SHARED_PREFERENCES_CIDADE_USER, edCidade.getText().toString());
+						editor.putString(ConfigGlobal.SHARED_PREFERENCES_TELEFONE_USER, edTelefone.getText().toString());
+						editor.putBoolean(ConfigGlobal.SHARED_PREFERENCES_SENT_USER_PROFILE, false);
+						
+						
 						editor.commit();
 						valid = true;
 					} else {
@@ -130,7 +134,15 @@ public class ConfiguracoesActivity extends MainBarActivity {
 			}
 		} else {
 			valid = true;
+			editor.putBoolean(ConfigGlobal.SHARED_PREFERENCES_LOGIN_AUTO, chAutoLogin.isChecked());
+			editor.putBoolean(ConfigGlobal.SHARED_PREFERENCES_RECEBER_NOTIFIC, chNotific.isChecked());
+			editor.putString(ConfigGlobal.SHARED_PREFERENCES_CIDADE_USER, edCidade.getText().toString());
+			editor.putString(ConfigGlobal.SHARED_PREFERENCES_TELEFONE_USER, edTelefone.getText().toString());
+			editor.putBoolean(ConfigGlobal.SHARED_PREFERENCES_SENT_USER_PROFILE, false);
+			editor.commit();
 		}
+		
+		
 		
 		
 		return valid;

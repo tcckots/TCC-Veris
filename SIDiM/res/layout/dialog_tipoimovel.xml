@@ -36,7 +36,7 @@
                 style="@style/ButtonCleanOrange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Todos Bairros"
+                android:text="Todos Tipos"
                 android:textSize="9dp" />
 
             <Button
