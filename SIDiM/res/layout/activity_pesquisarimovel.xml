@@ -46,7 +46,7 @@
         </LinearLayout>
 
         <AutoCompleteTextView
-            android:id="@+id/autoCompleteTextView1"
+            android:id="@+id/pesquisarAutoEditCidades"
             style="@style/EditTextClean"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

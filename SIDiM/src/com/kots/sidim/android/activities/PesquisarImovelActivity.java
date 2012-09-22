@@ -1,6 +1,7 @@
 package com.kots.sidim.android.activities;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -27,7 +28,12 @@ import com.kots.sidim.android.R;
 import com.kots.sidim.android.adapter.TipoImovelAdapter;
 import com.kots.sidim.android.config.ConfigGlobal;
 import com.kots.sidim.android.config.ValidacaoGeral;
+import com.kots.sidim.android.exception.SiDIMException;
+import com.kots.sidim.android.model.Bairro;
+import com.kots.sidim.android.model.Cidade;
 import com.kots.sidim.android.model.TipoImovelMobile;
+import com.kots.sidim.android.server.SiDIMControllerServer;
+import com.kots.sidim.android.views.OnWheelChangedListener;
 import com.kots.sidim.android.views.WheelView;
 import com.kots.sidim.android.views.adapters.ArrayWheelAdapter;
 
@@ -35,14 +41,27 @@ public class PesquisarImovelActivity extends MainBarActivity {
 
 	Activity instance;
 
-	WheelView city, intencao;
+	WheelView estados, intencao;
 
-	ArrayList<String> bairros = new ArrayList<String>();
+	List<Cidade> cidades = new ArrayList<Cidade>();
 	
-	ArrayList<TipoImovelMobile> tipos = new ArrayList<TipoImovelMobile>();
+	List<String> bairros = new ArrayList<String>();	
+	
+	List<Bairro> bairrosAutoComplete = new ArrayList<Bairro>();	
+	
+	List<TipoImovelMobile> tipos = new ArrayList<TipoImovelMobile>();
 
 	TextView txtBairros, txtTipos, txtPreco;
+	
+	AutoCompleteTextView autoEditCidades;
+	
+	SiDIMControllerServer controller;
 
+	String[] ufs = { "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO",
+			"MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ",
+			"RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" };
+	String[] sIntencao = { "Comprar", "Alugar", "Todos" };
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -51,7 +70,24 @@ public class PesquisarImovelActivity extends MainBarActivity {
 				ConfigGlobal.MENU_INDEX_PESQUISAR_IMOVEL);
 
 		instance = this;
+		controller = SiDIMControllerServer.getInstance(instance);
+		prepareWhellViews();
 		
+		
+		
+		autoEditCidades = (AutoCompleteTextView) findViewById(R.id.pesquisarAutoEditCidades);
+		
+		
+		try {
+			tipos = controller.getTipos();
+			
+			
+			
+			
+		} catch (SiDIMException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		tipos.add(new TipoImovelMobile((short) 1, "Casa", true));
 		tipos.add(new TipoImovelMobile((short) 2, "Apartamento", false));
@@ -61,7 +97,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 		tipos.add(new TipoImovelMobile((short) 2, "Fazenda", false));
 		tipos.add(new TipoImovelMobile((short) 2, "Comercial", false));
 
-		prepareWhellViews();
+		
 
 		txtBairros = (TextView) findViewById(R.id.pesquisarTextBairros);
 		txtTipos = (TextView) findViewById(R.id.pesquisarTxtTipoImovel);
@@ -157,7 +193,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 			public void onDismiss(DialogInterface dialog) {
 				
 				String sTipos = "Tipos Im—veis : ";
-				ArrayList<TipoImovelMobile> newList = getTiposCheckeds(tipos);
+				List<TipoImovelMobile> newList = getTiposCheckeds(tipos);
 
 				if (newList.size() == 0) {
 					sTipos += "Todos";
@@ -364,31 +400,38 @@ public class PesquisarImovelActivity extends MainBarActivity {
 	}
 
 	private void prepareWhellViews() {
-		city = (WheelView) findViewById(R.id.pesquisaWhellUf);
-		city.setVisibleItems(3);
+		estados = (WheelView) findViewById(R.id.pesquisaWhellUf);
+		estados.setVisibleItems(3);
 
 		intencao = (WheelView) findViewById(R.id.pesquisarWhellIntencao);
 		intencao.setVisibleItems(3);
 
-		String[] ufs = { "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO",
-				"MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ",
-				"RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" };
-		String[] sIntencao = { "Comprar", "Alugar", "Todos" };
+		
 
 		ArrayWheelAdapter<String> adapter = new ArrayWheelAdapter<String>(this,
 				ufs);
 		adapter.setTextSize(18);
-		city.setViewAdapter(adapter);
-		city.setCurrentItem(24);
+		estados.setViewAdapter(adapter);
+		estados.setCurrentItem(24);
 
 		ArrayWheelAdapter<String> adapter2 = new ArrayWheelAdapter<String>(
 				this, sIntencao);
 		adapter.setTextSize(18);
 		intencao.setViewAdapter(adapter2);
 		intencao.setCurrentItem(0);
+		
+		estados.addChangingListener(new OnWheelChangedListener() {
+			
+			@Override
+			public void onChanged(WheelView wheel, int oldValue, int newValue) {
+				
+				loadCidades(ufs[newValue]);
+				
+			}
+		});
 	}
 	
-	public ArrayList<TipoImovelMobile> getTiposCheckeds(ArrayList<TipoImovelMobile> list){
+	public List<TipoImovelMobile> getTiposCheckeds(List<TipoImovelMobile> list){
 		
 		ArrayList<TipoImovelMobile> newList = new ArrayList<TipoImovelMobile>();
 		
@@ -400,6 +443,48 @@ public class PesquisarImovelActivity extends MainBarActivity {
 		}
 		
 		return newList;
+		
+	}
+	
+	public void loadCidades(String uf){
+		
+		String[] arrayCidades;
+		
+		try {
+			cidades = controller.getCidades(uf);
+			arrayCidades = new String[cidades.size()];
+			for(int i=0; i < cidades.size(); i++){
+				arrayCidades[i] = cidades.get(i).getNome();
+			}
+			
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,arrayCidades);
+			
+			autoEditCidades.setAdapter(adapter);
+		} catch (SiDIMException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void loadBairros(String cidade, AutoCompleteTextView viewAutoComplete){
+		
+		String[] arrayBairros;
+		
+		try {
+			bairrosAutoComplete = controller.getBairro(cidade);
+			arrayBairros = new String[cidades.size()];
+			for(int i=0; i < bairrosAutoComplete.size(); i++){
+				arrayBairros[i] = bairrosAutoComplete.get(i).getNome();
+			}
+			
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,arrayBairros);
+			viewAutoComplete.setAdapter(adapter);
+		
+		} catch (SiDIMException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 

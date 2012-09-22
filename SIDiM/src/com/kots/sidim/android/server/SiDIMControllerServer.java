@@ -12,6 +12,7 @@ import com.kots.sidim.android.model.FiltroImovel;
 import com.kots.sidim.android.model.Imovel;
 import com.kots.sidim.android.model.InteresseCliente;
 import com.kots.sidim.android.model.TipoImovel;
+import com.kots.sidim.android.model.TipoImovelMobile;
 
 
 public class SiDIMControllerServer {
@@ -30,7 +31,7 @@ public class SiDIMControllerServer {
 		sidimAPI = new SiDIMServerAPI(context);
 	}
 	
-	public SiDIMControllerServer getInstance(Context context){
+	public static SiDIMControllerServer getInstance(Context context){
 		
 		if(instance == null){
 			instance = new SiDIMControllerServer(context);
@@ -81,7 +82,7 @@ public class SiDIMControllerServer {
 		return sidimAPI.getBairro(cidade);
 	}
 	
-	public List<TipoImovel> getTipos() throws SiDIMException{
+	public List<TipoImovelMobile> getTipos() throws SiDIMException{
 		
 		return sidimAPI.getTipos();
 		

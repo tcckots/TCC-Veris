@@ -15,11 +15,14 @@ import android.widget.Toast;
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.config.ConfigGlobal;
 import com.kots.sidim.android.config.ValidacaoGeral;
+import com.kots.sidim.android.exception.SiDIMException;
+import com.kots.sidim.android.server.SiDIMControllerServer;
 
 public class LoginActivity extends Activity {
 	
 	SharedPreferences globalPrefs;
 	Activity instance;
+	String emailUser;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +32,7 @@ public class LoginActivity extends Activity {
 		instance = this;
 		
 		globalPrefs = getSharedPreferences(ConfigGlobal.GLOBAL_SHARED_PREFERENCES, MODE_PRIVATE);
-		String emailUser = globalPrefs.getString(ConfigGlobal.SHARED_PREFERENCES_EMAIL_USER, null);
+		emailUser = globalPrefs.getString(ConfigGlobal.SHARED_PREFERENCES_EMAIL_USER, null);
 		
 		final EditText edLogin = (EditText) findViewById(R.id.loginInputLogin);
 		final EditText edSenha = (EditText) findViewById(R.id.loginInputSenhaLogin);
@@ -81,6 +84,12 @@ public class LoginActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 			
+				SiDIMControllerServer controller = SiDIMControllerServer.getInstance(instance);
+				try{
+					controller.enviarSenha(emailUser);
+				} catch (SiDIMException e){
+					Toast.makeText(instance, e.getMessage(), Toast.LENGTH_LONG).show();
+				}
 				
 				
 			}

@@ -16,6 +16,9 @@ import android.widget.Toast;
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.config.ConfigGlobal;
 import com.kots.sidim.android.config.ValidacaoGeral;
+import com.kots.sidim.android.exception.SiDIMException;
+import com.kots.sidim.android.model.Cliente;
+import com.kots.sidim.android.server.SiDIMControllerServer;
 
 public class CriarContaActivity extends Activity {
 	
@@ -53,12 +56,22 @@ public class CriarContaActivity extends Activity {
 					String telefone = edTelefone.getText().toString();
 					
 					if(validaEmail(email) && validaSenha(senha, confSenha)){
-						gravarDadosPreferences(email, confSenha, nome, telefone, cidade);
-						startActivity(new Intent(instance, MenuPrincipalActivity.class));
 						
-						//Criar no Servidor
+						Cliente cliente = new Cliente(email, nome, senha);
+						cliente.setCidade(cidade);
+						cliente.setTelefone(telefone);
+						SiDIMControllerServer controller = SiDIMControllerServer.getInstance(instance);
 						
-						finish();
+						try {
+							
+							controller.criarConta(cliente);
+							gravarDadosPreferences(email, confSenha, nome, telefone, cidade);
+							startActivity(new Intent(instance, MenuPrincipalActivity.class));							
+							finish();
+							
+						} catch (SiDIMException e) {
+							Toast.makeText(instance, e.getMessage(), Toast.LENGTH_LONG).show();
+						}	
 					}
 					
 					
@@ -141,7 +154,7 @@ public class CriarContaActivity extends Activity {
 		
 		editor.putBoolean(ConfigGlobal.SHARED_PREFERENCES_SENT_USER_PROFILE, false);
 		
-		editor.commit();	
+		editor.commit();				
 		
 	}
 	

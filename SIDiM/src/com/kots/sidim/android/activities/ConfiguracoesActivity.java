@@ -1,6 +1,7 @@
 package com.kots.sidim.android.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,9 @@ import android.widget.Toast;
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.config.ConfigGlobal;
 import com.kots.sidim.android.config.ValidacaoGeral;
+import com.kots.sidim.android.exception.SiDIMException;
+import com.kots.sidim.android.model.Cliente;
+import com.kots.sidim.android.server.SiDIMControllerServer;
 
 public class ConfiguracoesActivity extends MainBarActivity {
 	
@@ -52,15 +56,23 @@ public class ConfiguracoesActivity extends MainBarActivity {
 			public void onClick(View v) {
 			
 				
-				
-				
-				
-				
 				//Atualizar no Servidor
 				
 				if(validarSenha(edSenhaAtual.getText().toString(), edNovaSenha.getText().toString(), edConfirmaSenha.getText().toString())){
-					 //editor.putString(ConfigGlobal.SHARED_PREFERENCES_SENHA_USER, edNovaSenha.getText().toString());
-					finish();
+					
+					Cliente cliente = new Cliente(globalPrefs.getString(ConfigGlobal.SHARED_PREFERENCES_EMAIL_USER, ""), globalPrefs.getString(ConfigGlobal.SHARED_PREFERENCES_NOME_USER, ""), edNovaSenha.getText().toString());
+					SiDIMControllerServer controller = SiDIMControllerServer.getInstance(instance);
+					
+					try {
+						
+						controller.atualizarConta(cliente);						
+						startActivity(new Intent(instance, MenuPrincipalActivity.class));							
+						finish();
+						
+					} catch (SiDIMException e) {
+						Toast.makeText(instance, e.getMessage(), Toast.LENGTH_LONG).show();
+					}
+										
 				}
 				
 				

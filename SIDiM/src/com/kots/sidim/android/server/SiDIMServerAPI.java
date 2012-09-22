@@ -4,7 +4,9 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import android.content.Context;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.kots.sidim.android.exception.SiDIMException;
@@ -16,6 +18,7 @@ import com.kots.sidim.android.model.Imovel;
 import com.kots.sidim.android.model.InteresseCliente;
 import com.kots.sidim.android.model.ResultSidimAPI;
 import com.kots.sidim.android.model.TipoImovel;
+import com.kots.sidim.android.model.TipoImovelMobile;
 import com.kots.sidim.android.util.HttpUtil;
 
 public class SiDIMServerAPI {
@@ -27,12 +30,13 @@ public class SiDIMServerAPI {
 	Type typeOfImovel = new TypeToken<ArrayList<Imovel>>() {}.getType();
 	Type typeOfCidade = new TypeToken<ArrayList<Cidade>>() {}.getType();
 	Type typeOfBairro = new TypeToken<ArrayList<Bairro>>() {}.getType();
-	Type typeOfTipo = new TypeToken<ArrayList<TipoImovel>>() {}.getType();
+	Type typeOfTipo = new TypeToken<ArrayList<TipoImovelMobile>>() {}.getType();
 	Type typeContaUsuario = new TypeToken<Cliente>() {}.getType();
 	Type typeInteresseCliente = new TypeToken<ResultSidimAPI>() {}.getType();
 	Type typeResultAPI = new TypeToken<ResultSidimAPI>() {}.getType();
 	Type typeOfT = new TypeToken<Map<String, String>>() {}.getType();
-		
+
+	
 
 	public SiDIMServerAPI(Context context) {
 
@@ -216,9 +220,9 @@ public class SiDIMServerAPI {
 		
 	}
 
-	public List<TipoImovel> getTipos() throws SiDIMException {
+	public List<TipoImovelMobile> getTipos() throws SiDIMException {
 
-		ArrayList<TipoImovel> tipos = null;
+		ArrayList<TipoImovelMobile> tipos = null;
 		String url = URL_SERVER_API + "/buscarTipos";		
 		String response = "";
 		

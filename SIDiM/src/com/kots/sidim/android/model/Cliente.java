@@ -5,19 +5,17 @@ package com.kots.sidim.android.model;
 public class Cliente extends ResultSidimAPI implements java.io.Serializable {
 
 	private String login;
-	private Cidade cidade;
-	private String nome;
-	private String email;
+	private String cidade;
+	private String nome;	
 	private String telefone;
 	private String senha;
 
 	public Cliente() {
 	}
 
-	public Cliente(String login, String nome, String email, String senha) {
+	public Cliente(String login, String nome, String senha) {
 		this.login = login;
-		this.nome = nome;
-		this.email = email;
+		this.nome = nome;		
 		this.senha = senha;
 	}
 
@@ -29,11 +27,11 @@ public class Cliente extends ResultSidimAPI implements java.io.Serializable {
 		this.login = login;
 	}
 	
-	public Cidade getCidade() {
+	public String getCidade() {
 		return this.cidade;
 	}
 
-	public void setCidade(Cidade cidade) {
+	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
 
@@ -45,15 +43,7 @@ public class Cliente extends ResultSidimAPI implements java.io.Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
 	
-	public String getEmail() {
-		return this.email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
 	
 	public String getTelefone() {
 		return this.telefone;
