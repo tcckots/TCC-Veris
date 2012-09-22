@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/Template/TemplatePadrao.xhtml">
+	<ui:define name="content">
+		<div class="tituloPagina">
+			<h3>Exclusão de Bairro</h3>
+		</div>
+		<h:form id="bairroExclusaoForm">
+			<h:panelGrid>
+				<p:message for="selectEstado"></p:message>
+				<p:message for="selectCidade"></p:message>
+				<p:message for="selectBairro"></p:message>
+				<p:message for="cmbRemover"></p:message>
+			</h:panelGrid>
+			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+				<p:outputLabel value="Estado:" for="selectEstado"></p:outputLabel>
+				<p:selectOneMenu id="selectEstado" label="Estado"
+					value="#{bairroExclusaoView.estado}" converter="general"
+					required="true" effect="drop">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItems value="#{bairroExclusaoView.estados}" var="e"
+						itemLabel="#{e.uf}" itemValue="#{e}" />
+					<p:ajax update="selectCidade" event="change" process="@this"
+						partialSubmit="true" />
+				</p:selectOneMenu>
+				<p:outputLabel value="Cidade:" for="selectCidade"></p:outputLabel>
+				<p:selectOneMenu id="selectCidade" label="Cidade"
+					value="#{bairroExclusaoView.cidade}" converter="general"
+					required="true" effect="drop" style="width:160px">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItems value="#{bairroExclusaoView.cidades}" var="c"
+						itemLabel="#{c.nome}" itemValue="#{c}" />
+					<p:ajax update="selectBairro" event="change" process="@this"
+						partialSubmit="true" />
+				</p:selectOneMenu>
+				<p:outputLabel value="Bairro:" for="selectBairro"></p:outputLabel>
+				<p:selectOneMenu id="selectBairro" label="Bairro"
+					value="#{bairroExclusaoView.bairro}" converter="general"
+					required="true" effect="drop" style="width:160px">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItems value="#{bairroExclusaoView.bairros}" var="b"
+						itemLabel="#{b.nome}" itemValue="#{b}" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+			<p:commandButton id="cmbRemover" value="Remover"
+				action="#{bairroExclusaoView.removerBairro}" ajax="true"
+				update="@form"></p:commandButton>
+			<p:commandButton value="Cancelar" immediate="true" process="@this"
+				action="/Home?faces-redirect=true"></p:commandButton>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/Template/TemplatePadrao.xhtml">
+	<ui:define name="content">
+		<div class="tituloPagina">
+			<h3>Cadastro de Cidade</h3>
+		</div>
+		<h:form id="cidadeCadastroForm">
+			<h:panelGrid>
+				<p:message for="selectEstado"></p:message>
+				<p:message for="nomeCidade"></p:message>
+				<p:message for="cmbConfirmar"></p:message>
+			</h:panelGrid>
+			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+				<p:outputLabel value="Estado:" for="selectEstado"></p:outputLabel>
+				<p:selectOneMenu id="selectEstado" label="Estado"
+					value="#{cidadeCadastroView.estado}" converter="general"
+					required="true" effect="drop">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItems value="#{cidadeCadastroView.estados}" var="e"
+						itemLabel="#{e.uf}" itemValue="#{e}" />
+				</p:selectOneMenu>
+				<p:outputLabel value="Cidade:" for="nomeCidade"></p:outputLabel>
+				<p:inputText id="nomeCidade" label="Cidade"
+					value="#{cidadeCadastroView.cidade.nome}" required="true"
+					maxlength="40"></p:inputText>
+			</h:panelGrid>
+			<p:commandButton id="cmbConfirmar" value="Confirmar"
+				action="#{cidadeCadastroView.cadastrarCidade}" ajax="true"
+				update="@form" icon="ui-icon-disk"></p:commandButton>
+			<p:commandButton value="Cancelar" immediate="true" process="@this"
+				action="/Home?faces-redirect=true"></p:commandButton>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
