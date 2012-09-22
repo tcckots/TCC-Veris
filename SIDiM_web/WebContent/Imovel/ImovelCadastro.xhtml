@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/Template/TemplatePadrao.xhtml">
+	<ui:define name="content">
+		<div class="tituloPagina">
+			<h3>Cadastro de Imóvel</h3>
+		</div>
+		<h:form id="imovelCadastroForm">
+			<script>
+				function mascara(o, f) {
+					v_obj = o;
+					v_fun = f;
+					setTimeout("execmascara()", 1);
+				}
+
+				function execmascara() {
+					v_obj.value = v_fun(v_obj.value);
+				}
+
+				function valor(v) {
+					v = v.replace(/\D/g, "");
+					v = v.replace(/[0-9]{15}/, "invÃ¡lido");
+					v = v.replace(/(\d{1})(\d{11})$/, "$1.$2"); // coloca ponto antes dos  
+					// Ãºltimos 11 digitos  
+					v = v.replace(/(\d{1})(\d{8})$/, "$1.$2"); // coloca ponto antes dos  
+					// Ãºltimos 8 digitos  
+					v = v.replace(/(\d{1})(\d{5})$/, "$1.$2"); // coloca ponto antes dos  
+					// Ãºltimos 5 digitos  
+					v = v.replace(/(\d{1})(\d{1,2})$/, "$1,$2"); // coloca virgula antes dos  
+					// Ãºltimos 2 digitos  
+					return v;
+				}
+			</script>
+			<h:panelGrid>
+				<p:growl id="msg" />
+			</h:panelGrid>
+			<h:panelGrid columns="2" style="margin-bottom:10px;" cellpadding="5">
+				<p:outputLabel value="Tipo:" for="tipoImovel"></p:outputLabel>
+				<p:selectOneMenu id="tipoImovel" label="Tipo"
+					value="#{imovelCadastroView.tipoImovel}" converter="general"
+					required="true" effect="drop">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItems value="#{imovelCadastroView.tiposDeImoveis}" var="t"
+						itemLabel="#{t.descricao}" itemValue="#{t}"></f:selectItems>
+				</p:selectOneMenu>
+				<p:outputLabel value="Intenção:" for="intencaoImovel"></p:outputLabel>
+				<p:selectOneMenu id="intencaoImovel" label="Intenção"
+					value="#{imovelCadastroView.imovel.intencao}" converter="general"
+					required="true" effect="drop">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItems value="#{imovelCadastroView.intencoes}" var="t"
+						itemLabel="#{t}" itemValue="#{t}"></f:selectItems>
+				</p:selectOneMenu>
+				<p:outputLabel value="Dormitórios:" for="dormitorioImovel"></p:outputLabel>
+				<p:inputText id="dormitorioImovel" label="Dormitórios" size="5"
+					value="#{imovelCadastroView.imovel.dormitorios}" required="true"
+					maxlength="3"></p:inputText>
+				<p:outputLabel value="Suítes:" for="suiteImovel"></p:outputLabel>
+				<p:inputText id="suiteImovel" label="Suítes" size="5"
+					value="#{imovelCadastroView.imovel.suites}" required="true"
+					maxlength="3"></p:inputText>
+				<p:outputLabel value="Área Total:" for="areaTotalImovel"></p:outputLabel>
+				<p:inputText id="areaTotalImovel" label="Área" size="5"
+					value="#{imovelCadastroView.imovel.areaTotal}" required="true"
+					maxlength="8"></p:inputText>
+				<p:outputLabel value="Área Construída:" for="areaConstruidaImovel"></p:outputLabel>
+				<p:inputText id="areaConstruidaImovel" label="Área Construída"
+					size="5" value="#{imovelCadastroView.imovel.areaConstruida}" required="true"
+					maxlength="8"></p:inputText>
+				<p:outputLabel value="Vagas:" for="garagemImovel"></p:outputLabel>
+				<p:inputText id="garagemImovel" label="Garagens" size="5"
+					value="#{imovelCadastroView.imovel.garagens}" maxlength="2"></p:inputText>
+				<p:outputLabel value="CEP:" for="cepImovel"></p:outputLabel>
+				<p:inputMask id="cepImovel" label="CEP" size="7" mask="99999-999"
+					value="#{imovelCadastroView.imovel.cep}" required="true"
+					maxlength="10">
+				</p:inputMask>
+				<p:outputLabel value="Endereço:" for="enderecoImovel"></p:outputLabel>
+				<p:inputText id="enderecoImovel" label="Endereço"
+					style="width: 300px;" value="#{imovelCadastroView.imovel.rua}"
+					required="true" maxlength="50"></p:inputText>
+				<p:outputLabel value="Estado:" for="estadoImovel"></p:outputLabel>
+				<p:selectOneMenu id="estadoImovel" label="Estado"
+					value="#{imovelCadastroView.estado}" converter="general"
+					required="true" effect="drop">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItems value="#{imovelCadastroView.estados}" var="e"
+						itemLabel="#{e.uf}" itemValue="#{e}" />
+					<p:ajax update="cidadeImovel" event="change" process="@this"
+						partialSubmit="true" />
+				</p:selectOneMenu>
+				<p:outputLabel value="Cidade:" for="cidadeImovel"></p:outputLabel>
+				<p:selectOneMenu id="cidadeImovel" label="Cidade"
+					value="#{imovelCadastroView.cidade}" converter="general"
+					required="true" effect="drop" style="width:160px">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItems value="#{imovelCadastroView.cidades}" var="c"
+						itemLabel="#{c.nome}" itemValue="#{c}" />
+					<p:ajax update="bairroImovel" event="change" process="@this"
+						partialSubmit="true" />
+				</p:selectOneMenu>
+				<p:outputLabel value="Bairro:" for="bairroImovel"></p:outputLabel>
+				<p:selectOneMenu id="bairroImovel" label="Bairro"
+					value="#{imovelCadastroView.bairro}" converter="general"
+					required="true" effect="drop" style="width:160px">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItems value="#{imovelCadastroView.bairros}" var="b"
+						itemLabel="#{b.nome}" itemValue="#{b}" />
+				</p:selectOneMenu>
+				<p:outputLabel value="Add Fotos" for="fotoUploadImovel"></p:outputLabel>
+				<p:fileUpload id="fotoUploadImovel" sizeLimit="102400"
+					fileUploadListener="#{imovelCadastroView.handleFileUpload}"
+					multiple="true" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+					description="Fotos do Imóvel" update="msg" label="Fotos"></p:fileUpload>
+				<p:outputLabel value="Valor:" for="precoImovel"></p:outputLabel>
+				<p:inputText id="precoImovel" label="Preço"
+					value="#{imovelCadastroView.imovel.preco}" maxlength="12" size="10"
+					required="true" onkeypress="mascara(this, valor);">
+					<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+				</p:inputText>
+				<p:outputLabel value="Descrição:" for="descricaoImovel"></p:outputLabel>
+				<p:inputTextarea id="descricaoImovel" rows="6" cols="33"
+					value="#{imovelCadastroView.imovel.descricao}" maxlength="3000" />
+				<p:commandButton id="cmbConfirmar" value="Salvar"
+					action="#{imovelCadastroView.atualizarImovel}" ajax="true"
+					update="@form" icon="ui-icon-disk"></p:commandButton>
+				<p:commandButton value="Cancelar" type="button"
+					onclick="confirmation.show()" immediate="true" process="@this">
+				</p:commandButton>
+				<p:confirmDialog message="Tem certeza que deseja cancelar ?"
+					showEffect="bounce" hideEffect="explode" header="Confirmação"
+					severity="alert" widgetVar="confirmation">
+					<p:commandButton value="Sim" action="/Home?faces-redirect=true"
+						immediate="true" process="@this" />
+					<p:commandButton value="Não" onclick="confirmation.hide()"
+						type="button" />
+				</p:confirmDialog>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,61 @@
+@charset "utf-8";
+/* CSS Document */
+#loginBody {
+	margin: 0;
+	padding: 0;
+	background: #CFCFCF;
+	text-align: center;
+}
+
+#loginTudo {
+	width: 760px;
+	margin: 0 auto;
+	text-align: left; /* "remédio" para o hack do IE */
+}
+
+.loginLogo {
+	padding-top: 1px;
+	text-align: center;
+	width: 500px;
+	heigth: 210px;
+	margin-left: 125px;
+}
+
+.loginLogo img {
+	width: 230px;
+	height: 200px;
+}
+
+#loginConteudo {
+	padding: 5px;
+	background-color: #FFFFFF;
+	border: 2px solid #FFFFFF;
+	-moz-border-radius: 8px; /* Firefox */
+	-webkit-border-radius: 8px;
+	/* Safari and Chrome */
+	border-radius: 8px;
+	/* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+}
+
+#loginFooter {
+	padding: 0px;
+	float: left;
+	display: inline;
+	overflow: hidden;
+	width: 760px;
+	height: 80px;
+	margin-top: auto;
+	background-color: #FFFFFF;
+	border: 2px solid #FFFFFF;
+	-moz-border-radius: 8px; /* Firefox */
+	-webkit-border-radius: 8px;
+	/* Safari and Chrome */
+	border-radius: 8px;
+	/* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+	margin-top: 10px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	font: 12px;
+	color: #4F4F4F;
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title><ui:insert name="title">SIDiM</ui:insert></title>
+	<h:outputStylesheet library="css" name="style.css" />
+	<h:outputStylesheet library="css" name="styleInternas.css" />
+	<h:outputStylesheet library="css" name="stylePrimeFaces.css" />
+</h:head>
+
+
+<h:body id="templateMaster">
+
+	<div id="templateHeader">
+		<ui:insert name="header">
+
+			<div class="headerLogo">
+				<p:graphicImage id="logoPadua" styleClass="headerLogo"
+					value="/resources/images/LogoSIDiM.png"></p:graphicImage>
+			</div>
+			<div class="headerMenu">
+				<h:form>
+					<p:menubar>
+						<p:menuitem value="Home" action="/Home?faces-redirect=true"
+							icon="ui-icon-grip-dotted-horizontal"></p:menuitem>
+						<p:submenu label="Imóvel" icon="ui-icon-home">
+							<p:menuitem value="Cadastrar" url="/Imovel/ImovelCadastro.jsf"
+								icon="ui-icon-disk" />
+							<p:menuitem value="Atualizar" url="#"
+								icon="ui-icon-arrowrefresh-1-w" />
+							<p:menuitem value="Visualizar"
+								url="/Imovel/ImovelVisualizacao.jsf" icon="ui-icon-document-b" />
+							<p:menuitem value="Pesquisar" url="#" icon="ui-icon-search" />
+							<p:menuitem value="Remover" url="#" icon="ui-icon-trash" />
+						</p:submenu>
+						<p:submenu label="Funcionário" icon="ui-icon-person">
+							<p:menuitem value="Cadastrar" url="#" icon="ui-icon-disk" />
+							<p:menuitem value="Atualizar" url="#"
+								icon="ui-icon-arrowrefresh-1-w" />
+							<p:menuitem value="Visualizar" url="#" icon="ui-icon-document-b" />
+							<p:menuitem value="Remover" url="#" icon="ui-icon-trash" />
+						</p:submenu>
+						<p:submenu label="Cadastros" icon="ui-icon-pencil">
+							<p:submenu label="Cidade">
+								<p:menuitem value="Cadastrar"
+									url="/Cadastros/Cidade/CidadeCadastro.jsf" icon="ui-icon-disk" />
+								<p:menuitem value="Remover"
+									url="/Cadastros/Cidade/CidadeExclusao.jsf" icon="ui-icon-trash" />
+							</p:submenu>
+							<p:submenu label="Bairro">
+								<p:menuitem value="Cadastrar" icon="ui-icon-disk"
+									url="/Cadastros/Bairro/BairroCadastro.jsf" />
+								<p:menuitem value="Remover"
+									url="/Cadastros/Bairro/BairroExclusao.jsf" icon="ui-icon-trash" />
+							</p:submenu>
+						</p:submenu>
+						<p:submenu label="Aprovações" icon="ui-icon-check">
+							<p:submenu label="Imóvel">
+								<p:menuitem value="Cadastro" url="#" />
+								<p:menuitem value="Atualização" url="#" />
+							</p:submenu>
+						</p:submenu>
+						<p:submenu label="Cliente" icon="ui-icon-person">
+							<p:menuitem value="Visualizar Interesse de Imóveis" url="#" />
+							<p:menuitem value="Remover Cadastro" url="#" icon="ui-icon-trash" />
+						</p:submenu>
+						<p:submenu label="Relatório" icon="ui-icon-document">
+							<p:menuitem value="Imóveis" url="#" icon="ui-icon-document-b" />
+						</p:submenu>
+						<p:menuitem value="Sair" action="/Login?faces-redirect=true"
+							icon="ui-icon-close" />
+					</p:menubar>
+				</h:form>
+			</div>
+
+		</ui:insert>
+	</div>
+	<div id="templateContent">
+		<ui:insert name="content">
+
+
+		</ui:insert>
+	</div>
+	<div id="templateFooter" align="center">
+		<ui:insert name="footer">
+			<a rel="license"
+				href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.pt_BR">
+				<img alt="Licença Creative Commons" style="border-width: 0;"
+				src="http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png"></img>
+			</a>
+			<br />
+			<span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">SIDiM(Sistema
+				Imobiliário para Dispositivos Móveis)</span>
+		</ui:insert>
+	</div>
+</h:body>
+
+</html>

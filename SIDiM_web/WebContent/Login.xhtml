@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Login - SIDiM</title>
+	<h:outputStylesheet library="css" name="styleLogin.css" />
+</h:head>
+<h:body id="loginBody">
+	<div id="loginTudo">
+		<div class="loginLogo">
+			<h:graphicImage id="loginLogo"
+				value="/resources/images/LogoSIDiM.png"></h:graphicImage>
+		</div>
+		<h:form id="loginForm">
+			<div id="loginConteudo">
+				<p:panel>
+					<p:messages tooltip="true" globalOnly="true" />
+					<div style="margin-left: 210px;">
+						<h:panelGrid>
+							<p:message for="lkEnviarSenha" style="color: red;"></p:message>
+							<p:message for="btnloginFuncionario" style="color: red;"></p:message>
+							<p:message for="loginFuncionario" errorStyle="color: red;"></p:message>
+							<p:message for="senhaFuncionario" errorStyle="color: red;"></p:message>
+							<h:panelGroup>
+								<p:outputLabel value="Login:" for="loginFuncionario"></p:outputLabel>
+								<p:inputText id="loginFuncionario" size="11" maxlength="14"
+									value="#{loginView.func.cpf}" required="true" label="Login"
+									style="margin-left: 10px;" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:outputLabel value="Senha:" for="senhaFuncionario"></p:outputLabel>
+								<p:password id="senhaFuncionario" size="11" maxlength="20"
+									value="#{loginView.func.senha}" required="true" label="Senha"
+									style="margin-left: 2px;" />
+								<p:commandLink id="lkEnviarSenha" ajax="true" update="@form"
+									process="@this loginFuncionario" value="enviar senha"
+									action="#{loginView.enviarSenha}"
+									style="margin-left: 5px; font-size: 11px; color: blue;" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:commandButton id="btnloginFuncionario" ajax="true"
+									update="@form" binding="#{loginView.btnloginFuncionario}"
+									action="#{loginView.logarFuncionario}" value="Entrar" />
+							</h:panelGroup>
+
+						</h:panelGrid>
+					</div>
+				</p:panel>
+			</div>
+			<h:panelGroup>
+				<div id="loginFooter" align="center">
+
+					<a rel="license"
+						href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.pt_BR">
+						<img alt="Licença Creative Commons" style="border-width: 0;"
+						src="http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png"></img>
+					</a> <br /> <span xmlns:dct="http://purl.org/dc/terms/"
+						property="dct:title">SIDiM(Sistema Imobiliário para
+						Dispositivos Móveis)</span>
+
+				</div>
+			</h:panelGroup>
+		</h:form>
+	</div>
+</h:body>
+</html>

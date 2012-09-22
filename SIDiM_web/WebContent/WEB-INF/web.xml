@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <display-name>SIDiM</display-name>
+  
+   <servlet>
+    	<servlet-name>RESTService</servlet-name>
+    	<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+	    <init-param>
+	      <param-name>com.sun.jersey.config.property.packages</param-name>
+	      <param-value>com.kots.sidim.web.webservice.service</param-value>
+	    </init-param>
+	    <init-param>
+			<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	    <load-on-startup>5</load-on-startup>
+	</servlet>
+  
+	<servlet-mapping>
+	   <servlet-name>RESTService</servlet-name>
+	   <url-pattern>/ws/*</url-pattern>
+	</servlet-mapping>
+  
+  
+  <servlet>
+    <servlet-name>Faces Servlet</servlet-name>
+    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>*.jsf</url-pattern>
+  </servlet-mapping>
+  <welcome-file-list>
+    <welcome-file>Login.jsf</welcome-file>
+  </welcome-file-list>
+  <listener>
+    <listener-class>com.kots.sidim.web.dao.HibernateDAOFactory</listener-class>
+  </listener>
+  
+  
+  
+  <filter>
+  <filter-name>PrimeFaces FileUpload Filter</filter-name> 
+  <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class> 
+	<init-param>
+  <param-name>thresholdSize</param-name> 
+  <param-value>102400</param-value> 
+  </init-param>
+	<init-param>
+  <param-name>uploadDirectory</param-name> 
+  <param-value>/Users/primefaces/temp</param-value> 
+  </init-param>
+  </filter>
+	<filter-mapping>
+  <filter-name>PrimeFaces FileUpload Filter</filter-name> 
+  <servlet-name>Faces Servlet</servlet-name>
+  <url-pattern>*.jsf</url-pattern>
+  </filter-mapping>
+  
+  <!-- 
+  
+  <filter>
+    <filter-name>validator</filter-name>
+    <filter-class>com.kots.sidim.web.util.FilterClass</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>validator</filter-name>
+    <url-pattern>*.jsf</url-pattern>
+  </filter-mapping>
+  
+   -->
+</web-app>
