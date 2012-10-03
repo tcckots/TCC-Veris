@@ -25,6 +25,7 @@ public class Foto implements java.io.Serializable {
 	private int idFoto;
 	private Imovel imovel;
 	private String url;
+	
 
 	public Foto() {
 	}
@@ -41,7 +42,7 @@ public class Foto implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="SEQ_FOTO")
-	@SequenceGenerator(name="SEQ_FOTO", sequenceName = "SEQ_FOTO")
+	@SequenceGenerator(name="SEQ_FOTO", sequenceName = "SEQ_FOTO", allocationSize=1)
 	@Column(name = "ID_FOTO", unique = true, nullable = false, precision = 8, scale = 0)
 	public int getIdFoto() {
 		return this.idFoto;
@@ -91,5 +92,6 @@ public class Foto implements java.io.Serializable {
 			return false;
 		return true;
 	}
+
 
 }

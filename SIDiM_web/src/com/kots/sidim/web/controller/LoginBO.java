@@ -1,11 +1,5 @@
 package com.kots.sidim.web.controller;
 
-import java.util.List;
-
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
-
-import com.kots.sidim.web.model.Estado;
 import com.kots.sidim.web.model.Funcionario;
 
 public class LoginBO {

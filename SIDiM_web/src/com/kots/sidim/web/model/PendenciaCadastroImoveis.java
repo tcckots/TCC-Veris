@@ -92,7 +92,7 @@ public class PendenciaCadastroImoveis implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="SEQ_PENDENCIA_CADASTRO_IMOVEIS")
-	@SequenceGenerator(name="SEQ_PENDENCIA_CADASTRO_IMOVEIS", sequenceName = "SEQ_PENDENCIA_CADASTRO_IMOVEIS")
+	@SequenceGenerator(name="SEQ_PENDENCIA_CADASTRO_IMOVEIS", sequenceName = "SEQ_PENDENCIA_CADASTRO_IMOVEIS", allocationSize=1)
 	@Column(name = "ID_PENDENCIA", unique = true, nullable = false, precision = 14, scale = 0)
 	public long getIdPendencia() {
 		return this.idPendencia;

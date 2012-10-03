@@ -19,15 +19,6 @@ import com.kots.sidim.web.model.Estado;
 @ViewScoped
 public class BairroCadastroView {
 
-	public BairroCadastroView() {
-		// TODO Auto-generated constructor stub
-		if (bairro == null)
-			bairro = new Bairro();
-		estadoBO = new EstadoBO();
-		cidadeBO = new CidadeBO();
-		bairroBO = new BairroBO();
-	}
-
 	private Estado estado;
 	private Cidade cidade;
 	private Bairro bairro;
@@ -36,6 +27,14 @@ public class BairroCadastroView {
 	private BairroBO bairroBO;
 	private List<Estado> estados;
 	private List<Cidade> cidades;
+
+	public BairroCadastroView() {
+		if (bairro == null)
+			bairro = new Bairro();
+		estadoBO = new EstadoBO();
+		cidadeBO = new CidadeBO();
+		bairroBO = new BairroBO();
+	}
 
 	public Estado getEstado() {
 		return estado;
@@ -96,6 +95,7 @@ public class BairroCadastroView {
 	}
 
 	public List<Cidade> getCidades() {
+
 		cidades = cidadeBO.listar(estado);
 		return cidades;
 	}
@@ -108,31 +108,26 @@ public class BairroCadastroView {
 		FacesContext context = FacesContext.getCurrentInstance();
 		FacesMessage message = null;
 		try {
-			
-			
-			
+
 			if (!bairroBO.verificarBairroExiste(bairro.getNome(), cidade)) {
 				cidade.setEstado(estado);
 				bairro.setCidade(cidade);
 				bairro.setPadrao("N");
 				bairroBO.salvar(bairro);
+				bairro = new Bairro();
 				message = new FacesMessage("Bairro cadastrado com sucesso!");
-				message.setSeverity(FacesMessage.SEVERITY_WARN);
+				message.setSeverity(FacesMessage.SEVERITY_INFO);
 				context.addMessage("bairroCadastroForm:cmbConfirmar", message);
+
 			} else {
 				message = new FacesMessage("Esse bairro já está cadastrado!");
 				message.setSeverity(FacesMessage.SEVERITY_WARN);
 				context.addMessage("bairroCadastroForm:cmbConfirmar", message);
 			}
-			
-			
-			
-
 
 		} catch (Exception e) {
 			// TODO: handle exception
-			message = new FacesMessage(
-					"Erro interno na aplicação, entre em contato com o suporte do sistema por favor");
+			message = new FacesMessage("Erro interno na aplicação, entre em contato com o suporte do sistema por favor");
 			message.setSeverity(FacesMessage.SEVERITY_ERROR);
 			context.addMessage("bairroCadastroForm:cmbConfirmar", message);
 		}

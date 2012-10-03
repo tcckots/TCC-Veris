@@ -1,18 +1,12 @@
 package com.kots.sidim.web.util;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+
 import java.util.List;
-import java.util.Set;
 
-import com.kots.sidim.web.controller.CidadeBO;
-import com.kots.sidim.web.controller.EstadoBO;
+import com.kots.sidim.web.controller.ImovelBO;
 import com.kots.sidim.web.controller.TipoImovelBO;
-import com.kots.sidim.web.model.Cidade;
-import com.kots.sidim.web.model.Estado;
-import com.kots.sidim.web.model.PendenciaCadastroImoveis;
+import com.kots.sidim.web.model.Imovel;
 import com.kots.sidim.web.model.TipoImovel;
-
 
 
 public class MainTeste {
@@ -25,22 +19,22 @@ public class MainTeste {
 		String ret = "END";
 		try {
 
-			/*
-			EstadoBO estadoBO = new EstadoBO();
-			Estado estado = estadoBO.obter("RS");
 			
-			CidadeBO cidadeBO = new CidadeBO();
+			ImovelBO imovelBO = new ImovelBO();
 			
 			
-			List<Cidade> lst = null;
+			List<Imovel> lst = null;
 			
-			lst = cidadeBO.listar(null);
-			String nome="primeiro_item";
-			for (Cidade v : lst) {
-				nome = nome + " - " + v.getNome();
+			TipoImovel tipo;
+			
+			lst = imovelBO.listar();
+			String nome = "nada";
+			for (Imovel v : lst) {
+				tipo = v.getTipoImovel();
+				nome = nome + " - " + tipo.getDescricao();
 			}
 			ret = nome;
-			*/
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();

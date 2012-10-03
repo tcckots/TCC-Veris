@@ -27,7 +27,7 @@ import javax.persistence.Table;
 @ManagedBean(name = "bairro")
 public class Bairro implements java.io.Serializable {
 
-	private long idBairro;
+	private int idBairro;
 	private Cidade cidade;
 	private String nome;
 	private String padrao;
@@ -39,14 +39,14 @@ public class Bairro implements java.io.Serializable {
 	public Bairro() {
 	}
 
-	public Bairro(long idBairro, Cidade cidade, String nome, String padrao) {
+	public Bairro(int idBairro, Cidade cidade, String nome, String padrao) {
 		this.idBairro = idBairro;
 		this.cidade = cidade;
 		this.nome = nome;
 		this.padrao = padrao;
 	}
 
-	public Bairro(long idBairro, Cidade cidade, String nome, String padrao,
+	public Bairro(int idBairro, Cidade cidade, String nome, String padrao,
 			Set<PendenciaCadastroImoveis> pendenciaCadastroImoveis,
 			Set<Funcionario> funcionarios, Set<Perfil> perfils,
 			Set<Imovel> imovels) {
@@ -62,13 +62,13 @@ public class Bairro implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="SEQ_BAIRRO")
-	@SequenceGenerator(name="SEQ_BAIRRO", sequenceName = "SEQ_BAIRRO")
+	@SequenceGenerator(name="SEQ_BAIRRO", sequenceName = "SEQ_BAIRRO", allocationSize=1)
 	@Column(name = "ID_BAIRRO", unique = true, nullable = false, precision = 10, scale = 0)
-	public long getIdBairro() {
+	public int getIdBairro() {
 		return this.idBairro;
 	}
 
-	public void setIdBairro(long idBairro) {
+	public void setIdBairro(int idBairro) {
 		this.idBairro = idBairro;
 	}
 

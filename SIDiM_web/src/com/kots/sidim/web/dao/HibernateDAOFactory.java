@@ -11,8 +11,7 @@ public class HibernateDAOFactory extends DAOFactory {
 		try {
 			dao = c.newInstance();
 		} catch (Exception e) {
-			throw new RuntimeException("Não foi possível instanciar o DAO: "
-					+ c.getName(), e);
+			throw new RuntimeException("Não foi possível instanciar o DAO: " + c.getName(), e);
 		}
 
 		return (dao);

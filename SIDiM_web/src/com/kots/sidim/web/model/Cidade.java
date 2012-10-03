@@ -68,7 +68,7 @@ public class Cidade implements java.io.Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="SEQ_CIDADE")
-	@SequenceGenerator(name="SEQ_CIDADE", sequenceName = "SEQ_CIDADE")
+	@SequenceGenerator(name="SEQ_CIDADE", sequenceName = "SEQ_CIDADE", allocationSize=1)
 	@Column(name = "ID_CIDADE", unique = true, nullable = false, precision = 8, scale = 0)
 	public int getIdCidade() {
 		return this.idCidade;

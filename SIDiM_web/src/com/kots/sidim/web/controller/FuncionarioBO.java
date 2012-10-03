@@ -43,7 +43,7 @@ public class FuncionarioBO {
 
 			retorno = dao.uniqueResult(entidadeFilter, null);
 		} catch (Exception e) {
-			Biblio.tratarErro("buscaFuncionario", e);
+			Biblio.tratarErro("obterFuncionario", e);
 		}
 		return retorno;
 	}

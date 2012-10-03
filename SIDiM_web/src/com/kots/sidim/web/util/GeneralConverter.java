@@ -1,6 +1,5 @@
 package com.kots.sidim.web.util;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -16,14 +15,8 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 
-import com.kots.sidim.web.view.*;
+import com.kots.sidim.web.view.BaseView;
 
-/**
- * Acts as a generic converter for entities, allowing them to be used in JSF
- * components without a specific converter for every single class.
- * 
- * @author <a href="mailto:hlfsousa@yahoo.com.br">Henrique L. F. de Sousa</a>
- */
 @FacesConverter("general")
 public class GeneralConverter implements Converter {
 

@@ -25,23 +25,22 @@ import javax.persistence.Table;
 @ManagedBean(name = "tipoImovel")
 public class TipoImovel implements java.io.Serializable {
 
-	private short idTipoImovel;
+	private int idTipoImovel;
 	private String descricao;
+	
 	private Set<PendenciaCadastroImoveis> pendenciaCadastroImoveis = new HashSet<PendenciaCadastroImoveis>(0);
 	private Set<Perfil> perfils = new HashSet<Perfil>(0);
 	private Set<Imovel> imovels = new HashSet<Imovel>(0);
-
+	 
 	public TipoImovel() {
 	}
 
-	public TipoImovel(short idTipoImovel, String descricao) {
+	public TipoImovel(int idTipoImovel, String descricao) {
 		this.idTipoImovel = idTipoImovel;
 		this.descricao = descricao;
 	}
 
-	public TipoImovel(short idTipoImovel, String descricao,
-			Set<PendenciaCadastroImoveis> pendenciaCadastroImoveis,
-			Set<Perfil> perfils, Set<Imovel> imovels) {
+	public TipoImovel(int idTipoImovel, String descricao, Set<PendenciaCadastroImoveis> pendenciaCadastroImoveis, Set<Perfil> perfils, Set<Imovel> imovels) {
 		this.idTipoImovel = idTipoImovel;
 		this.descricao = descricao;
 		this.pendenciaCadastroImoveis = pendenciaCadastroImoveis;
@@ -50,14 +49,14 @@ public class TipoImovel implements java.io.Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="SEQ_TIPO_IMOVEL")
-	@SequenceGenerator(name="SEQ_TIPO_IMOVEL", sequenceName = "SEQ_TIPO_IMOVEL")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_TIPO_IMOVEL")
+	@SequenceGenerator(name = "SEQ_TIPO_IMOVEL", sequenceName = "SEQ_TIPO_IMOVEL", allocationSize = 1)
 	@Column(name = "ID_TIPO_IMOVEL", unique = true, nullable = false, precision = 4, scale = 0)
-	public short getIdTipoImovel() {
+	public int getIdTipoImovel() {
 		return this.idTipoImovel;
 	}
 
-	public void setIdTipoImovel(short idTipoImovel) {
+	public void setIdTipoImovel(int idTipoImovel) {
 		this.idTipoImovel = idTipoImovel;
 	}
 
@@ -70,13 +69,13 @@ public class TipoImovel implements java.io.Serializable {
 		this.descricao = descricao;
 	}
 
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tipoImovel")
 	public Set<PendenciaCadastroImoveis> getPendenciaCadastroImoveis() {
 		return this.pendenciaCadastroImoveis;
 	}
 
-	public void setPendenciaCadastroImoveis(
-			Set<PendenciaCadastroImoveis> pendenciaCadastroImoveis) {
+	public void setPendenciaCadastroImoveis(Set<PendenciaCadastroImoveis> pendenciaCadastroImoveis) {
 		this.pendenciaCadastroImoveis = pendenciaCadastroImoveis;
 	}
 
@@ -119,7 +118,5 @@ public class TipoImovel implements java.io.Serializable {
 			return false;
 		return true;
 	}
-	
-	
 
 }

@@ -41,11 +41,10 @@ public class EstadoBO {
 			EstadoDAO dao = factory.getDAO(EstadoDAO.class);
 			Estado entidadeFilter = new Estado();
 			entidadeFilter.setUf(uf);
-			entidadeFilter.setNome("Teste2");
 
 			ret = dao.uniqueResult(entidadeFilter, null);
 		} catch (Exception e) {
-			Biblio.tratarErro("buscaEstado", e);
+			Biblio.tratarErro("obterEstado", e);
 		}
 		return ret;
 	}

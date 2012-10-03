@@ -71,7 +71,7 @@ public class Perfil implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="SEQ_PERFIL")
-	@SequenceGenerator(name="SEQ_PERFIL", sequenceName = "SEQ_PERFIL")
+	@SequenceGenerator(name="SEQ_PERFIL", sequenceName = "SEQ_PERFIL", allocationSize=1)
 	@Column(name = "ID_PERFIL", unique = true, nullable = false, precision = 8, scale = 0)
 	public int getIdPerfil() {
 		return this.idPerfil;

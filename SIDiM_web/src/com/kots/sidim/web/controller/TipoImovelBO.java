@@ -12,7 +12,6 @@ public class TipoImovelBO {
 
 	}
 
-	TipoImovel tipoImovel;
 
 	public void salvar(TipoImovel tipoImovel) {
 		try {
@@ -34,7 +33,7 @@ public class TipoImovelBO {
 		}
 	}
 
-	public TipoImovel obter(short idTipoImovel) {
+	public TipoImovel obter(int idTipoImovel) {
 		TipoImovel retorno = null; 
 		try {
 			DAOFactory factory = DAOFactory.getInstance();
@@ -44,7 +43,7 @@ public class TipoImovelBO {
 
 			retorno = dao.uniqueResult(entidadeFilter, null);
 		} catch (Exception e) {
-			Biblio.tratarErro("buscaTipoImovel", e);
+			Biblio.tratarErro("obterTipoImovel", e);
 		}
 		return retorno;
 	}

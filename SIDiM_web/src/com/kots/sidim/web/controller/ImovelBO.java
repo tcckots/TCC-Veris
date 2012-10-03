@@ -43,7 +43,7 @@ public class ImovelBO {
 
 			retorno = dao.uniqueResult(entidadeFilter, null);
 		} catch (Exception e) {
-			Biblio.tratarErro("buscaImovel", e);
+			Biblio.tratarErro("obterImovel", e);
 		}
 		return retorno;
 	}

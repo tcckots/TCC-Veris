@@ -9,6 +9,7 @@
 	<title><ui:insert name="title">SIDiM</ui:insert></title>
 	<h:outputStylesheet library="css" name="style.css" />
 	<h:outputStylesheet library="css" name="styleInternas.css" />
+	<h:outputStylesheet library="css" name="stylePrimeFaces.css" />
 </h:head>
 
 
@@ -31,7 +32,8 @@
 								icon="ui-icon-disk" />
 							<p:menuitem value="Atualizar" url="#"
 								icon="ui-icon-arrowrefresh-1-w" />
-							<p:menuitem value="Visualizar" url="#" icon="ui-icon-document-b" />
+							<p:menuitem value="Visualizar"
+								url="/Imovel/ImovelVisualizacao.jsf" icon="ui-icon-document-b" />
 							<p:menuitem value="Pesquisar" url="#" icon="ui-icon-search" />
 							<p:menuitem value="Remover" url="#" icon="ui-icon-trash" />
 						</p:submenu>
@@ -83,20 +85,16 @@
 
 		</ui:insert>
 	</div>
-	<div id="templateFooter">
+	<div id="templateFooter" align="center">
 		<ui:insert name="footer">
 			<a rel="license"
 				href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.pt_BR">
-				<img alt="Licença Creative Commons" style="border-width: 0"
+				<img alt="Licença Creative Commons" style="border-width: 0;"
 				src="http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png"></img>
 			</a>
 			<br />
 			<span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">SIDiM(Sistema
-				Imobiliário para Dispositivos Móveis)</span>está licenciado sob uma <a
-				rel="license"
-				href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.pt_BR">licença
-				Creative Commons Atribuição-NãoComercial-SemDerivados 3.0 Não
-				Adaptada</a>.
+				Imobiliário para Dispositivos Móveis)</span>
 		</ui:insert>
 	</div>
 </h:body>

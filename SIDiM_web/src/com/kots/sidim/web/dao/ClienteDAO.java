@@ -1,7 +1,7 @@
 package com.kots.sidim.web.dao;
 
-import com.kots.sidim.web.model.Bairro;
+import com.kots.sidim.web.model.Cliente;
 
-public class ClienteDAO extends GenericHibernateDAO<Bairro, Integer> {
+public class ClienteDAO extends GenericHibernateDAO<Cliente, Integer> {
 	
 }

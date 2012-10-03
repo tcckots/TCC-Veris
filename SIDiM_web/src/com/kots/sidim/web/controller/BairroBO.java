@@ -1,18 +1,12 @@
 package com.kots.sidim.web.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.kots.sidim.web.dao.BairroDAO;
-import com.kots.sidim.web.dao.CidadeDAO;
 import com.kots.sidim.web.dao.DAOFactory;
 import com.kots.sidim.web.model.Bairro;
-import com.kots.sidim.web.model.Bairro;
 import com.kots.sidim.web.model.Cidade;
-import com.kots.sidim.web.model.Estado;
 import com.kots.sidim.web.util.Biblio;
-
-;
 
 public class BairroBO {
 
@@ -65,7 +59,7 @@ public class BairroBO {
 
 			retorno = dao.uniqueResult(entidadeFilter, null);
 		} catch (Exception e) {
-			Biblio.tratarErro("buscaBairro", e);
+			Biblio.tratarErro("obterBairro", e);
 		}
 		return retorno;
 	}

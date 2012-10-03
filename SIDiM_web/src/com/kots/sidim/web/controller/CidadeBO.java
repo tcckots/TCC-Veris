@@ -1,6 +1,5 @@
 package com.kots.sidim.web.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.kots.sidim.web.dao.CidadeDAO;
@@ -66,7 +65,7 @@ public class CidadeBO {
 
 			retorno = dao.uniqueResult(entidadeFilter, null);
 		} catch (Exception e) {
-			Biblio.tratarErro("buscaCidade", e);
+			Biblio.tratarErro("obterCidade", e);
 		}
 		return retorno;
 	}

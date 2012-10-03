@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
@@ -18,6 +19,7 @@ import org.primefaces.model.UploadedFile;
 import com.kots.sidim.web.controller.BairroBO;
 import com.kots.sidim.web.controller.CidadeBO;
 import com.kots.sidim.web.controller.EstadoBO;
+import com.kots.sidim.web.controller.FotoBO;
 import com.kots.sidim.web.controller.ImovelBO;
 import com.kots.sidim.web.controller.TipoImovelBO;
 import com.kots.sidim.web.model.Bairro;
@@ -29,7 +31,31 @@ import com.kots.sidim.web.model.TipoImovel;
 
 @ManagedBean(name = "imovelCadastroView")
 @ViewScoped
+@RequestScoped
 public class ImovelCadastroView {
+
+	private Imovel imovel;
+	private TipoImovel tipoImovel;
+	private Estado estado;
+	private Cidade cidade;
+	private Bairro bairro;
+	private Foto fotoImovel;
+	private ImovelBO imovelBO;
+	private FotoBO fotoBO;
+	private TipoImovelBO tipoImovelBO;
+	private EstadoBO estadoBO;
+	private CidadeBO cidadeBO;
+	private BairroBO bairroBO;
+	private List<TipoImovel> tiposDeImoveis;
+	private List<Estado> estados;
+	private List<Cidade> cidades;
+	private List<Bairro> bairros;
+	private StreamedContent fotoStreamed;
+	private UploadedFile file;
+	private List<String> images;
+	private List<String> intencoes;
+	private static List<Foto> fotosImovel;
+	private static List<byte[]> fotosByte;
 
 	public ImovelCadastroView() {
 		if (imovel == null)
@@ -39,25 +65,8 @@ public class ImovelCadastroView {
 		estadoBO = new EstadoBO();
 		cidadeBO = new CidadeBO();
 		bairroBO = new BairroBO();
+		fotoBO = new FotoBO();
 	}
-
-	private Imovel imovel;
-	private TipoImovel tipoImovel;
-	private Estado estado;
-	private Cidade cidade;
-	private Bairro bairro;
-	private ImovelBO imovelBO;
-	private TipoImovelBO tipoImovelBO;
-	private EstadoBO estadoBO;
-	private CidadeBO cidadeBO;
-	private BairroBO bairroBO;
-	private List<TipoImovel> tiposDeImoveis;
-	private List<Estado> estados;
-	private List<Cidade> cidades;
-	private List<Bairro> bairros;
-	private StreamedContent foto;
-	private UploadedFile file;
-	private List<String> images;
 
 	public Imovel getImovel() {
 		return imovel;
@@ -91,6 +100,22 @@ public class ImovelCadastroView {
 		this.cidade = cidade;
 	}
 
+	public Foto getFotoImovel() {
+		return fotoImovel;
+	}
+
+	public void setFotoImovel(Foto fotoImovel) {
+		this.fotoImovel = fotoImovel;
+	}
+
+	public StreamedContent getFotoStreamed() {
+		return fotoStreamed;
+	}
+
+	public void setFotoStreamed(StreamedContent fotoStreamed) {
+		this.fotoStreamed = fotoStreamed;
+	}
+
 	public ImovelBO getImovelBO() {
 		return imovelBO;
 	}
@@ -101,6 +126,14 @@ public class ImovelCadastroView {
 
 	public TipoImovelBO getTipoImovelBO() {
 		return tipoImovelBO;
+	}
+
+	public List<Foto> getFotosImovel() {
+		return fotosImovel;
+	}
+
+	public void setFotosImovel(List<Foto> fotosImovel) {
+		this.fotosImovel = fotosImovel;
 	}
 
 	public void setTipoImovelBO(TipoImovelBO tipoImovelBO) {
@@ -144,7 +177,6 @@ public class ImovelCadastroView {
 	}
 
 	public List<Cidade> getCidades() {
-		if (cidades == null)
 		cidades = cidadeBO.listar(estado);
 		return cidades;
 	}
@@ -170,7 +202,6 @@ public class ImovelCadastroView {
 	}
 
 	public List<Bairro> getBairros() {
-		if (bairros == null)
 		bairros = bairroBO.listar(cidade);
 		return bairros;
 	}
@@ -179,20 +210,25 @@ public class ImovelCadastroView {
 		this.bairros = bairros;
 	}
 
-	public StreamedContent getFoto() {
-		return foto;
-	}
-
-	public void setFoto(StreamedContent foto) {
-		this.foto = foto;
-	}
-
 	public UploadedFile getFile() {
 		return file;
 	}
 
 	public void setFile(UploadedFile file) {
 		this.file = file;
+	}
+	
+	public List<String> getIntencoes() {
+		if (intencoes == null) {
+			intencoes = new ArrayList<String>();
+			intencoes.add("Aluguel");
+			intencoes.add("Compra");
+		}
+		return intencoes;
+	}
+
+	public void setIntencoes(List<String> intencoes) {
+		this.intencoes = intencoes;
 	}
 
 	// Teste para visualizar imagens no componente do pf
@@ -215,25 +251,27 @@ public class ImovelCadastroView {
 		FacesContext context = FacesContext.getCurrentInstance();
 		FacesMessage message = null;
 		try {
-			foto = new DefaultStreamedContent(event.getFile().getInputstream());
+			fotoStreamed = new DefaultStreamedContent(event.getFile().getInputstream());
 			byte[] foto = event.getFile().getContents();
-			//this.imovel.setFoto(foto);
+			// this.imovel.setFoto(foto);
 
 			String nomeArquivo = event.getFile().getFileName();
 			FacesContext facesContext = FacesContext.getCurrentInstance();
-			ServletContext scontext = (ServletContext) facesContext
-					.getExternalContext().getContext();
-			String arquivo = scontext.getRealPath("/WEB-INF/upload/"
-					+ nomeArquivo);
-			criaArquivo(foto, arquivo);
+			ServletContext scontext = (ServletContext) facesContext.getExternalContext().getContext();
+			String arquivo = "C:\\fotosSidim\\" + nomeArquivo;
+			fotoImovel = new Foto();
+			fotoImovel.setUrl(arquivo);
+			if (fotosImovel == null)
+				fotosImovel = new ArrayList<Foto>();
+			if (fotosByte == null)
+				fotosByte = new ArrayList<byte[]>();
+			fotosImovel.add(fotoImovel);
+			fotosByte.add(foto);
+			
 
-			message = new FacesMessage("Deu certo");
-			message.setSeverity(FacesMessage.SEVERITY_ERROR);
-			context.addMessage("imovelCadastroForm:msg", message);
 		} catch (Exception e) {
 			// TODO: handle exception
-			message = new FacesMessage(
-					"Erro interno na aplicação, entre em contato com o suporte do sistema por favor");
+			message = new FacesMessage("Erro interno na aplicação, entre em contato com o suporte do sistema por favor");
 			message.setSeverity(FacesMessage.SEVERITY_ERROR);
 			context.addMessage("imovelCadastroForm:cmbConfirmar", message);
 		}
@@ -249,8 +287,7 @@ public class ImovelCadastroView {
 			fos.close();
 		} catch (FileNotFoundException ex) {
 			// TODO: handle exception
-			message = new FacesMessage(
-					"Erro interno na aplicação, entre em contato com o suporte do sistema por favor");
+			message = new FacesMessage("Erro interno na aplicação, entre em contato com o suporte do sistema por favor");
 			message.setSeverity(FacesMessage.SEVERITY_ERROR);
 			context.addMessage("imovelCadastroForm:cmbConfirmar", message);
 		}
@@ -267,15 +304,30 @@ public class ImovelCadastroView {
 			imovel.setTipoImovel(tipoImovel);
 			imovel.setCidade(cidade);
 			imovel.setBairro(bairro);
+			System.out.println(imovel.getIntencao().substring(0,1));
+			imovel.setIntencao(imovel.getIntencao().substring(0,1));
+				
+			
+			imovelBO.salvar(imovel);
 
+			if (fotosImovel != null) {
+				for (int i = 0; i < fotosImovel.size(); i++) {
+					fotosImovel.get(i).setImovel(imovel);
+					fotoBO.salvar(fotosImovel.get(i));
+					criaArquivo( fotosByte.get(i) , fotosImovel.get(i).getUrl());
+				}
+			}
+
+			imovel = new Imovel();
+			fotosImovel = null;
+			fotosByte = null;
 			message = new FacesMessage("Imóvel cadastrado com sucesso.");
 			message.setSeverity(FacesMessage.SEVERITY_INFO);
 			context.addMessage("imovelCadastroForm:cmbConfirmar", message);
 
 		} catch (Exception e) {
 			// TODO: handle exception
-			message = new FacesMessage(
-					"Erro interno na aplicação, entre em contato com o suporte do sistema por favor");
+			message = new FacesMessage("Erro interno na aplicação, entre em contato com o suporte do sistema por favor");
 			message.setSeverity(FacesMessage.SEVERITY_ERROR);
 			context.addMessage("imovelCadastroForm:cmbConfirmar", message);
 		}

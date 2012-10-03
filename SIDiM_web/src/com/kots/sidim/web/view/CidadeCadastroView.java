@@ -1,5 +1,6 @@
 package com.kots.sidim.web.view;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -14,7 +15,7 @@ import com.kots.sidim.web.model.Estado;
 
 @ManagedBean(name = "cidadeCadastroView")
 @ViewScoped
-public class CidadeCadastroView {
+public class CidadeCadastroView implements Serializable {
 
 	public CidadeCadastroView() {
 		if (cidade == null)
@@ -82,6 +83,7 @@ public class CidadeCadastroView {
 					cidade.setEstado(estado);
 				cidade.setPadrao("N");
 				cidadeBO.salvar(cidade);
+				cidade = new Cidade();
 				message = new FacesMessage("Cidade cadastrada com sucesso!");
 				message.setSeverity(FacesMessage.SEVERITY_INFO);
 				context.addMessage("cidadeCadastroForm:cmbConfirmar", message);
