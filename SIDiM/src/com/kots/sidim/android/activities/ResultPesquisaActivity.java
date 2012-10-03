@@ -23,6 +23,7 @@ import com.kots.sidim.android.model.TipoImovel;
 public class ResultPesquisaActivity extends MainBarActivity {
 	
 	ListView listResult;
+	List<Imovel> imoveis;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class ResultPesquisaActivity extends MainBarActivity {
 		
 		listResult = (ListView) findViewById(R.id.resultPesquisaListImoveis);
 		
-		List<Imovel> imoveis = new ArrayList<Imovel>();
+		imoveis = new ArrayList<Imovel>();
 		imoveis.add(getNewImovel());
 		imoveis.add(getNewImovel());
 		imoveis.add(getNewImovel());
@@ -58,7 +59,9 @@ public class ResultPesquisaActivity extends MainBarActivity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 
-				startActivity(new Intent(getBaseContext(), VisualizarImovelActivity.class));
+				 Intent intent = new Intent(getBaseContext(), VisualizarImovelActivity.class);
+                 intent.putExtra("imoveldetalhes", imoveis.get(arg2));
+				startActivity(intent);
 				
 				
 			}
@@ -73,12 +76,12 @@ public Imovel getNewImovel(){
 		Imovel imovel = new Imovel();
 		imovel.setIdImovel(1);
 		imovel.setEstado(new Estado("SP","São Paulo"));
-		imovel.setCidade(new Cidade(1, new Estado("SP","São Paulo"), "Campinas", ""));
+		imovel.setCidade(new Cidade(1, new Estado("SP","São Paulo"), "Sumaré", ""));
 		imovel.setArea(40);
 		imovel.setDormitorios((short)3);
 		imovel.setSuites((short) 2);
 		imovel.setGaragens((byte) 1);
-		imovel.setBairro(new Bairro(1, null, "Jd. Aurélia", ""));
+		imovel.setBairro(new Bairro(1, null, "Jd. Amanda", ""));
 		imovel.setDescricao("Linda Casa");
 		imovel.setPreco(new BigDecimal(130000));
 		imovel.setTipoImovel(new TipoImovel((short) 1, "Casa"));

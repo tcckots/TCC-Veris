@@ -2,18 +2,21 @@ package com.kots.sidim.android.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.google.android.maps.MapActivity;
 import com.kots.sidim.android.R;
@@ -37,11 +40,11 @@ public class MainBarActivity extends MapActivity {
     static boolean menuOn = false;
     ListView listMenu;
     int indexActivity;
-
+    Activity instance;
 	
 	@Override
 	public void setContentView(int layoutResID) {		
-		
+		instance = this;
 		LayoutInflater inflater = LayoutInflater.from(this);
         scrollView = (MyHorizontalScrollView) inflater.inflate(R.layout.horz_scroll_with_list_menu, null);
         scrollView.setBackgroundColor(R.color.color_background_screens);
@@ -61,7 +64,20 @@ public class MainBarActivity extends MapActivity {
         listMenu = (ListView) menu.findViewById(R.id.menuListView);
         //listMenu.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,ConfigGlobal.menuList));
         listMenu.setAdapter(new MenuAdapter(this, ConfigGlobal.menuList));
-        
+        listMenu.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				
+				switch(arg2){
+				case ConfigGlobal.MENU_INDEX_FAVORITOS: startActivity(new Intent(instance,FavoritosActivity.class)); break;
+				case ConfigGlobal.MENU_INDEX_CONFIGURACOES: startActivity(new Intent(instance,ConfiguracoesActivity.class)); break;
+				case ConfigGlobal.MENU_INDEX_PESQUISAR_IMOVEL: startActivity(new Intent(instance,PesquisarImovelActivity.class)); break;
+				case ConfigGlobal.MENU_INDEX_CONTATO: startActivity(new Intent(instance,ContatoActivity.class)); break;
+				
+				}
+			}});
         
         
         ViewGroup tabBar = (ViewGroup) bar.findViewById(R.id.layoutBarApp);

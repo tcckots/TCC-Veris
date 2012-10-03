@@ -4,7 +4,7 @@ import java.util.Date;
 
 
 
-public class InteresseCliente extends ResultSidimAPI implements java.io.Serializable {
+public class InteresseCliente extends ResultWebService implements java.io.Serializable {
 	
 	private Imovel imovel;
 	private Cliente cliente;

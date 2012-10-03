@@ -2,7 +2,7 @@ package com.kots.sidim.android.model;
 
 import java.util.ArrayList;
 
-public class FiltroImovel extends ResultWebService  {
+public class FiltroImovelWeb  {
 
 	private String uf;
 	private String cidade;

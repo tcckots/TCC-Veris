@@ -52,6 +52,7 @@ public class FavoritosActivity extends MainBarActivity {
       
       coverFlow.setAdapter(adapter);
       
+      
       coverFlow.setSpacing(-25);
       coverFlow.setSelection(4, true);
       coverFlow.setAnimationDuration(1000);

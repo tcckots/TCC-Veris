@@ -13,11 +13,11 @@
         android:orientation="vertical" >
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/visualizarImovelImageMain"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:layout_marginTop="2dp"
-            android:src="@drawable/casabonita" />
+            android:src="@drawable/casafera" />
 
         <Gallery
             android:id="@+id/visualizarImovelGallery"
@@ -40,7 +40,7 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/visualizarImovelTextTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Casa 3 Dorm, Amplo quintal - JD Aurélia"
@@ -54,26 +54,33 @@
                 android:orientation="vertical" >
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/visualizarImovelTextBairro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Bairro: JD Aurélia" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/visualizarImovelTextCidadeEstado"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Campinas - São Paulo" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/visualizarImovelTextQtds"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="3 Dorm - 2 Suítes - 2 Garagens" />
+
+                <TextView
+                    android:id="@+id/visualizarImovelTextArea"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Área: 80m Contruída, 200m Total " />
+
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/visualizarImovelTextObservacao"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ótima Localização, Amplo Quintal, Casa Nova, Aceita Financiamento, Preço Negociável" />
@@ -87,14 +94,14 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/visualizarImovelButtonInteresse"
             style="@style/ButtonCleanOrange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Enviar Interesse" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/visualizarImovelBtAddFavoritos"
             style="@style/ButtonCleanOrange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

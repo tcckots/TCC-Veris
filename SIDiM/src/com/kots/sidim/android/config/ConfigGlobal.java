@@ -13,21 +13,19 @@ public class ConfigGlobal {
 			
 	public static final String MENU_HOME = "Home";
 	public static final String MENU_PESQUISAR_IMOVEL = "Pesquisar Imóvel";
-	public static final String MENU_FAVORITOS = "Favoritos";
-	public static final String MENU_PERFIL = "Perfil";
+	public static final String MENU_FAVORITOS = "Favoritos";	
 	public static final String MENU_CONFIGURACOES = "Configurações";
 	public static final String MENU_CONTATO = "Contato";
 	
 	public static final int MENU_INDEX_HOME = 0;
 	public static final int MENU_INDEX_PESQUISAR_IMOVEL = 1;
 	public static final int MENU_INDEX_FAVORITOS = 2;
-	public static final int MENU_INDEX_PERFIL = 3;
-	public static final int MENU_INDEX_CONFIGURACOES = 4;
-	public static final int MENU_INDEX_CONTATO = 5;
+	public static final int MENU_INDEX_CONFIGURACOES = 3;
+	public static final int MENU_INDEX_CONTATO = 4;
 	
-public static final String[] menuList = {MENU_HOME,MENU_PESQUISAR_IMOVEL,MENU_FAVORITOS,MENU_PERFIL,MENU_CONFIGURACOES,MENU_CONTATO};
+public static final String[] menuList = {MENU_HOME,MENU_PESQUISAR_IMOVEL,MENU_FAVORITOS,MENU_CONFIGURACOES,MENU_CONTATO};
 	
-	public static final String[] menuPrincipalList = {MENU_PESQUISAR_IMOVEL,MENU_FAVORITOS,MENU_PERFIL,MENU_CONFIGURACOES,MENU_CONTATO};
+	public static final String[] menuPrincipalList = {MENU_PESQUISAR_IMOVEL,MENU_FAVORITOS,MENU_CONFIGURACOES,MENU_CONTATO};
 	
 	public static Map<String,Integer> resourcesImages = new HashMap<String, Integer>();
 	
@@ -68,8 +66,7 @@ public static final String[] menuList = {MENU_HOME,MENU_PESQUISAR_IMOVEL,MENU_FA
 			resourcesImages.put(MENU_CONFIGURACOES, R.drawable.configmenu);
 			resourcesImages.put(MENU_CONTATO, R.drawable.contactmenu);
 			resourcesImages.put(MENU_FAVORITOS, R.drawable.favormenu);
-			resourcesImages.put(MENU_HOME, R.drawable.homemenu);
-			resourcesImages.put(MENU_PERFIL, R.drawable.perfilmenu);
+			resourcesImages.put(MENU_HOME, R.drawable.homemenu);			
 			resourcesImages.put(MENU_PESQUISAR_IMOVEL, R.drawable.searchmenu);
 		}
 		

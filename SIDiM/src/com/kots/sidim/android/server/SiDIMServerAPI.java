@@ -16,14 +16,13 @@ import com.kots.sidim.android.model.Cliente;
 import com.kots.sidim.android.model.FiltroImovel;
 import com.kots.sidim.android.model.Imovel;
 import com.kots.sidim.android.model.InteresseCliente;
-import com.kots.sidim.android.model.ResultSidimAPI;
-import com.kots.sidim.android.model.TipoImovel;
+import com.kots.sidim.android.model.ResultWebService;
 import com.kots.sidim.android.model.TipoImovelMobile;
 import com.kots.sidim.android.util.HttpUtil;
 
 public class SiDIMServerAPI {
 
-	private static final String URL_SERVER_API = "http://api.tv.zeewe.com/api/";
+	private static final String URL_SERVER_API = "http://192.168.0.101/SIDiM/ws/service";
 	
 	
 	private static Gson GSON = new Gson();
@@ -32,8 +31,8 @@ public class SiDIMServerAPI {
 	Type typeOfBairro = new TypeToken<ArrayList<Bairro>>() {}.getType();
 	Type typeOfTipo = new TypeToken<ArrayList<TipoImovelMobile>>() {}.getType();
 	Type typeContaUsuario = new TypeToken<Cliente>() {}.getType();
-	Type typeInteresseCliente = new TypeToken<ResultSidimAPI>() {}.getType();
-	Type typeResultAPI = new TypeToken<ResultSidimAPI>() {}.getType();
+	Type typeInteresseCliente = new TypeToken<ResultWebService>() {}.getType();
+	Type typeResultAPI = new TypeToken<ResultWebService>() {}.getType();
 	Type typeOfT = new TypeToken<Map<String, String>>() {}.getType();
 
 	
@@ -54,12 +53,16 @@ public class SiDIMServerAPI {
             
         } catch (Exception e) {            
             e.printStackTrace();
+            throw new SiDIMException("Por favor conecte-se a uma rede para criar uma conta");
         }
         
-        if(cliente.isSuccess()){
+        if(cliente != null && cliente.isSuccess()){
         	return true;
         } else {
-        	throw new SiDIMException(cliente.getMessage());
+        	if(cliente != null && cliente.getMensagem() != null)
+        		throw new SiDIMException(cliente.getMensagem());
+        	else
+        		throw new SiDIMException("Servidor Indispon’vel, tente mais tarde");
         }
 				
 	}
@@ -78,10 +81,37 @@ public class SiDIMServerAPI {
             e.printStackTrace();
         }
         
-        if(cliente.isSuccess()){
+        if(cliente != null && cliente.isSuccess()){
         	return true;
         } else {
-        	throw new SiDIMException(cliente.getMessage());
+        	if(cliente != null && cliente.getMensagem() != null)
+        		throw new SiDIMException(cliente.getMensagem());
+        	else
+        		throw new SiDIMException("Servidor Indispon’vel, tente mais tarde");
+        }				
+	}
+	
+	public Cliente validarLogin(Cliente conta) throws SiDIMException {
+		
+		Cliente cliente = null;
+		String url = URL_SERVER_API + "/validarLogin";		
+		String response = "";
+		
+        try {
+            response = HttpUtil.doHttpPost(url, GSON.toJson(conta));
+            cliente = GSON.fromJson(response, typeContaUsuario);                       
+            
+        } catch (Exception e) {            
+            e.printStackTrace();
+        }
+        
+        if(cliente != null && cliente.isSuccess()){
+        	return cliente;
+        } else {
+        	if(cliente != null && cliente.getMensagem() != null)
+        		throw new SiDIMException(cliente.getMensagem());
+        	else
+        		throw new SiDIMException("Servidor Indispon’vel, tente mais tarde");
         }				
 	}
 
@@ -111,7 +141,7 @@ public class SiDIMServerAPI {
 
 	public boolean enviarInteresse(InteresseCliente interesse) throws SiDIMException {
 
-		ResultSidimAPI result = null;
+		ResultWebService result = null;
 		String url = URL_SERVER_API + "/enviarInteresse";		
 		String response = "";
 		
@@ -123,10 +153,10 @@ public class SiDIMServerAPI {
             e.printStackTrace();
         }
         
-        if(result.isSuccess()){
+        if(result != null && result.isSuccess()){
         	return true;
         } else {
-        	throw new SiDIMException(result.getMessage());
+        	throw new SiDIMException(result.getMensagem());
         }
 		
 		
@@ -134,7 +164,7 @@ public class SiDIMServerAPI {
 
 	public boolean enviarSenha(String login) throws SiDIMException {
 
-		ResultSidimAPI trocaSenha = null;
+		ResultWebService trocaSenha = null;
 		String url = URL_SERVER_API + "/enviarInteresse?login=" + login;		
 		String response = "";
 		
@@ -146,10 +176,10 @@ public class SiDIMServerAPI {
             e.printStackTrace();
         }
         
-        if(trocaSenha.isSuccess()){
+        if(trocaSenha != null && trocaSenha.isSuccess()){
         	return true;
         } else {
-        	throw new SiDIMException(trocaSenha.getMessage());
+        	throw new SiDIMException(trocaSenha.getMensagem());
         }
 
 	}
@@ -198,14 +228,14 @@ public class SiDIMServerAPI {
 		
 	}
 
-	public List<Bairro> getBairro(String cidade) throws SiDIMException {
+	public List<Bairro> getBairro(Cidade cidade) throws SiDIMException {
 
 		ArrayList<Bairro> bairros = null;
 		String url = URL_SERVER_API + "/buscarBairros?cidade=" + cidade;		
 		String response = "";
 		
         try {
-            response = HttpUtil.doHttpGet(url);
+            response = HttpUtil.doHttpPost(url,GSON.toJson(cidade));
             bairros = GSON.fromJson(response, typeOfBairro);                       
             
         } catch (Exception e) {            

@@ -1,5 +1,6 @@
 package com.kots.sidim.android.server;
 
+import java.util.ArrayList;
 import java.util.List;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -8,6 +9,7 @@ import com.kots.sidim.android.exception.SiDIMException;
 import com.kots.sidim.android.model.Bairro;
 import com.kots.sidim.android.model.Cidade;
 import com.kots.sidim.android.model.Cliente;
+import com.kots.sidim.android.model.Estado;
 import com.kots.sidim.android.model.FiltroImovel;
 import com.kots.sidim.android.model.Imovel;
 import com.kots.sidim.android.model.InteresseCliente;
@@ -41,6 +43,11 @@ public class SiDIMControllerServer {
 		
 	}
 	
+	public Cliente validarLogin(Cliente conta) throws SiDIMException{
+		
+		return sidimAPI.validarLogin(conta);
+	}
+	
 	public boolean criarConta(Cliente conta) throws SiDIMException{
 				
 		return sidimAPI.criarConta(conta);
@@ -56,9 +63,9 @@ public class SiDIMControllerServer {
 		return sidimAPI.buscarImoveis(filtro);
 	}
 	
-	public boolean enviarInteresse(InteresseCliente “nteresse) throws SiDIMException{
+	public boolean enviarInteresse(InteresseCliente interesse) throws SiDIMException{
 		
-		return sidimAPI.enviarInteresse(“nteresse);
+		return sidimAPI.enviarInteresse(interesse);
 		
 	}
 	
@@ -74,10 +81,17 @@ public class SiDIMControllerServer {
 	
 	public List<Cidade> getCidades(String uf) throws SiDIMException{
 		
-		return sidimAPI.getCidades(uf);
+		ArrayList<Cidade> cidades = new ArrayList<Cidade>();
+		cidades.add(new Cidade(1, new Estado("SP", "S‹o Paulo"), "Campinas", "N"));
+		cidades.add(new Cidade(1, new Estado("SP", "S‹o Paulo"), "Campina Grande", "N"));
+		cidades.add(new Cidade(1, new Estado("SP", "S‹o Paulo"), "Campina do Sul", "N"));
+		
+		
+		//return sidimAPI.getCidades(uf);
+		return cidades;
 	}
 	
-	public List<Bairro> getBairro(String cidade) throws SiDIMException{
+	public List<Bairro> getBairro(Cidade cidade) throws SiDIMException{
 		
 		return sidimAPI.getBairro(cidade);
 	}

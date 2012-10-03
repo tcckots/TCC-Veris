@@ -2,7 +2,7 @@ package com.kots.sidim.android.model;
 
 
 
-public class Cliente extends ResultSidimAPI implements java.io.Serializable {
+public class Cliente extends ResultWebService implements java.io.Serializable {
 
 	private String login;
 	private String cidade;

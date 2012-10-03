@@ -17,6 +17,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
@@ -31,6 +32,7 @@ import com.kots.sidim.android.config.ValidacaoGeral;
 import com.kots.sidim.android.exception.SiDIMException;
 import com.kots.sidim.android.model.Bairro;
 import com.kots.sidim.android.model.Cidade;
+import com.kots.sidim.android.model.FiltroImovel;
 import com.kots.sidim.android.model.TipoImovelMobile;
 import com.kots.sidim.android.server.SiDIMControllerServer;
 import com.kots.sidim.android.views.OnWheelChangedListener;
@@ -47,45 +49,52 @@ public class PesquisarImovelActivity extends MainBarActivity {
 	
 	List<String> bairros = new ArrayList<String>();	
 	
-	List<Bairro> bairrosAutoComplete = new ArrayList<Bairro>();	
+	List<Bairro> bairrosToAutoComplete = new ArrayList<Bairro>();	
 	
 	List<TipoImovelMobile> tipos = new ArrayList<TipoImovelMobile>();
 
 	TextView txtBairros, txtTipos, txtPreco;
 	
-	AutoCompleteTextView autoEditCidades;
-	
+	AutoCompleteTextView autoEditCidades,autoEditBairros;
+			
 	SiDIMControllerServer controller;
+	
+	LinearLayout linearBairro, linearTipos;
+	
+	Button btPesquisar;
+	
+	FiltroImovel filtro;
 
 	String[] ufs = { "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO",
 			"MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ",
 			"RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" };
-	String[] sIntencao = { "Comprar", "Alugar", "Todos" };
+	String[] sIntencao = { "Comprar", "Alugar"};
+	
+	EditText ediTextQtdQuartos, ediTextQtdSuites, editTextGaragens;
+	
+	SeekBar barPreco;
+	
+	List<TipoImovelMobile> newListTipoImovelMobile;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_pesquisarimovel,
 				ConfigGlobal.MENU_INDEX_PESQUISAR_IMOVEL);
 
 		instance = this;
+		findIds();
 		controller = SiDIMControllerServer.getInstance(instance);
 		prepareWhellViews();
 		
 		
 		
-		autoEditCidades = (AutoCompleteTextView) findViewById(R.id.pesquisarAutoEditCidades);
-		
-		
 		try {
 			tipos = controller.getTipos();
-			
-			
-			
-			
+
 		} catch (SiDIMException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		
@@ -96,13 +105,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 		tipos.add(new TipoImovelMobile((short) 2, "S’tio", false));
 		tipos.add(new TipoImovelMobile((short) 2, "Fazenda", false));
 		tipos.add(new TipoImovelMobile((short) 2, "Comercial", false));
-
 		
-
-		txtBairros = (TextView) findViewById(R.id.pesquisarTextBairros);
-		txtTipos = (TextView) findViewById(R.id.pesquisarTxtTipoImovel);
-
-		LinearLayout linearBairro = (LinearLayout) findViewById(R.id.pesquisarLinearBairro);
 		linearBairro.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -112,7 +115,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 			}
 		});
 		
-		LinearLayout linearTipos = (LinearLayout) findViewById(R.id.pesquisarLinearTipoImovel);
+		
 		linearTipos.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -122,9 +125,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 			}
 		});
 		
-		txtPreco = (TextView) findViewById(R.id.pesquisarTxtPreco);
 		
-		SeekBar barPreco = (SeekBar) findViewById(R.id.pesquisarSeekBarPreco);
 		barPreco.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			
 			@Override
@@ -135,7 +136,6 @@ public class PesquisarImovelActivity extends MainBarActivity {
 			
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {
-				// TODO Auto-generated method stub
 				
 			}
 			
@@ -159,11 +159,41 @@ public class PesquisarImovelActivity extends MainBarActivity {
 			}
 		});
 		
-		Button btPesquisar = (Button) findViewById(R.id.pesquisarBtPesquisar);
+		
 		btPesquisar.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
+				
+//				filtro = new FiltroImovel();
+//				filtro.setCidade(autoEditCidades.getText().toString());
+//				filtro.setUf(ufs[estados.getCurrentItem()]);
+//				
+//				ArrayList<String> filtroBairros = new ArrayList<String>();
+//				
+//				for(String sBairro : bairros){
+//					filtroBairros.add(sBairro);
+//				}
+//				filtro.setIdsBairro(filtroBairros);
+//				
+//				ArrayList<Integer> filtroTipos = new ArrayList<Integer>();
+//				for(int i=0; i <  newListTipoImovelMobile.size();i++){
+//					filtroTipos.add((int)newListTipoImovelMobile.get(i).getIdTipoImovel());
+//				}
+//				filtro.setIdsTipo(filtroTipos);
+//				filtro.setIntencao(intencao.getCurrentItem());
+//				filtro.setQtdDorm(Integer.parseInt(ediTextQtdQuartos.getText().toString()));
+//				filtro.setQtdGaragens(Integer.parseInt(editTextGaragens.getText().toString()));
+//				filtro.setQtdSuite(Integer.parseInt(ediTextQtdSuites.getText().toString()));
+//				//filtro.setFaixaPreco(faixaPreco);
+//				filtro.setIndexBuscas(0);
+//				
+//				try {
+//					controller.buscarImoveis(filtro);
+//				} catch (SiDIMException e) {
+//					
+//					e.printStackTrace();
+//				}
 				
 				startActivity(new Intent(getBaseContext(),ResultPesquisaActivity.class));
 				
@@ -193,17 +223,17 @@ public class PesquisarImovelActivity extends MainBarActivity {
 			public void onDismiss(DialogInterface dialog) {
 				
 				String sTipos = "Tipos Im—veis : ";
-				List<TipoImovelMobile> newList = getTiposCheckeds(tipos);
+				newListTipoImovelMobile = getTiposCheckeds(tipos);
 
-				if (newList.size() == 0) {
+				if (newListTipoImovelMobile.size() == 0) {
 					sTipos += "Todos";
-				} else if (newList.size() >= 1) {
-					sTipos = newList.get(0).getDescricao();
-					if (newList.size() >= 2) {
-						sTipos += "," + newList.get(1).getDescricao();
-						if (newList.size() >= 3) {
-							sTipos += "," + newList.get(2).getDescricao();
-							if (newList.size() >= 4) {
+				} else if (newListTipoImovelMobile.size() >= 1) {
+					sTipos = newListTipoImovelMobile.get(0).getDescricao();
+					if (newListTipoImovelMobile.size() >= 2) {
+						sTipos += "," + newListTipoImovelMobile.get(1).getDescricao();
+						if (newListTipoImovelMobile.size() >= 3) {
+							sTipos += "," + newListTipoImovelMobile.get(2).getDescricao();
+							if (newListTipoImovelMobile.size() >= 4) {
 								sTipos += "...";
 							}
 						}
@@ -389,6 +419,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 			}
 		});
 		dialog.show();
+		loadBairros(cidades.get(cidades.indexOf(new Cidade(0, null, autoEditCidades.getText().toString(), ""))));
 	}
 
 	private void updateBairros(ListView listView) {
@@ -413,12 +444,27 @@ public class PesquisarImovelActivity extends MainBarActivity {
 		adapter.setTextSize(18);
 		estados.setViewAdapter(adapter);
 		estados.setCurrentItem(24);
+		loadCidades(ufs[estados.getCurrentItem()]);
 
 		ArrayWheelAdapter<String> adapter2 = new ArrayWheelAdapter<String>(
 				this, sIntencao);
 		adapter.setTextSize(18);
 		intencao.setViewAdapter(adapter2);
-		intencao.setCurrentItem(0);
+		intencao.setCurrentItem(0);		
+		
+		intencao.addChangingListener(new OnWheelChangedListener() {
+			
+			@Override
+			public void onChanged(WheelView wheel, int oldValue, int newValue) {
+				
+				if(newValue > 0){
+					barPreco.setEnabled(false);
+				} else {
+					barPreco.setEnabled(true);
+				}
+				
+			}
+		});
 		
 		estados.addChangingListener(new OnWheelChangedListener() {
 			
@@ -452,12 +498,12 @@ public class PesquisarImovelActivity extends MainBarActivity {
 		
 		try {
 			cidades = controller.getCidades(uf);
-			arrayCidades = new String[cidades.size()];
-			for(int i=0; i < cidades.size(); i++){
-				arrayCidades[i] = cidades.get(i).getNome();
-			}
+//			arrayCidades = new String[cidades.size()];
+//			for(int i=0; i < cidades.size(); i++){
+//				arrayCidades[i] = cidades.get(i).getNome();
+//			}
 			
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,arrayCidades);
+			ArrayAdapter<Cidade> adapter = new ArrayAdapter<Cidade>(this,android.R.layout.simple_dropdown_item_1line,cidades);
 			
 			autoEditCidades.setAdapter(adapter);
 		} catch (SiDIMException e) {
@@ -467,25 +513,37 @@ public class PesquisarImovelActivity extends MainBarActivity {
 		
 	}
 	
-	public void loadBairros(String cidade, AutoCompleteTextView viewAutoComplete){
+	public void loadBairros(Cidade cidade){
 		
-		String[] arrayBairros;
+		//String[] arrayBairros;
 		
 		try {
-			bairrosAutoComplete = controller.getBairro(cidade);
-			arrayBairros = new String[cidades.size()];
-			for(int i=0; i < bairrosAutoComplete.size(); i++){
-				arrayBairros[i] = bairrosAutoComplete.get(i).getNome();
-			}
+			bairrosToAutoComplete = controller.getBairro(cidade);
+//			arrayBairros = new String[cidades.size()];
+//			for(int i=0; i < bairrosAutoComplete.size(); i++){
+//				arrayBairros[i] = bairrosAutoComplete.get(i).getNome();
+//			}
 			
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,arrayBairros);
-			viewAutoComplete.setAdapter(adapter);
+			ArrayAdapter<Bairro> adapter = new ArrayAdapter<Bairro>(this,android.R.layout.simple_dropdown_item_1line,bairrosToAutoComplete);
+			autoEditBairros.setAdapter(adapter);
 		
 		} catch (SiDIMException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+	}
+	
+	private void findIds(){
+		
+		txtBairros = (TextView) findViewById(R.id.pesquisarTextBairros);
+		txtTipos = (TextView) findViewById(R.id.pesquisarTxtTipoImovel);
+		autoEditCidades = (AutoCompleteTextView) findViewById(R.id.pesquisarAutoEditCidades);
+		linearBairro = (LinearLayout) findViewById(R.id.pesquisarLinearBairro);
+		linearTipos = (LinearLayout) findViewById(R.id.pesquisarLinearTipoImovel);
+		txtPreco = (TextView) findViewById(R.id.pesquisarTxtPreco);		
+		barPreco = (SeekBar) findViewById(R.id.pesquisarSeekBarPreco);
+		btPesquisar = (Button) findViewById(R.id.pesquisarBtPesquisar);
 	}
 
 }
