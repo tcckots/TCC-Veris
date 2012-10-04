@@ -19,6 +19,15 @@ public class Imovel implements java.io.Serializable {
 	private String rua;
 	private BigDecimal preco;
 	private String descricao;
+	private String fotoslocal;
+
+	public String getFotoslocal() {
+		return fotoslocal;
+	}
+
+	public void setFotoslocal(String fotoslocal) {
+		this.fotoslocal = fotoslocal;
+	}
 
 	public Imovel() {
 	}

@@ -11,7 +11,7 @@ import com.kots.sidim.android.config.ConfigGlobal;
 import com.kots.sidim.android.model.Cliente;
 public class SessionUserSidim {
         
-    public static Map<String,Bitmap> images = new HashMap<String, Bitmap>();
+	public static Map<String,Bitmap> images = new HashMap<String, Bitmap>();
 
     public static void clearImages(){
         images.clear();
@@ -49,6 +49,8 @@ public class SessionUserSidim {
 	    	editor.commit();
     	}    	    	
     }
+    
+    
                
     
 }

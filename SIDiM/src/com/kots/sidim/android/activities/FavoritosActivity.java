@@ -9,7 +9,9 @@ import android.widget.ListView;
 
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.adapter.ImovelAdapter;
+import com.kots.sidim.android.adapter.ImovelFavoritoAdapter;
 import com.kots.sidim.android.config.ConfigGlobal;
+import com.kots.sidim.android.dao.FavoritosDAO;
 import com.kots.sidim.android.model.Bairro;
 import com.kots.sidim.android.model.Cidade;
 import com.kots.sidim.android.model.Estado;
@@ -19,7 +21,7 @@ import com.kots.sidim.android.views.CoverFlow;
 
 public class FavoritosActivity extends MainBarActivity {
 	
-	
+	FavoritosDAO favoritosDao;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,37 +29,31 @@ public class FavoritosActivity extends MainBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_favoritos, ConfigGlobal.MENU_INDEX_FAVORITOS);
 		
-		List<Imovel> imoveis = new ArrayList<Imovel>();
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
+		favoritosDao = new FavoritosDAO(instance);
 		
-		ImovelAdapter adapter = new ImovelAdapter(this, imoveis);
-//		
-//		ListView list = (ListView) findViewById(R.id.favorlist3dImoveis);
-//		list.setDivider( null ); 
-//        list.setAdapter(adapter);
 		
-	  CoverFlow coverFlow = (CoverFlow) findViewById(R.id.favorlist3dImoveis);	
-      
-      coverFlow.setAdapter(adapter);
-      
-      
-      coverFlow.setSpacing(-25);
-      coverFlow.setSelection(4, true);
-      coverFlow.setAnimationDuration(1000);
-
-						
+		
+		List<Imovel> imoveis = favoritosDao.getImoveis();
+//		imoveis.add(getNewImovel());
+//		imoveis.add(getNewImovel());
+//		imoveis.add(getNewImovel());
+//		imoveis.add(getNewImovel());
+//		imoveis.add(getNewImovel());
+//		imoveis.add(getNewImovel());
+//		imoveis.add(getNewImovel());
+//		imoveis.add(getNewImovel());
+//		imoveis.add(getNewImovel());
+//		imoveis.add(getNewImovel());
+//		imoveis.add(getNewImovel());
+//		imoveis.add(getNewImovel());
+//		imoveis.add(getNewImovel());
+		
+		ImovelFavoritoAdapter adapter = new ImovelFavoritoAdapter(this, imoveis);
+		
+		ListView list = (ListView) findViewById(R.id.favoritosListResultados);
+		list.setDivider( null ); 
+        list.setAdapter(adapter);
+								
 	
 	}
 	

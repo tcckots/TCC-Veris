@@ -117,14 +117,7 @@ public class CriarContaActivity extends Activity {
 						}
 
 						handler.sendEmptyMessage(2);
-						// Handler handler = new Handler();
-						// handler.post(new Runnable() {
-						// @Override
-						// public void run() {
-						// if (progressDialog != null)
-						// progressDialog.dismiss();
-						// }
-						// });
+
 
 					}
 

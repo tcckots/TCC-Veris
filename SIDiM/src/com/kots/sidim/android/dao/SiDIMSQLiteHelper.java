@@ -50,7 +50,7 @@ public class SiDIMSQLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_RUA = "rua";
     public static final int COLUMN_RUA_INDEX = 10;
     
-    public static final String COLUMN_PRECO = "qtddorm";
+    public static final String COLUMN_PRECO = "preco";
     public static final int COLUMN_PRECO_INDEX = 11;
     
     public static final String COLUMN_DESCRICAO = "descricao";

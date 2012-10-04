@@ -3,6 +3,7 @@ package com.kots.sidim.android.adapter;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,19 +14,20 @@ import android.widget.TextView;
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.config.ConfigGlobal;
 import com.kots.sidim.android.util.DrawableConnectionManager;
+import com.kots.sidim.android.util.SessionUserSidim;
 
 public class FotoGaleriaAdapter extends BaseAdapter {
 	
 	private Context context;
-	private ArrayList<Integer> list;
+	private ArrayList<String> list;
 	DrawableConnectionManager drawManager;
 	
 	
-	public FotoGaleriaAdapter(Context context, ArrayList<Integer> list){
+	public FotoGaleriaAdapter(Context context, ArrayList<String> list){
 		
 		this.context = context;
 		this.list = list;
-			
+		drawManager = new DrawableConnectionManager();	
 		
 	}
 
@@ -51,13 +53,19 @@ public class FotoGaleriaAdapter extends BaseAdapter {
 	public View getView(int arg0, View arg1, ViewGroup arg2) {
 				
 
-		final int item = list.get(arg0);	
+		final String url = list.get(arg0);	
 		
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View v = inflater.inflate(R.layout.foto_item_galeria, null);
 		
 		ImageView imgOption = (ImageView) v.findViewById(R.id.fotogaleriaitem);
-		imgOption.setImageResource(item);													
+		
+		if(SessionUserSidim.images.containsKey(url)){
+			imgOption.setImageBitmap(SessionUserSidim.images.get(url));
+		} else {
+		    drawManager.fetchDrawableOnThread(url, imgOption);                                       
+		}
+													
 		
 		return v;
 		
