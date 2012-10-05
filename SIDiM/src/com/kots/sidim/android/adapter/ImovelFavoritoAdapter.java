@@ -70,9 +70,12 @@ public class ImovelFavoritoAdapter extends BaseAdapter {
 		txtPreco.setText("Venda " + ": " + imovel.getPreco().doubleValue());
 		
 		ImageView imgPreview = (ImageView) v.findViewById(R.id.favorItemImgFoto);
-		Bitmap image = null;
-		LoadImagesSDCard.getFirstImageFromSdCard(imovel.getFotoslocal(),image);
+		Bitmap image = null;//LoadImagesSDCard.ShowPicture(imovel.getFotoslocal());
+		LoadImagesSDCard.getFirstImageFromSdCard(imovel.getFotoslocal(), image);
+		
+		
 		imgPreview.setImageBitmap(image);
+		
 		
 		
 		

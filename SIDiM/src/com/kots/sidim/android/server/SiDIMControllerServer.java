@@ -79,26 +79,50 @@ public class SiDIMControllerServer {
 		return sidimAPI.getRandomImoveis(cidade);
 	}
 	
-	public List<Cidade> getCidades(String uf) throws SiDIMException{
+	public List<String> getCidades(String uf) throws SiDIMException{
 		
-		ArrayList<Cidade> cidades = new ArrayList<Cidade>();
-		cidades.add(new Cidade(1, new Estado("SP", "S‹o Paulo"), "Campinas", "N"));
-		cidades.add(new Cidade(1, new Estado("SP", "S‹o Paulo"), "Campina Grande", "N"));
-		cidades.add(new Cidade(1, new Estado("SP", "S‹o Paulo"), "Campina do Sul", "N"));
+//		ArrayList<Cidade> cidades = new ArrayList<Cidade>();
+//		cidades.add(new Cidade(1, new Estado("SP", "S‹o Paulo"), "Campinas", "N"));
+//		cidades.add(new Cidade(1, new Estado("SP", "S‹o Paulo"), "Campina Grande", "N"));
+//		cidades.add(new Cidade(1, new Estado("SP", "S‹o Paulo"), "Campina do Sul", "N"));
+//		cidades.add(new Cidade(1, new Estado("SP", "S‹o Paulo"), "Campos do Jordao", "N"));
 		
 		
-		//return sidimAPI.getCidades(uf);
-		return cidades;
+		List<Cidade> cidades = sidimAPI.getCidades(uf);
+		List<String> stringCidades = new ArrayList<String>();
+		for(Cidade cidade : cidades){
+			stringCidades.add(cidade.getNome());
+		}
+		
+		
+		return stringCidades;
+		//return cidades;
 	}
 	
-	public List<Bairro> getBairro(Cidade cidade) throws SiDIMException{
+	public List<String> getBairro(String cidade) throws SiDIMException{
 		
-		return sidimAPI.getBairro(cidade);
+		List<String> sBairros = new ArrayList<String>();
+		List<Bairro> bairros = sidimAPI.getBairro(cidade);
+		
+		for(Bairro item : bairros){
+			sBairros.add(item.getNome());
+		}
+		
+		return sBairros;
 	}
 	
 	public List<TipoImovelMobile> getTipos() throws SiDIMException{
 		
-		return sidimAPI.getTipos();
+		//return sidimAPI.getTipos();
+		
+		List<TipoImovelMobile> tipos = new ArrayList<TipoImovelMobile>();
+		tipos.add(new TipoImovelMobile((short) 1, "Apartamento", true));
+		tipos.add(new TipoImovelMobile((short) 2, "Casa", false));
+		tipos.add(new TipoImovelMobile((short) 3, "Ponto", false));
+		tipos.add(new TipoImovelMobile((short) 4, "Terreno", false));
+		
+		
+		return tipos;
 		
 	}
 	

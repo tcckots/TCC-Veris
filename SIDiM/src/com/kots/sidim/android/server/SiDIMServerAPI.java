@@ -208,7 +208,7 @@ public class SiDIMServerAPI {
 	public List<Cidade> getCidades(String uf) throws SiDIMException {
 
 		ArrayList<Cidade> cidades = null;
-		String url = URL_SERVER_API + "/buscarCidades?uf=" + uf;		
+		String url = URL_SERVER_API + "/buscarCidades/" + uf;		
 		String response = "";
 		
         try {
@@ -228,14 +228,14 @@ public class SiDIMServerAPI {
 		
 	}
 
-	public List<Bairro> getBairro(Cidade cidade) throws SiDIMException {
+	public List<Bairro> getBairro(String cidade) throws SiDIMException {
 
 		ArrayList<Bairro> bairros = null;
-		String url = URL_SERVER_API + "/buscarBairros?cidade=" + cidade;		
+		String url = URL_SERVER_API + "/buscarBairros/" + cidade;		
 		String response = "";
 		
         try {
-            response = HttpUtil.doHttpPost(url,GSON.toJson(cidade));
+            response = HttpUtil.doHttpGet(url);
             bairros = GSON.fromJson(response, typeOfBairro);                       
             
         } catch (Exception e) {            

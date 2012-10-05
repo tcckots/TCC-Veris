@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -98,13 +99,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 			e.printStackTrace();
 		}
 		
-		tipos.add(new TipoImovelMobile((short) 1, "Casa", true));
-		tipos.add(new TipoImovelMobile((short) 2, "Apartamento", false));
-		tipos.add(new TipoImovelMobile((short) 2, "Chac‡ra", false));
-		tipos.add(new TipoImovelMobile((short) 2, "Terreno", false));
-		tipos.add(new TipoImovelMobile((short) 2, "S’tio", false));
-		tipos.add(new TipoImovelMobile((short) 2, "Fazenda", false));
-		tipos.add(new TipoImovelMobile((short) 2, "Comercial", false));
+		
 		
 		linearBairro.setOnClickListener(new OnClickListener() {
 
@@ -196,6 +191,21 @@ public class PesquisarImovelActivity extends MainBarActivity {
 //				}
 				
 				startActivity(new Intent(getBaseContext(),ResultPesquisaActivity.class));
+				
+			}
+		});
+		
+		autoEditCidades.setThreshold(3);
+		autoEditCidades.setOnFocusChangeListener(new OnFocusChangeListener() {
+			
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				Toast.makeText(instance, "Cidade FOCUS " + hasFocus, Toast.LENGTH_LONG).show();
+				if(!hasFocus){
+					//loadBairros(autoEditCidades.getText().toString());
+				} else {
+					loadCidades(ufs[estados.getCurrentItem()]);
+				}
 				
 			}
 		});
@@ -333,7 +343,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 				.findViewById(R.id.dialogBairroListBairro);
 		updateBairros(list);
 
-		final AutoCompleteTextView autoComplBairro = (AutoCompleteTextView) dialog
+		autoEditBairros = (AutoCompleteTextView) dialog
 				.findViewById(R.id.dialogBairroInputBairro);
 
 		Button btAdicionar = (Button) dialog
@@ -343,7 +353,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 			@Override
 			public void onClick(View v) {
 
-				String bairro = autoComplBairro.getText().toString();
+				String bairro = autoEditBairros.getText().toString();
 				if (ValidacaoGeral.validaCampoVazio(bairro)) {
 					if(bairros.contains(bairro)){
 						Toast.makeText(instance, "Bairro j‡ inserido", Toast.LENGTH_LONG).show();
@@ -351,7 +361,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 						bairros.add(0, bairro);
 						updateBairros(list);					
 					}					
-					autoComplBairro.setText("");					
+					autoEditBairros.setText("");					
 				}
 
 			}
@@ -419,7 +429,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 			}
 		});
 		dialog.show();
-		loadBairros(cidades.get(cidades.indexOf(new Cidade(0, null, autoEditCidades.getText().toString(), ""))));
+		loadBairros(autoEditCidades.getText().toString());
 	}
 
 	private void updateBairros(ListView listView) {
@@ -465,13 +475,26 @@ public class PesquisarImovelActivity extends MainBarActivity {
 				
 			}
 		});
+				
 		
 		estados.addChangingListener(new OnWheelChangedListener() {
 			
 			@Override
 			public void onChanged(WheelView wheel, int oldValue, int newValue) {
 				
-				loadCidades(ufs[newValue]);
+				//loadCidades(ufs[newValue]);
+				
+			}
+		});
+		
+		estados.setOnFocusChangeListener(new OnFocusChangeListener() {
+			
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				Toast.makeText(instance, "Estados FOCUS " + hasFocus, Toast.LENGTH_LONG).show();
+				if(!hasFocus){
+					loadCidades(ufs[estados.getCurrentItem()]);
+				}
 				
 			}
 		});
@@ -493,38 +516,36 @@ public class PesquisarImovelActivity extends MainBarActivity {
 	}
 	
 	public void loadCidades(String uf){
+			
 		
-		String[] arrayCidades;
 		
 		try {
-			cidades = controller.getCidades(uf);
-//			arrayCidades = new String[cidades.size()];
-//			for(int i=0; i < cidades.size(); i++){
-//				arrayCidades[i] = cidades.get(i).getNome();
-//			}
+			//cidades = controller.getCidades(uf);
 			
-			ArrayAdapter<Cidade> adapter = new ArrayAdapter<Cidade>(this,android.R.layout.simple_dropdown_item_1line,cidades);
+			
+			
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,controller.getCidades(uf)); 
 			
 			autoEditCidades.setAdapter(adapter);
 		} catch (SiDIMException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		
 	}
 	
-	public void loadBairros(Cidade cidade){
+	public void loadBairros(String cidade){
 		
 		//String[] arrayBairros;
 		
 		try {
-			bairrosToAutoComplete = controller.getBairro(cidade);
+			//bairrosToAutoComplete = controller.getBairro(cidade);
 //			arrayBairros = new String[cidades.size()];
 //			for(int i=0; i < bairrosAutoComplete.size(); i++){
 //				arrayBairros[i] = bairrosAutoComplete.get(i).getNome();
 //			}
 			
-			ArrayAdapter<Bairro> adapter = new ArrayAdapter<Bairro>(this,android.R.layout.simple_dropdown_item_1line,bairrosToAutoComplete);
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,controller.getBairro(cidade));
 			autoEditBairros.setAdapter(adapter);
 		
 		} catch (SiDIMException e) {
@@ -538,7 +559,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 		
 		txtBairros = (TextView) findViewById(R.id.pesquisarTextBairros);
 		txtTipos = (TextView) findViewById(R.id.pesquisarTxtTipoImovel);
-		autoEditCidades = (AutoCompleteTextView) findViewById(R.id.pesquisarAutoEditCidades);
+		autoEditCidades = (AutoCompleteTextView) findViewById(R.id.pesquisarAutoEditCidades);		
 		linearBairro = (LinearLayout) findViewById(R.id.pesquisarLinearBairro);
 		linearTipos = (LinearLayout) findViewById(R.id.pesquisarLinearTipoImovel);
 		txtPreco = (TextView) findViewById(R.id.pesquisarTxtPreco);		

@@ -102,12 +102,12 @@ public class FavoritosDAO {
 	        	
 	        	
 	        	
-	        	String nameFile = imovel.getIdImovel() + "_"  + i + ".jpg";
+	        	String nameFile = imovel.getIdImovel() + "00"  + i + ".png";
 	        	File file = new File(root, imovel.getIdImovel() + nameFile);
 	        	allPhotos = nameFile + ";";
 	        	os = new FileOutputStream(file);
 	        	
-	        	bitmap.compress(CompressFormat.JPEG, 100, os);
+	        	bitmap.compress(CompressFormat.PNG, 100, os);
 	            os.flush();
 	            os.close();
 	            
