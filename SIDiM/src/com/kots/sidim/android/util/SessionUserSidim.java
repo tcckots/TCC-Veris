@@ -1,6 +1,8 @@
 package com.kots.sidim.android.util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
@@ -48,6 +50,21 @@ public class SessionUserSidim {
 	    	
 	    	editor.commit();
     	}    	    	
+    }
+    
+    public static List<String> getListPhotoUrl(String urlsSeparetedComma){
+    	
+    	String[] urls = urlsSeparetedComma.split(";");
+    	List<String> photos = new ArrayList<String>();
+    	for(int i = 0; i < urls.length; i++){
+    		if(!urls[i].equals("")){
+    			photos.add(urls[i]);
+    		}
+    	}
+    	
+    	return photos;
+    	
+    	
     }
     
     

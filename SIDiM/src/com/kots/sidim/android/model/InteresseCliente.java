@@ -6,14 +6,14 @@ import java.util.Date;
 
 public class InteresseCliente extends ResultWebService implements java.io.Serializable {
 	
-	private Imovel imovel;
+	private ImovelMobile imovel;
 	private Cliente cliente;
 	private Date data;
 
 	public InteresseCliente() {
 	}
 
-	public InteresseCliente(Imovel imovel, Cliente cliente, Date data) {
+	public InteresseCliente(ImovelMobile imovel, Cliente cliente, Date data) {
 		
 		this.imovel = imovel;
 		this.cliente = cliente;
@@ -21,11 +21,11 @@ public class InteresseCliente extends ResultWebService implements java.io.Serial
 	}
 	
 	
-	public Imovel getImovel() {
+	public ImovelMobile getImovel() {
 		return this.imovel;
 	}
 
-	public void setImovel(Imovel imovel) {
+	public void setImovel(ImovelMobile imovel) {
 		this.imovel = imovel;
 	}
 

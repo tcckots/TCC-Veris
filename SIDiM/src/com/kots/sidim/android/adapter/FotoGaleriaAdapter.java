@@ -1,29 +1,26 @@
 package com.kots.sidim.android.adapter;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.kots.sidim.android.R;
-import com.kots.sidim.android.config.ConfigGlobal;
 import com.kots.sidim.android.util.DrawableConnectionManager;
 import com.kots.sidim.android.util.SessionUserSidim;
 
 public class FotoGaleriaAdapter extends BaseAdapter {
 	
 	private Context context;
-	private ArrayList<String> list;
+	private List<String> list;
 	DrawableConnectionManager drawManager;
 	
 	
-	public FotoGaleriaAdapter(Context context, ArrayList<String> list){
+	public FotoGaleriaAdapter(Context context, List<String> list){
 		
 		this.context = context;
 		this.list = list;

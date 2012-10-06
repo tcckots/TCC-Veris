@@ -48,7 +48,7 @@ public class HttpUtil {
             conn.setReadTimeout(timeout * 1000);
             conn.setUseCaches(false);
                                     
-            br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "iso-8859-1"));            
+            br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));            
 
             String line;
 
@@ -87,7 +87,7 @@ public class HttpUtil {
             httpPost.setHeader("Accept", "application/json");
             httpPost.setHeader("Content-type", "application/json");
             HttpResponse response = new DefaultHttpClient().execute(httpPost);
-            br = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "iso-8859-1"));
+            br = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
             
             String line;
 

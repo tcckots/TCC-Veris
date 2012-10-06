@@ -120,7 +120,7 @@
             android:id="@+id/pesquisarTxtPreco"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Até R$ 150.000,00"
+            android:text="Até R$ 100.000,00"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <SeekBar
@@ -188,7 +188,7 @@
                 android:textColor="@color/color_text_color" />
 
             <EditText
-                android:id="@+id/pesquisarInputGaragem"
+                android:id="@+id/pesquisarInputQtdGaragem"
                 style="@style/EditTextClean"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"

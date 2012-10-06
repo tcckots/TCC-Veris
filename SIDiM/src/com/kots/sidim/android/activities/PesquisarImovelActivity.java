@@ -77,6 +77,8 @@ public class PesquisarImovelActivity extends MainBarActivity {
 	
 	List<TipoImovelMobile> newListTipoImovelMobile;
 	
+	int faixaPreco;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -88,6 +90,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 		findIds();
 		controller = SiDIMControllerServer.getInstance(instance);
 		prepareWhellViews();
+		faixaPreco = 1;
 		
 		
 		
@@ -138,16 +141,27 @@ public class PesquisarImovelActivity extends MainBarActivity {
 			public void onProgressChanged(SeekBar seekBar, int progress,
 					boolean fromUser) {
 				
-				if(progress < 30){
+				if(progress < 20){
+					txtPreco.setText("AtŽ R$ 100.000,00");
+					faixaPreco = 1;
+				} else if(progress >= 20 && progress < 40){
 					txtPreco.setText("AtŽ R$ 150.000,00");
-				} else if(progress >= 30 && progress < 60){
+					faixaPreco = 2;
+				} else if(progress >= 40 && progress < 60 ){
 					txtPreco.setText("AtŽ R$ 200.000,00");
-				} else if(progress >= 60 && progress < 80 ){
-					txtPreco.setText("AtŽ R$ 400.000,00");
-				} else if(progress >= 80 && progress < 98){
+					faixaPreco = 3;
+				} else if(progress >= 60 && progress < 75){
+					txtPreco.setText("AtŽ R$ 500.000,00");
+					faixaPreco = 4;
+				} else if(progress >= 75 && progress < 85){
 					txtPreco.setText("AtŽ R$ 800.000,00");
-				} else if(progress >= 98){
-					txtPreco.setText("Qualquer Preo");
+					faixaPreco = 5;
+				} else if(progress >= 85 && progress < 95){
+					txtPreco.setText("AtŽ R$ 1.000.000,00");
+					faixaPreco = 6;
+				} else if(progress >= 95){
+					txtPreco.setText("Acima de R$ 1.000.000,00");
+					faixaPreco = 7;
 				} 
 				
 				
@@ -160,29 +174,49 @@ public class PesquisarImovelActivity extends MainBarActivity {
 			@Override
 			public void onClick(View v) {
 				
-//				filtro = new FiltroImovel();
-//				filtro.setCidade(autoEditCidades.getText().toString());
-//				filtro.setUf(ufs[estados.getCurrentItem()]);
-//				
-//				ArrayList<String> filtroBairros = new ArrayList<String>();
-//				
-//				for(String sBairro : bairros){
-//					filtroBairros.add(sBairro);
-//				}
-//				filtro.setIdsBairro(filtroBairros);
-//				
-//				ArrayList<Integer> filtroTipos = new ArrayList<Integer>();
-//				for(int i=0; i <  newListTipoImovelMobile.size();i++){
-//					filtroTipos.add((int)newListTipoImovelMobile.get(i).getIdTipoImovel());
-//				}
-//				filtro.setIdsTipo(filtroTipos);
-//				filtro.setIntencao(intencao.getCurrentItem());
-//				filtro.setQtdDorm(Integer.parseInt(ediTextQtdQuartos.getText().toString()));
-//				filtro.setQtdGaragens(Integer.parseInt(editTextGaragens.getText().toString()));
-//				filtro.setQtdSuite(Integer.parseInt(ediTextQtdSuites.getText().toString()));
-//				//filtro.setFaixaPreco(faixaPreco);
-//				filtro.setIndexBuscas(0);
-//				
+				filtro = new FiltroImovel();
+				filtro.setCidade(autoEditCidades.getText().toString());
+				filtro.setUf(ufs[estados.getCurrentItem()]);
+				
+				ArrayList<String> filtroBairros = new ArrayList<String>();
+				
+				for(String sBairro : bairros){
+					filtroBairros.add(sBairro);
+				}
+				filtro.setIdsBairro(filtroBairros);
+				
+				ArrayList<Integer> filtroTipos = new ArrayList<Integer>();
+				if(newListTipoImovelMobile != null && newListTipoImovelMobile.size() > 0){
+					for(int i=0; i <  newListTipoImovelMobile.size();i++){
+						filtroTipos.add((int)newListTipoImovelMobile.get(i).getIdTipoImovel());
+					}
+				}else {
+					filtroTipos.add(0);
+				}
+				filtro.setIdsTipo(filtroTipos);
+				if(intencao.getCurrentItem() == 0){
+					filtro.setIntencao("C");
+				} else{
+					filtro.setIntencao("A");
+				}
+				
+				
+				try{
+					filtro.setQtdDorm(Integer.parseInt(ediTextQtdQuartos.getText().toString().trim()));					
+				} catch (Exception e) { filtro.setQtdDorm(0); }
+				
+				try{
+					filtro.setQtdSuite(Integer.parseInt(ediTextQtdSuites.getText().toString().trim()));					
+				} catch (Exception e) { filtro.setQtdSuite(0); }
+				
+				try{
+					filtro.setQtdGaragens(Integer.parseInt(editTextGaragens.getText().toString().trim()));					
+				} catch (Exception e) { filtro.setQtdGaragens(0); }
+				
+															
+				filtro.setFaixaPreco(faixaPreco);
+				filtro.setIndexBuscas(0);
+				
 //				try {
 //					controller.buscarImoveis(filtro);
 //				} catch (SiDIMException e) {
@@ -190,7 +224,10 @@ public class PesquisarImovelActivity extends MainBarActivity {
 //					e.printStackTrace();
 //				}
 				
-				startActivity(new Intent(getBaseContext(),ResultPesquisaActivity.class));
+				Intent intent = new Intent(getBaseContext(), ResultPesquisaActivity.class);
+                intent.putExtra("filtroimovel", filtro);
+				startActivity(intent);
+								
 				
 			}
 		});
@@ -536,14 +573,10 @@ public class PesquisarImovelActivity extends MainBarActivity {
 	
 	public void loadBairros(String cidade){
 		
-		//String[] arrayBairros;
+
 		
 		try {
-			//bairrosToAutoComplete = controller.getBairro(cidade);
-//			arrayBairros = new String[cidades.size()];
-//			for(int i=0; i < bairrosAutoComplete.size(); i++){
-//				arrayBairros[i] = bairrosAutoComplete.get(i).getNome();
-//			}
+
 			
 			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,controller.getBairro(cidade));
 			autoEditBairros.setAdapter(adapter);
@@ -565,6 +598,9 @@ public class PesquisarImovelActivity extends MainBarActivity {
 		txtPreco = (TextView) findViewById(R.id.pesquisarTxtPreco);		
 		barPreco = (SeekBar) findViewById(R.id.pesquisarSeekBarPreco);
 		btPesquisar = (Button) findViewById(R.id.pesquisarBtPesquisar);
+		ediTextQtdQuartos = (EditText) findViewById(R.id.pesquisarInputQtdDorm);
+		ediTextQtdSuites = (EditText) findViewById(R.id.pesquisarInputQtdSuites);
+		editTextGaragens = (EditText) findViewById(R.id.pesquisarInputQtdGaragem);
 	}
 
 }

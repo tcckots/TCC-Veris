@@ -15,17 +15,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kots.sidim.android.R;
-import com.kots.sidim.android.model.Imovel;
+import com.kots.sidim.android.model.ImovelMobile;
 import com.kots.sidim.android.util.LoadImagesSDCard;
 
 public class ImovelFavoritoAdapter extends BaseAdapter {
 	
 	private Context context;
-	private List<Imovel> imoveis;
+	private List<ImovelMobile> imoveis;
 	
 	
 	
-	public ImovelFavoritoAdapter(Context context, List<Imovel> imoveis){
+	public ImovelFavoritoAdapter(Context context, List<ImovelMobile> imoveis){
 		
 		this.context = context;
 		this.imoveis = imoveis;
@@ -54,7 +54,7 @@ public class ImovelFavoritoAdapter extends BaseAdapter {
 	public View getView(int arg0, View arg1, ViewGroup arg2) {
 				
 
-		final Imovel imovel = imoveis.get(arg0);
+		final ImovelMobile imovel = imoveis.get(arg0);
 		
 		
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -71,7 +71,7 @@ public class ImovelFavoritoAdapter extends BaseAdapter {
 		
 		ImageView imgPreview = (ImageView) v.findViewById(R.id.favorItemImgFoto);
 		Bitmap image = null;//LoadImagesSDCard.ShowPicture(imovel.getFotoslocal());
-		LoadImagesSDCard.getFirstImageFromSdCard(imovel.getFotoslocal(), image);
+		//LoadImagesSDCard.getFirstImageFromSdCard(imovel.getFotos(), image);
 		
 		
 		imgPreview.setImageBitmap(image);

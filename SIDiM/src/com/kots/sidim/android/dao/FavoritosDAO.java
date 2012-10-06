@@ -23,7 +23,7 @@ import com.kots.sidim.android.exception.SiDIMException;
 import com.kots.sidim.android.model.Bairro;
 import com.kots.sidim.android.model.Cidade;
 import com.kots.sidim.android.model.Estado;
-import com.kots.sidim.android.model.Imovel;
+import com.kots.sidim.android.model.ImovelMobile;
 import com.kots.sidim.android.model.TipoImovel;
 import com.kots.sidim.android.util.DrawableConnectionManager;
 import com.kots.sidim.android.util.SessionUserSidim;
@@ -53,7 +53,7 @@ public class FavoritosDAO {
 		dbHelper.close();
 	}
 
-	public int insertFavorito(Imovel imovel, List<String> photos) throws SiDIMException {
+	public int insertFavorito(ImovelMobile imovel, List<String> photos) throws SiDIMException {
 
 		removerImovel(imovel);
 		
@@ -67,7 +67,8 @@ public class FavoritosDAO {
 		values.put(SiDIMSQLiteHelper.COLUMN_BAIRRO, imovel.getBairro()
 				.getNome());
 		values.put(SiDIMSQLiteHelper.COLUMN_QTD_DORM, imovel.getDormitorios());
-		values.put(SiDIMSQLiteHelper.COLUMN_AREA, imovel.getArea());
+		values.put(SiDIMSQLiteHelper.COLUMN_AREA_CONSTRUIDA, imovel.getAreaConstruida());
+		values.put(SiDIMSQLiteHelper.COLUMN_AREA_TOTAL, imovel.getAreaTotal());
 		values.put(SiDIMSQLiteHelper.COLUMN_QTD_GARAG, imovel.getGaragens());
 		values.put(SiDIMSQLiteHelper.COLUMN_QTD_SUITES, imovel.getSuites());
 		values.put(SiDIMSQLiteHelper.COLUMN_CEP, imovel.getCep());
@@ -148,17 +149,17 @@ public class FavoritosDAO {
 
 	}
 
-	public Imovel getResponseAPI(int idMovel) {
+	public ImovelMobile getResponseAPI(int idMovel) {
 
 		Cursor cursor = database.query(SiDIMSQLiteHelper.TABLE_FAVORITOS, null,
 				SiDIMSQLiteHelper.COLUMN_ID_MOVEL + " = " + idMovel, null,
 				null, null, null);
-		Imovel imovel = null;
+		ImovelMobile imovel = null;
 
 		if (cursor.moveToFirst()) {
 
 			try {
-				imovel = new Imovel();
+				imovel = new ImovelMobile();
 				imovel.setIdImovel(cursor
 						.getInt(SiDIMSQLiteHelper.COLUMN_ID_MOVEL_INDEX));
 				imovel.setEstado(new Estado(cursor
@@ -169,11 +170,13 @@ public class FavoritosDAO {
 						.getString(SiDIMSQLiteHelper.COLUMN_CIDADE_INDEX), ""));
 				imovel.setBairro(new Bairro(0, null, cursor
 						.getString(SiDIMSQLiteHelper.COLUMN_BAIRRO_INDEX), ""));
-				imovel.setDormitorios((short) cursor
+				imovel.setDormitorios((byte) cursor
 						.getInt(SiDIMSQLiteHelper.COLUMN_QTD_DORM_INDEX));
-				imovel.setArea(cursor
-						.getInt(SiDIMSQLiteHelper.COLUMN_AREA_INDEX));
-				imovel.setSuites((short) cursor
+				imovel.setAreaConstruida(cursor
+						.getDouble(SiDIMSQLiteHelper.COLUMN_AREA_CONSTRUIDA_INDEX));
+				imovel.setAreaTotal(cursor
+						.getDouble(SiDIMSQLiteHelper.COLUMN_AREA_TOTAL_INDEX));
+				imovel.setSuites((byte) cursor
 						.getInt(SiDIMSQLiteHelper.COLUMN_QTD_SUITES_INDEX));
 				imovel.setGaragens((byte) cursor
 						.getInt(SiDIMSQLiteHelper.COLUMN_QTD_SUITES_INDEX));
@@ -197,7 +200,7 @@ public class FavoritosDAO {
 
 	}
 
-	public void removerImovel(Imovel imovel) {
+	public void removerImovel(ImovelMobile imovel) {
 
 		open();
 		
@@ -209,20 +212,20 @@ public class FavoritosDAO {
 
 	}
 
-	public List<Imovel> getImoveis() {
+	public List<ImovelMobile> getImoveis() {
 
 		open();
 		
-		List<Imovel> imoveis = new ArrayList<Imovel>();
+		List<ImovelMobile> imoveis = new ArrayList<ImovelMobile>();
 
 		Cursor cursor = database.query(SiDIMSQLiteHelper.TABLE_FAVORITOS, null,
 				null, null, null, null, null);
-		Imovel imovel = null;
+		ImovelMobile imovel = null;
 
 		while (cursor.moveToNext()) {
 
 			try {
-				imovel = new Imovel();
+				imovel = new ImovelMobile();
 				imovel.setIdImovel(cursor
 						.getInt(SiDIMSQLiteHelper.COLUMN_ID_MOVEL_INDEX));
 				imovel.setEstado(new Estado(cursor
@@ -233,11 +236,13 @@ public class FavoritosDAO {
 						.getString(SiDIMSQLiteHelper.COLUMN_CIDADE_INDEX), ""));
 				imovel.setBairro(new Bairro(0, null, cursor
 						.getString(SiDIMSQLiteHelper.COLUMN_BAIRRO_INDEX), ""));
-				imovel.setDormitorios((short) cursor
+				imovel.setDormitorios((byte) cursor
 						.getInt(SiDIMSQLiteHelper.COLUMN_QTD_DORM_INDEX));
-				imovel.setArea(cursor
-						.getInt(SiDIMSQLiteHelper.COLUMN_AREA_INDEX));
-				imovel.setSuites((short) cursor
+				imovel.setAreaConstruida(cursor
+						.getDouble(SiDIMSQLiteHelper.COLUMN_AREA_CONSTRUIDA_INDEX));
+				imovel.setAreaTotal(cursor
+						.getDouble(SiDIMSQLiteHelper.COLUMN_AREA_TOTAL_INDEX));
+				imovel.setSuites((byte) cursor
 						.getInt(SiDIMSQLiteHelper.COLUMN_QTD_SUITES_INDEX));
 				imovel.setGaragens((byte) cursor
 						.getInt(SiDIMSQLiteHelper.COLUMN_QTD_GARAG_INDEX));
@@ -249,7 +254,7 @@ public class FavoritosDAO {
 						.getDouble(SiDIMSQLiteHelper.COLUMN_PRECO_INDEX)));
 				imovel.setDescricao(cursor
 						.getString(SiDIMSQLiteHelper.COLUMN_DESCRICAO_INDEX));
-				imovel.setFotoslocal(cursor.getString(SiDIMSQLiteHelper.COLUMN_FOTOS_INDEX));
+				imovel.setFotos(SessionUserSidim.getListPhotoUrl(cursor.getString(SiDIMSQLiteHelper.COLUMN_FOTOS_INDEX)));
 
 				imoveis.add(imovel);
 				

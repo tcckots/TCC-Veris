@@ -25,7 +25,7 @@ import com.kots.sidim.android.config.ValidacaoGeral;
 import com.kots.sidim.android.dao.FavoritosDAO;
 import com.kots.sidim.android.exception.SiDIMException;
 import com.kots.sidim.android.model.Cliente;
-import com.kots.sidim.android.model.Imovel;
+import com.kots.sidim.android.model.ImovelMobile;
 import com.kots.sidim.android.model.InteresseCliente;
 import com.kots.sidim.android.server.SiDIMControllerServer;
 import com.kots.sidim.android.util.DrawableConnectionManager;
@@ -35,7 +35,7 @@ public class VisualizarImovelActivity extends MainBarActivity {
 
 	Button btEnviarInteresse, addFavoritos;
 	SiDIMControllerServer controller;
-	Imovel imovel;
+	ImovelMobile imovel;
 	SharedPreferences globalPrefs;
 
 	ImageView imgMain;
@@ -45,7 +45,7 @@ public class VisualizarImovelActivity extends MainBarActivity {
 
 	DrawableConnectionManager drawManager;
 
-	private ArrayList<String> list;
+	//private ArrayList<String> list;
 
 	ProgressDialog progressDialog;
 
@@ -60,8 +60,8 @@ public class VisualizarImovelActivity extends MainBarActivity {
 		favoritosDao = new FavoritosDAO(instance);
 
 		if (getIntent() != null) {
-			if (getIntent().getSerializableExtra("imoveldetalhes") instanceof Imovel) {
-				imovel = (Imovel) getIntent().getSerializableExtra(
+			if (getIntent().getSerializableExtra("imoveldetalhes") instanceof ImovelMobile) {
+				imovel = (ImovelMobile) getIntent().getSerializableExtra(
 						"imoveldetalhes");
 				loadIds();
 			}
@@ -73,20 +73,20 @@ public class VisualizarImovelActivity extends MainBarActivity {
 		Gallery gallery = (Gallery) findViewById(R.id.visualizarImovelGallery);
 		imgMain = (ImageView) findViewById(R.id.visualizarImovelImageMain);
 
-		list = new ArrayList<String>();
-		list.add("http://www.atlantycaimoveis.com.br/imoveis/7_4.jpg");
-		list.add("http://www.atlantycaimoveis.com.br/imoveis/4_7.jpg");
-		list.add("http://www.atlantycaimoveis.com.br/imoveis/8_6.jpg");
-		list.add("http://www.atlantycaimoveis.com.br/imoveis/25_8.jpg");
-		list.add("http://www.atlantycaimoveis.com.br/imoveis/21_3.jpg");
+//		list = new ArrayList<String>();
+//		list.add("http://www.atlantycaimoveis.com.br/imoveis/7_4.jpg");
+//		list.add("http://www.atlantycaimoveis.com.br/imoveis/4_7.jpg");
+//		list.add("http://www.atlantycaimoveis.com.br/imoveis/8_6.jpg");
+//		list.add("http://www.atlantycaimoveis.com.br/imoveis/25_8.jpg");
+//		list.add("http://www.atlantycaimoveis.com.br/imoveis/21_3.jpg");
 
-		if (SessionUserSidim.images.containsKey(list.get(0))) {
-			imgMain.setImageBitmap(SessionUserSidim.images.get(list.get(0)));
+		if (SessionUserSidim.images.containsKey(imovel.getFotos().get(0))) {
+			imgMain.setImageBitmap(SessionUserSidim.images.get(imovel.getFotos().get(0)));
 		} else {
-			drawManager.fetchDrawableOnThread(list.get(0), imgMain);
+			drawManager.fetchDrawableOnThread(imovel.getFotos().get(0), imgMain);
 		}
 
-		FotoGaleriaAdapter adapter = new FotoGaleriaAdapter(this, list);
+		FotoGaleriaAdapter adapter = new FotoGaleriaAdapter(this, imovel.getFotos());
 
 		gallery.setAdapter(adapter);
 
@@ -97,11 +97,10 @@ public class VisualizarImovelActivity extends MainBarActivity {
 					long arg3) {
 
 				// imgMain.setImageResource(list.get(arg2));
-				if (SessionUserSidim.images.containsKey(list.get(arg2))) {
-					imgMain.setImageBitmap(SessionUserSidim.images.get(list
-							.get(arg2)));
+				if (SessionUserSidim.images.containsKey(imovel.getFotos().get(arg2))) {
+					imgMain.setImageBitmap(SessionUserSidim.images.get(imovel.getFotos().get(arg2)));
 				} else {
-					drawManager.fetchDrawableOnThread(list.get(arg2), imgMain);
+					drawManager.fetchDrawableOnThread(imovel.getFotos().get(arg2), imgMain);
 				}
 
 			}
@@ -152,7 +151,7 @@ public class VisualizarImovelActivity extends MainBarActivity {
 					public void run() {
 
 						try {
-							favoritosDao.insertFavorito(imovel, list);
+							favoritosDao.insertFavorito(imovel, imovel.getFotos());
 							handler.sendEmptyMessage(2);
 						} catch (SiDIMException e) {
 							Bundle data = new Bundle();
@@ -211,8 +210,8 @@ public class VisualizarImovelActivity extends MainBarActivity {
 		txtQtds.setText(imovel.getDormitorios() + " Dorm, sendo "
 				+ imovel.getSuites() + " su’tes - com " + imovel.getGaragens()
 				+ " Garagens");
-		txtArea.setText("çrea: " + imovel.getArea() + " Constru’da - "
-				+ imovel.getArea() + " Total");
+		txtArea.setText("çrea: " + imovel.getAreaConstruida() + " Constru’da - "
+				+ imovel.getAreaTotal() + " Total");
 		txtObservacao.setText(imovel.getDescricao());
 	}
 

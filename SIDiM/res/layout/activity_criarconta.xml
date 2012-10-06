@@ -148,9 +148,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:textColor="#a9a9a9" >
-
-                    <requestFocus />
+                    android:textColor="#a9a9a9" >                    
                 </EditText>
             </LinearLayout>
 

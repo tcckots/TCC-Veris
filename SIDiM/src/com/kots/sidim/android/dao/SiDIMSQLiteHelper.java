@@ -35,29 +35,32 @@ public class SiDIMSQLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_QTD_DORM = "qtddorm";
     public static final int COLUMN_QTD_DORM_INDEX = 5;
     
-    public static final String COLUMN_AREA = "area";
-    public static final int COLUMN_AREA_INDEX = 6;
+    public static final String COLUMN_AREA_CONSTRUIDA = "areacontr";
+    public static final int COLUMN_AREA_CONSTRUIDA_INDEX = 6;
+    
+    public static final String COLUMN_AREA_TOTAL = "areatotal";
+    public static final int COLUMN_AREA_TOTAL_INDEX = 7;
     
     public static final String COLUMN_QTD_GARAG = "qtdgarag";
-    public static final int COLUMN_QTD_GARAG_INDEX = 7;
+    public static final int COLUMN_QTD_GARAG_INDEX = 8;
     
     public static final String COLUMN_QTD_SUITES = "qtdsuites";
-    public static final int COLUMN_QTD_SUITES_INDEX = 8;
+    public static final int COLUMN_QTD_SUITES_INDEX = 9;
     
     public static final String COLUMN_CEP = "cep";
-    public static final int COLUMN_CEP_INDEX = 9;
+    public static final int COLUMN_CEP_INDEX = 10;
     
     public static final String COLUMN_RUA = "rua";
-    public static final int COLUMN_RUA_INDEX = 10;
+    public static final int COLUMN_RUA_INDEX = 11;
     
     public static final String COLUMN_PRECO = "preco";
-    public static final int COLUMN_PRECO_INDEX = 11;
+    public static final int COLUMN_PRECO_INDEX = 12;
     
     public static final String COLUMN_DESCRICAO = "descricao";
-    public static final int COLUMN_DESCRICAO_INDEX = 12;
+    public static final int COLUMN_DESCRICAO_INDEX = 13;
     
     public static final String COLUMN_FOTOS = "fotos";
-    public static final int COLUMN_FOTOS_INDEX = 13;
+    public static final int COLUMN_FOTOS_INDEX = 14;
     
     
     
@@ -74,7 +77,8 @@ public class SiDIMSQLiteHelper extends SQLiteOpenHelper {
                     + COLUMN_CIDADE				    + " text,"
                     + COLUMN_BAIRRO				    + " text,"
                     + COLUMN_QTD_DORM       	    + " int,"
-                    + COLUMN_AREA				    + " int,"
+                    + COLUMN_AREA_CONSTRUIDA	    + " int,"
+                    + COLUMN_AREA_TOTAL			    + " int,"
                     + COLUMN_QTD_GARAG      	    + " int,"
                     + COLUMN_QTD_SUITES			    + " int,"
                     + COLUMN_CEP 				    + " text,"

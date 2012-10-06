@@ -2,7 +2,7 @@ package com.kots.sidim.android.adapter;
 
 import java.util.List;
 import com.kots.sidim.android.R;
-import com.kots.sidim.android.model.Imovel;
+import com.kots.sidim.android.model.ImovelMobile;
 import com.kots.sidim.android.util.DrawableConnectionManager;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -19,11 +19,11 @@ import android.widget.TextView;
 public class ImovelAdapter extends BaseAdapter {
 	
 	private Context context;
-	private List<Imovel> imoveis;
+	private List<ImovelMobile> imoveis;
 	DrawableConnectionManager drawManager;
 	
 	
-	public ImovelAdapter(Context context, List<Imovel> imoveis){
+	public ImovelAdapter(Context context, List<ImovelMobile> imoveis){
 		
 		this.context = context;
 		this.imoveis = imoveis;
@@ -54,7 +54,7 @@ public class ImovelAdapter extends BaseAdapter {
 	public View getView(int arg0, View arg1, ViewGroup arg2) {
 				
 
-		final Imovel imovel = imoveis.get(arg0);
+		final ImovelMobile imovel = imoveis.get(arg0);
 		
 		
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

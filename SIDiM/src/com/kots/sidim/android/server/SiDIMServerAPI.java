@@ -14,7 +14,7 @@ import com.kots.sidim.android.model.Bairro;
 import com.kots.sidim.android.model.Cidade;
 import com.kots.sidim.android.model.Cliente;
 import com.kots.sidim.android.model.FiltroImovel;
-import com.kots.sidim.android.model.Imovel;
+import com.kots.sidim.android.model.ImovelMobile;
 import com.kots.sidim.android.model.InteresseCliente;
 import com.kots.sidim.android.model.ResultWebService;
 import com.kots.sidim.android.model.TipoImovelMobile;
@@ -22,11 +22,11 @@ import com.kots.sidim.android.util.HttpUtil;
 
 public class SiDIMServerAPI {
 
-	private static final String URL_SERVER_API = "http://192.168.0.101/SIDiM/ws/service";
+	private static final String URL_SERVER_API = "http://10.1.1.5/SIDiM/ws/service";
 	
 	
 	private static Gson GSON = new Gson();
-	Type typeOfImovel = new TypeToken<ArrayList<Imovel>>() {}.getType();
+	Type typeOfImovel = new TypeToken<ArrayList<ImovelMobile>>() {}.getType();
 	Type typeOfCidade = new TypeToken<ArrayList<Cidade>>() {}.getType();
 	Type typeOfBairro = new TypeToken<ArrayList<Bairro>>() {}.getType();
 	Type typeOfTipo = new TypeToken<ArrayList<TipoImovelMobile>>() {}.getType();
@@ -115,11 +115,11 @@ public class SiDIMServerAPI {
         }				
 	}
 
-	public List<Imovel> buscarImoveis(FiltroImovel filtro)
+	public List<ImovelMobile> buscarImoveis(FiltroImovel filtro)
 			throws SiDIMException {
 
 		
-		ArrayList<Imovel> imoveis = null;
+		ArrayList<ImovelMobile> imoveis = null;
 		String url = URL_SERVER_API + "/buscarImoveis";		
 		String response = "";
 		
@@ -184,9 +184,9 @@ public class SiDIMServerAPI {
 
 	}
 
-	public List<Imovel> getRandomImoveis(String cidade) throws SiDIMException {
+	public List<ImovelMobile> getRandomImoveis(String cidade) throws SiDIMException {
 
-		ArrayList<Imovel> imoveis = null;
+		ArrayList<ImovelMobile> imoveis = null;
 		String url = URL_SERVER_API + "/buscarImoveisRandom?cidade=" + cidade;		
 		String response = "";
 		

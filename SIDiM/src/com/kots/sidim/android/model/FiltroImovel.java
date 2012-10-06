@@ -1,14 +1,15 @@
 package com.kots.sidim.android.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class FiltroImovel extends ResultWebService  {
+public class FiltroImovel extends ResultWebService implements Serializable  {
 
 	private String uf;
 	private String cidade;
 	private ArrayList<String> idsBairro;
 	private ArrayList<Integer> idsTipo;
-	private int intencao;
+	private String intencao;
 	private int faixaPreco;
 	private int qtdDorm;
 	private int qtdSuite;
@@ -47,10 +48,10 @@ public class FiltroImovel extends ResultWebService  {
 	public void setIdsTipo(ArrayList<Integer> idsTipo) {
 		this.idsTipo = idsTipo;
 	}
-	public int getIntencao() {
+	public String getIntencao() {
 		return intencao;
 	}
-	public void setIntencao(int intencao) {
+	public void setIntencao(String intencao) {
 		this.intencao = intencao;
 	}
 	public int getFaixaPreco() {

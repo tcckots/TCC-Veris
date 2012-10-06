@@ -11,7 +11,7 @@ import com.kots.sidim.android.model.Cidade;
 import com.kots.sidim.android.model.Cliente;
 import com.kots.sidim.android.model.Estado;
 import com.kots.sidim.android.model.FiltroImovel;
-import com.kots.sidim.android.model.Imovel;
+import com.kots.sidim.android.model.ImovelMobile;
 import com.kots.sidim.android.model.InteresseCliente;
 import com.kots.sidim.android.model.TipoImovel;
 import com.kots.sidim.android.model.TipoImovelMobile;
@@ -58,7 +58,7 @@ public class SiDIMControllerServer {
 		return sidimAPI.atualizarConta(conta);
 	}
 	
-	public List<Imovel> buscarImoveis(FiltroImovel filtro) throws SiDIMException{
+	public List<ImovelMobile> buscarImoveis(FiltroImovel filtro) throws SiDIMException{
 		
 		return sidimAPI.buscarImoveis(filtro);
 	}
@@ -74,7 +74,7 @@ public class SiDIMControllerServer {
 		return sidimAPI.enviarSenha(login);
 	}
 	
-	public List<Imovel> getRandomImoveis(String cidade) throws SiDIMException{
+	public List<ImovelMobile> getRandomImoveis(String cidade) throws SiDIMException{
 		
 		return sidimAPI.getRandomImoveis(cidade);
 	}

@@ -3,7 +3,7 @@ package com.kots.sidim.android.adapter;
 import java.util.List;
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.config.ConfigGlobal;
-import com.kots.sidim.android.model.Imovel;
+import com.kots.sidim.android.model.ImovelMobile;
 import com.kots.sidim.android.util.DrawableConnectionManager;
 import android.content.Context;
 import android.view.LayoutInflater;

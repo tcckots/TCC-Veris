@@ -19,7 +19,7 @@ import com.kots.sidim.android.config.ConfigGlobal;
 import com.kots.sidim.android.model.Bairro;
 import com.kots.sidim.android.model.Cidade;
 import com.kots.sidim.android.model.Estado;
-import com.kots.sidim.android.model.Imovel;
+import com.kots.sidim.android.model.ImovelMobile;
 import com.kots.sidim.android.model.TipoImovel;
 import com.kots.sidim.android.views.CoverFlow;
 
@@ -34,20 +34,8 @@ public class MenuPrincipalActivity extends Activity {
 
 		instance = this;
 		
-		List<Imovel> imoveis = new ArrayList<Imovel>();
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
+		List<ImovelMobile> imoveis = new ArrayList<ImovelMobile>();
+		
 		
 		ImovelAdapter adapter = new ImovelAdapter(this, imoveis);
 
@@ -117,22 +105,22 @@ public class MenuPrincipalActivity extends Activity {
 
 	}
 	
-	public Imovel getNewImovel(){
-		
-		Imovel imovel = new Imovel();
-		imovel.setIdImovel(1);
-		imovel.setEstado(new Estado("SP","São Paulo"));
-		imovel.setCidade(new Cidade(1, new Estado("SP","São Paulo"), "Campinas", ""));
-		imovel.setArea(40);
-		imovel.setDormitorios((short)3);
-		imovel.setSuites((short) 2);
-		imovel.setGaragens((byte) 1);
-		imovel.setBairro(new Bairro(1, null, "Jd. Aurélia", ""));
-		imovel.setDescricao("Linda Casa");
-		imovel.setPreco(new BigDecimal(130000));
-		imovel.setTipoImovel(new TipoImovel((short) 1, "Casa"));
-		
-		return imovel;
-		
-	}
+//	public Imovel getNewImovel(){
+//		
+//		Imovel imovel = new Imovel();
+//		imovel.setIdImovel(1);
+//		imovel.setEstado(new Estado("SP","São Paulo"));
+//		imovel.setCidade(new Cidade(1, new Estado("SP","São Paulo"), "Campinas", ""));
+//		imovel.setArea(40);
+//		imovel.setDormitorios((short)3);
+//		imovel.setSuites((short) 2);
+//		imovel.setGaragens((byte) 1);
+//		imovel.setBairro(new Bairro(1, null, "Jd. Aurélia", ""));
+//		imovel.setDescricao("Linda Casa");
+//		imovel.setPreco(new BigDecimal(130000));
+//		imovel.setTipoImovel(new TipoImovel((short) 1, "Casa"));
+//		
+//		return imovel;
+//		
+//	}
 }
