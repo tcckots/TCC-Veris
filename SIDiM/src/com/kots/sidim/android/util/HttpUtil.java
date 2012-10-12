@@ -12,6 +12,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -83,9 +84,10 @@ public class HttpUtil {
     	
         try {
             HttpPost httpPost = new HttpPost(url);
-            httpPost.setEntity(new StringEntity(json));
+            httpPost.setEntity(new StringEntity(json,"utf-8"));
             httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
+            httpPost.setHeader("Content-type", "application/json; charset=utf-8");
+            
             HttpResponse response = new DefaultHttpClient().execute(httpPost);
             br = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
             

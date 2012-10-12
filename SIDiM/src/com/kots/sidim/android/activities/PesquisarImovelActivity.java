@@ -9,6 +9,8 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
@@ -47,38 +49,38 @@ public class PesquisarImovelActivity extends MainBarActivity {
 	WheelView estados, intencao;
 
 	List<Cidade> cidades = new ArrayList<Cidade>();
-	
-	List<String> bairros = new ArrayList<String>();	
-	
-	List<Bairro> bairrosToAutoComplete = new ArrayList<Bairro>();	
-	
+
+	List<String> bairros = new ArrayList<String>();
+
+	List<Bairro> bairrosToAutoComplete = new ArrayList<Bairro>();
+
 	List<TipoImovelMobile> tipos = new ArrayList<TipoImovelMobile>();
 
 	TextView txtBairros, txtTipos, txtPreco;
-	
-	AutoCompleteTextView autoEditCidades,autoEditBairros;
-			
+
+	AutoCompleteTextView autoEditCidades, autoEditBairros;
+
 	SiDIMControllerServer controller;
-	
+
 	LinearLayout linearBairro, linearTipos;
-	
+
 	Button btPesquisar;
-	
+
 	FiltroImovel filtro;
 
 	String[] ufs = { "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO",
-			"MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ",
-			"RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" };
-	String[] sIntencao = { "Comprar", "Alugar"};
-	
+			"MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN",
+			"RS", "RO", "RR", "SC", "SP", "SE", "TO" };
+	String[] sIntencao = { "Comprar", "Alugar" };
+
 	EditText ediTextQtdQuartos, ediTextQtdSuites, editTextGaragens;
-	
+
 	SeekBar barPreco;
-	
+
 	List<TipoImovelMobile> newListTipoImovelMobile;
-	
+
 	int faixaPreco;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -91,9 +93,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 		controller = SiDIMControllerServer.getInstance(instance);
 		prepareWhellViews();
 		faixaPreco = 1;
-		
-		
-		
+
 		try {
 			tipos = controller.getTipos();
 
@@ -101,9 +101,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 
 			e.printStackTrace();
 		}
-		
-		
-		
+
 		linearBairro.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -112,8 +110,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 				showDialogBairros();
 			}
 		});
-		
-		
+
 		linearTipos.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -122,153 +119,147 @@ public class PesquisarImovelActivity extends MainBarActivity {
 				showDialogTipos();
 			}
 		});
-		
-		
+
 		barPreco.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-			
+
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
-				
-				
+
 			}
-			
+
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {
-				
+
 			}
-			
+
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress,
 					boolean fromUser) {
-				
-				if(progress < 20){
+
+				if (progress < 20) {
 					txtPreco.setText("AtŽ R$ 100.000,00");
 					faixaPreco = 1;
-				} else if(progress >= 20 && progress < 40){
+				} else if (progress >= 20 && progress < 40) {
 					txtPreco.setText("AtŽ R$ 150.000,00");
 					faixaPreco = 2;
-				} else if(progress >= 40 && progress < 60 ){
+				} else if (progress >= 40 && progress < 60) {
 					txtPreco.setText("AtŽ R$ 200.000,00");
 					faixaPreco = 3;
-				} else if(progress >= 60 && progress < 75){
+				} else if (progress >= 60 && progress < 75) {
 					txtPreco.setText("AtŽ R$ 500.000,00");
 					faixaPreco = 4;
-				} else if(progress >= 75 && progress < 85){
+				} else if (progress >= 75 && progress < 85) {
 					txtPreco.setText("AtŽ R$ 800.000,00");
 					faixaPreco = 5;
-				} else if(progress >= 85 && progress < 95){
+				} else if (progress >= 85 && progress < 95) {
 					txtPreco.setText("AtŽ R$ 1.000.000,00");
 					faixaPreco = 6;
-				} else if(progress >= 95){
+				} else if (progress >= 95) {
 					txtPreco.setText("Acima de R$ 1.000.000,00");
 					faixaPreco = 7;
-				} 
-				
-				
+				}
+
 			}
 		});
-		
-		
+
 		btPesquisar.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				
+
 				filtro = new FiltroImovel();
 				filtro.setCidade(autoEditCidades.getText().toString());
 				filtro.setUf(ufs[estados.getCurrentItem()]);
-				
+
 				ArrayList<String> filtroBairros = new ArrayList<String>();
-				
-				for(String sBairro : bairros){
+
+				for (String sBairro : bairros) {
 					filtroBairros.add(sBairro);
 				}
 				filtro.setIdsBairro(filtroBairros);
-				
+
 				ArrayList<Integer> filtroTipos = new ArrayList<Integer>();
-				if(newListTipoImovelMobile != null && newListTipoImovelMobile.size() > 0){
-					for(int i=0; i <  newListTipoImovelMobile.size();i++){
-						filtroTipos.add((int)newListTipoImovelMobile.get(i).getIdTipoImovel());
+				if (newListTipoImovelMobile != null
+						&& newListTipoImovelMobile.size() > 0) {
+					for (int i = 0; i < newListTipoImovelMobile.size(); i++) {
+						filtroTipos.add((int) newListTipoImovelMobile.get(i)
+								.getIdTipoImovel());
 					}
-				}else {
+				} else {
 					filtroTipos.add(0);
 				}
 				filtro.setIdsTipo(filtroTipos);
-				if(intencao.getCurrentItem() == 0){
+				if (intencao.getCurrentItem() == 0) {
 					filtro.setIntencao("C");
-				} else{
+				} else {
 					filtro.setIntencao("A");
 				}
-				
-				
-				try{
-					filtro.setQtdDorm(Integer.parseInt(ediTextQtdQuartos.getText().toString().trim()));					
-				} catch (Exception e) { filtro.setQtdDorm(0); }
-				
-				try{
-					filtro.setQtdSuite(Integer.parseInt(ediTextQtdSuites.getText().toString().trim()));					
-				} catch (Exception e) { filtro.setQtdSuite(0); }
-				
-				try{
-					filtro.setQtdGaragens(Integer.parseInt(editTextGaragens.getText().toString().trim()));					
-				} catch (Exception e) { filtro.setQtdGaragens(0); }
-				
-															
+
+				try {
+					filtro.setQtdDorm(Integer.parseInt(ediTextQtdQuartos
+							.getText().toString().trim()));
+				} catch (Exception e) {
+					filtro.setQtdDorm(0);
+				}
+
+				try {
+					filtro.setQtdSuite(Integer.parseInt(ediTextQtdSuites
+							.getText().toString().trim()));
+				} catch (Exception e) {
+					filtro.setQtdSuite(0);
+				}
+
+				try {
+					filtro.setQtdGaragens(Integer.parseInt(editTextGaragens
+							.getText().toString().trim()));
+				} catch (Exception e) {
+					filtro.setQtdGaragens(0);
+				}
+
 				filtro.setFaixaPreco(faixaPreco);
 				filtro.setIndexBuscas(0);
-				
-//				try {
-//					controller.buscarImoveis(filtro);
-//				} catch (SiDIMException e) {
-//					
-//					e.printStackTrace();
-//				}
-				
-				Intent intent = new Intent(getBaseContext(), ResultPesquisaActivity.class);
-                intent.putExtra("filtroimovel", filtro);
+
+				Intent intent = new Intent(getBaseContext(),
+						ResultPesquisaActivity.class);
+				intent.putExtra("filtroimovel", filtro);
 				startActivity(intent);
-								
-				
+
 			}
 		});
-		
-		autoEditCidades.setThreshold(3);
+
+		//autoEditCidades.setThreshold(3);
 		autoEditCidades.setOnFocusChangeListener(new OnFocusChangeListener() {
-			
+
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
-				Toast.makeText(instance, "Cidade FOCUS " + hasFocus, Toast.LENGTH_LONG).show();
-				if(!hasFocus){
-					//loadBairros(autoEditCidades.getText().toString());
+				
+				if (!hasFocus) {
+					// loadBairros(autoEditCidades.getText().toString());
 				} else {
 					loadCidades(ufs[estados.getCurrentItem()]);
 				}
-				
+
 			}
 		});
 	}
-	
-	private void showDialogTipos(){
 
-		
-		
-		
+	private void showDialogTipos() {
+
 		final Dialog dialog = new Dialog(this, R.style.myDialogStyleSearch);
 
 		dialog.setContentView(R.layout.dialog_tipoimovel);
 		dialog.setTitle("Tipos Im—veis");
-		
+
 		final ListView list = (ListView) dialog
 				.findViewById(R.id.dialogTipoImovelList);
 		TipoImovelAdapter adapter = new TipoImovelAdapter(instance, tipos);
 		list.setAdapter(adapter);
-		
 
 		dialog.setOnDismissListener(new OnDismissListener() {
 
 			@Override
 			public void onDismiss(DialogInterface dialog) {
-				
+
 				String sTipos = "Tipos Im—veis : ";
 				newListTipoImovelMobile = getTiposCheckeds(tipos);
 
@@ -277,20 +268,22 @@ public class PesquisarImovelActivity extends MainBarActivity {
 				} else if (newListTipoImovelMobile.size() >= 1) {
 					sTipos = newListTipoImovelMobile.get(0).getDescricao();
 					if (newListTipoImovelMobile.size() >= 2) {
-						sTipos += "," + newListTipoImovelMobile.get(1).getDescricao();
+						sTipos += ","
+								+ newListTipoImovelMobile.get(1).getDescricao();
 						if (newListTipoImovelMobile.size() >= 3) {
-							sTipos += "," + newListTipoImovelMobile.get(2).getDescricao();
+							sTipos += ","
+									+ newListTipoImovelMobile.get(2)
+											.getDescricao();
 							if (newListTipoImovelMobile.size() >= 4) {
 								sTipos += "...";
 							}
 						}
 					}
 				}
-				txtTipos.setText(sTipos);								
+				txtTipos.setText(sTipos);
 			}
 		});
-		
-		
+
 		Button btConcluido = (Button) dialog
 				.findViewById(R.id.dialogTipoImovelBtConcluido);
 		btConcluido.setOnClickListener(new OnClickListener() {
@@ -302,24 +295,22 @@ public class PesquisarImovelActivity extends MainBarActivity {
 
 			}
 		});
-		
+
 		Button btTodosTipos = (Button) dialog
 				.findViewById(R.id.dialogTipoImovelBtTodosTipos);
 		btTodosTipos.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				
-				for(TipoImovelMobile tipo : tipos){
+
+				for (TipoImovelMobile tipo : tipos) {
 					tipo.setCheck(false);
 				}
-												
+
 				dialog.dismiss();
 			}
 		});
-		
-		
-		
+
 		Button btLimpar = (Button) dialog
 				.findViewById(R.id.dialogTipoImovelBtLimpar);
 		btLimpar.setOnClickListener(new OnClickListener() {
@@ -327,20 +318,19 @@ public class PesquisarImovelActivity extends MainBarActivity {
 			@Override
 			public void onClick(View v) {
 
-				for(TipoImovelMobile tipo : tipos){
+				for (TipoImovelMobile tipo : tipos) {
 					tipo.setCheck(false);
 				}
-				
-				TipoImovelAdapter adapter = new TipoImovelAdapter(instance, tipos);
+
+				TipoImovelAdapter adapter = new TipoImovelAdapter(instance,
+						tipos);
 				list.setAdapter(adapter);
 
 			}
 		});
-		
-		
-		
+
 		dialog.show();
-		
+
 	}
 
 	private void showDialogBairros() {
@@ -392,17 +382,18 @@ public class PesquisarImovelActivity extends MainBarActivity {
 
 				String bairro = autoEditBairros.getText().toString();
 				if (ValidacaoGeral.validaCampoVazio(bairro)) {
-					if(bairros.contains(bairro)){
-						Toast.makeText(instance, "Bairro j‡ inserido", Toast.LENGTH_LONG).show();
+					if (bairros.contains(bairro)) {
+						Toast.makeText(instance, "Bairro j‡ inserido",
+								Toast.LENGTH_LONG).show();
 					} else {
 						bairros.add(0, bairro);
-						updateBairros(list);					
-					}					
-					autoEditBairros.setText("");					
+						updateBairros(list);
+					}
+					autoEditBairros.setText("");
 				}
 
 			}
-		});				
+		});
 
 		Button btConcluido = (Button) dialog
 				.findViewById(R.id.dialogBairroBtConcluido);
@@ -415,7 +406,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 
 			}
 		});
-		
+
 		Button btTodosBairros = (Button) dialog
 				.findViewById(R.id.dialogBairroBtTodosBairros);
 		btTodosBairros.setOnClickListener(new OnClickListener() {
@@ -426,9 +417,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 				dialog.dismiss();
 			}
 		});
-		
-		
-		
+
 		Button btLimpar = (Button) dialog
 				.findViewById(R.id.dialogBairroBtLimpar);
 		btLimpar.setOnClickListener(new OnClickListener() {
@@ -484,8 +473,6 @@ public class PesquisarImovelActivity extends MainBarActivity {
 		intencao = (WheelView) findViewById(R.id.pesquisarWhellIntencao);
 		intencao.setVisibleItems(3);
 
-		
-
 		ArrayWheelAdapter<String> adapter = new ArrayWheelAdapter<String>(this,
 				ufs);
 		adapter.setTextSize(18);
@@ -497,105 +484,167 @@ public class PesquisarImovelActivity extends MainBarActivity {
 				this, sIntencao);
 		adapter.setTextSize(18);
 		intencao.setViewAdapter(adapter2);
-		intencao.setCurrentItem(0);		
-		
+		intencao.setCurrentItem(0);
+
 		intencao.addChangingListener(new OnWheelChangedListener() {
-			
+
 			@Override
 			public void onChanged(WheelView wheel, int oldValue, int newValue) {
-				
-				if(newValue > 0){
+
+				if (newValue > 0) {
 					barPreco.setEnabled(false);
+					barPreco.setVisibility(View.INVISIBLE);
+					txtPreco.setVisibility(View.INVISIBLE);
 				} else {
 					barPreco.setEnabled(true);
+					barPreco.setVisibility(View.VISIBLE);
+					txtPreco.setVisibility(View.VISIBLE);
 				}
-				
+
 			}
 		});
-				
-		
+
 		estados.addChangingListener(new OnWheelChangedListener() {
-			
+
 			@Override
 			public void onChanged(WheelView wheel, int oldValue, int newValue) {
-				
-				//loadCidades(ufs[newValue]);
-				
+
+				// loadCidades(ufs[newValue]);
+
 			}
 		});
-		
+
 		estados.setOnFocusChangeListener(new OnFocusChangeListener() {
-			
+
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
-				Toast.makeText(instance, "Estados FOCUS " + hasFocus, Toast.LENGTH_LONG).show();
-				if(!hasFocus){
+				Toast.makeText(instance, "Estados FOCUS " + hasFocus,
+						Toast.LENGTH_LONG).show();
+				if (!hasFocus) {
 					loadCidades(ufs[estados.getCurrentItem()]);
 				}
-				
+
 			}
 		});
 	}
-	
-	public List<TipoImovelMobile> getTiposCheckeds(List<TipoImovelMobile> list){
-		
+
+	public List<TipoImovelMobile> getTiposCheckeds(List<TipoImovelMobile> list) {
+
 		ArrayList<TipoImovelMobile> newList = new ArrayList<TipoImovelMobile>();
-		
-		for(TipoImovelMobile tipo: tipos){
-			
-			if(tipo.isCheck()){
+
+		for (TipoImovelMobile tipo : tipos) {
+
+			if (tipo.isCheck()) {
 				newList.add(tipo);
-			}			
+			}
 		}
-		
+
 		return newList;
-		
-	}
-	
-	public void loadCidades(String uf){
-			
-		
-		
-		try {
-			//cidades = controller.getCidades(uf);
-			
-			
-			
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,controller.getCidades(uf)); 
-			
-			autoEditCidades.setAdapter(adapter);
-		} catch (SiDIMException e) {
 
-			e.printStackTrace();
-		}
-		
 	}
-	
-	public void loadBairros(String cidade){
-		
 
-		
-		try {
+	@SuppressWarnings("unchecked")
+	public void loadCidades(final String uf) {
 
-			
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,controller.getBairro(cidade));
-			autoEditBairros.setAdapter(adapter);
-		
-		} catch (SiDIMException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		final Handler handler = new Handler() {
+			@Override
+			public void handleMessage(final Message msgs) {
+
+				String msgerror = msgs.getData().getString("msgerror");
+				if (ValidacaoGeral.validaCampoVazio(msgerror)) {
+					Toast.makeText(instance, msgerror, Toast.LENGTH_LONG)
+							.show();
+				} else {
+					autoEditCidades.setAdapter((ArrayAdapter<String>) msgs.obj);
+				}
+
+			}
+		};
+
+		Thread thread = new Thread() {
+
+			@Override
+			public void run() {
+
+				try {
+
+					ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+							instance,
+							android.R.layout.simple_dropdown_item_1line,
+							controller.getCidades(uf));
+					Message message = handler.obtainMessage(1, adapter);
+					handler.sendMessage(message);
+
+				} catch (SiDIMException e) {
+
+					Bundle data = new Bundle();
+					data.putString("msgerror", e.getMessage());
+					Message msg = new Message();
+					msg.setData(data);
+					handler.sendMessage(msg);
+				}
+			}
+		};
+
+		thread.start();
+
 	}
-	
-	private void findIds(){
+
+	public void loadBairros(final String cidade) {
+
+		final Handler handler2 = new Handler() {
+			@Override
+			public void handleMessage(final Message msgs) {
+
+				String msgerror = msgs.getData().getString("msgerror");
+				if (ValidacaoGeral.validaCampoVazio(msgerror)) {
+					Toast.makeText(instance, msgerror, Toast.LENGTH_LONG)
+							.show();
+				} else {
+					autoEditBairros.setAdapter((ArrayAdapter<String>) msgs.obj);
+				}
+
+			}
+		};
+
+		Thread thread2 = new Thread() {
+
+			@Override
+			public void run() {
+
+				try {
+
+					ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+							instance,
+							android.R.layout.simple_dropdown_item_1line,
+							controller.getBairro(cidade));
+					Message message = handler.obtainMessage(1, adapter);
+					handler2.sendMessage(message);
+					//autoEditBairros.setAdapter(adapter);
+
+				} catch (SiDIMException e) {
+					Bundle data = new Bundle();
+					data.putString("msgerror", e.getMessage());
+					Message msg = new Message();
+					msg.setData(data);
+					handler2.sendMessage(msg);
+				}
+
+			}
+		};
 		
+		thread2.start();
+
+	}
+
+	private void findIds() {
+
 		txtBairros = (TextView) findViewById(R.id.pesquisarTextBairros);
 		txtTipos = (TextView) findViewById(R.id.pesquisarTxtTipoImovel);
-		autoEditCidades = (AutoCompleteTextView) findViewById(R.id.pesquisarAutoEditCidades);		
+		autoEditCidades = (AutoCompleteTextView) findViewById(R.id.pesquisarAutoEditCidades);
 		linearBairro = (LinearLayout) findViewById(R.id.pesquisarLinearBairro);
 		linearTipos = (LinearLayout) findViewById(R.id.pesquisarLinearTipoImovel);
-		txtPreco = (TextView) findViewById(R.id.pesquisarTxtPreco);		
+		txtPreco = (TextView) findViewById(R.id.pesquisarTxtPreco);
 		barPreco = (SeekBar) findViewById(R.id.pesquisarSeekBarPreco);
 		btPesquisar = (Button) findViewById(R.id.pesquisarBtPesquisar);
 		ediTextQtdQuartos = (EditText) findViewById(R.id.pesquisarInputQtdDorm);

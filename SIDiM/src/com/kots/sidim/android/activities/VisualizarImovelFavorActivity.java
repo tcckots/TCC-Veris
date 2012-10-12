@@ -1,6 +1,5 @@
 package com.kots.sidim.android.activities;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -31,9 +30,10 @@ import com.kots.sidim.android.model.InteresseCliente;
 import com.kots.sidim.android.model.InteresseClienteId;
 import com.kots.sidim.android.server.SiDIMControllerServer;
 import com.kots.sidim.android.util.DrawableConnectionManager;
+import com.kots.sidim.android.util.LoadImagesSDCard;
 import com.kots.sidim.android.util.SessionUserSidim;
 
-public class VisualizarImovelActivity extends MainBarActivity {
+public class VisualizarImovelFavorActivity extends MainBarActivity {
 
 	Button btEnviarInteresse, addFavoritos;
 	SiDIMControllerServer controller;
@@ -42,10 +42,10 @@ public class VisualizarImovelActivity extends MainBarActivity {
 
 	ImageView imgMain;
 	TextView txtTitle, txtBairro, txtCidadeEstado, txtQtds, txtArea,
-			txtObservacao, txtIntencao, txtPreco;
+			txtObservacao;
 	FavoritosDAO favoritosDao;
 
-	DrawableConnectionManager drawManager;
+
 
 	//private ArrayList<String> list;
 
@@ -58,7 +58,7 @@ public class VisualizarImovelActivity extends MainBarActivity {
 		setContentView(R.layout.activity_visualizar_imovel,
 				ConfigGlobal.MENU_INDEX_PESQUISAR_IMOVEL);
 
-		drawManager = new DrawableConnectionManager();
+		
 		favoritosDao = new FavoritosDAO(instance);
 
 		if (getIntent() != null) {
@@ -71,39 +71,31 @@ public class VisualizarImovelActivity extends MainBarActivity {
 
 		controller = SiDIMControllerServer.getInstance(this);
 
-		btEnviarInteresse = (Button) findViewById(R.id.visualizarImovelButtonInteresse);
-		Gallery gallery = (Gallery) findViewById(R.id.visualizarImovelGallery);
-		imgMain = (ImageView) findViewById(R.id.visualizarImovelImageMain);
+		btEnviarInteresse = (Button) findViewById(R.id.visualizarImovelFavorButtonInteresse);
+		Gallery gallery = (Gallery) findViewById(R.id.visualizarImovelFavorGallery);
+		imgMain = (ImageView) findViewById(R.id.visualizarImovelFavorImageMain);
 
+//		list = new ArrayList<String>();
+//		list.add("http://www.atlantycaimoveis.com.br/imoveis/7_4.jpg");
+//		list.add("http://www.atlantycaimoveis.com.br/imoveis/4_7.jpg");
+//		list.add("http://www.atlantycaimoveis.com.br/imoveis/8_6.jpg");
+//		list.add("http://www.atlantycaimoveis.com.br/imoveis/25_8.jpg");
+//		list.add("http://www.atlantycaimoveis.com.br/imoveis/21_3.jpg");
 
-
-		if(imovel != null && imovel.getFotos() != null && imovel.getFotos().size() > 0){
-			if (SessionUserSidim.images.containsKey(imovel.getFotos().get(0))) {
-				
-					imgMain.setImageBitmap(SessionUserSidim.images.get(imovel.getFotos().get(0)));
-				
-			} else {
-				drawManager.fetchDrawableOnThread(imovel.getFotos().get(0), imgMain);
-			}
-			FotoGaleriaAdapter adapter = new FotoGaleriaAdapter(this, imovel.getFotos());
-
-			gallery.setAdapter(adapter);
-
-		}
-
+		imgMain.setImageDrawable(LoadImagesSDCard.getFirstImageFromSdCard(imovel.getFotos()));
 		
+
+		FotoGaleriaAdapter adapter = new FotoGaleriaAdapter(this, imovel.getFotos());
+
+		gallery.setAdapter(adapter);
+
 		gallery.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 
-				// imgMain.setImageResource(list.get(arg2));
-				if (SessionUserSidim.images.containsKey(imovel.getFotos().get(arg2))) {
-					imgMain.setImageBitmap(SessionUserSidim.images.get(imovel.getFotos().get(arg2)));
-				} else {
-					drawManager.fetchDrawableOnThread(imovel.getFotos().get(arg2), imgMain);
-				}
+				imgMain.setImageDrawable(LoadImagesSDCard.getImageFromSdCard(imovel.getFotos().get(arg2)));
 
 			}
 		});
@@ -126,7 +118,7 @@ public class VisualizarImovelActivity extends MainBarActivity {
 				instance.runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						showDialog("Adicionando...");
+						showDialog();
 					}
 				});
 
@@ -180,111 +172,45 @@ public class VisualizarImovelActivity extends MainBarActivity {
 		Cliente cliente = new Cliente();
 		cliente.setLogin(globalPrefs.getString(
 				ConfigGlobal.SHARED_PREFERENCES_EMAIL_USER, ""));
-//		final InteresseCliente interesse = new InteresseCliente(imovel, cliente,
-//				new Date());
+//		
 		final InteresseClienteId interesse = new InteresseClienteId(cliente.getLogin(), imovel.getIdImovel());
-		
-		instance.runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				showDialog("Enviando Interesse...");
-			}
-		});
-
-		final Handler handler = new Handler() {
-			@Override
-			public void handleMessage(final Message msgs) {
-
-				String msgerror = msgs.getData().getString("msgerror");
-				if (ValidacaoGeral.validaCampoVazio(msgerror)) {
-					Toast.makeText(instance, msgerror,
-							Toast.LENGTH_LONG).show();
-				}
-
-				if (progressDialog != null) {
-					progressDialog.dismiss();
-				}
-
-			}
-		};
-
-		Thread thread = new Thread() {
-
-			@Override
-			public void run() {
-
-		
-		
-				try {
-					controller.enviarInteresse(interesse);
-					
-					Bundle data = new Bundle();
-					data.putString("msgerror", "Interesse Enviado, Em breve entraremos em contato");
-					Message msg = new Message();
-					msg.setData(data);
-					handler.sendMessage(msg);
-										
-				} catch (SiDIMException e) {
-					
-					Bundle data = new Bundle();
-					data.putString("msgerror", e.getMessage());
-					Message msg = new Message();
-					msg.setData(data);
-					handler.sendMessage(msg);
-										
-				}
-			}
-		};  thread.start();
+		try {
+			controller.enviarInteresse(interesse);
+			Toast.makeText(this,
+					"Interesse Enviado, Em breve entraremos em contato",
+					Toast.LENGTH_LONG).show();
+		} catch (SiDIMException e) {
+			Toast.makeText(this,
+					"N‹o foi poss’vel enviar Interesse, verifique sua conex‹o",
+					Toast.LENGTH_LONG).show();
+		}
 
 	}
 
 	private void loadIds() {
-		txtTitle = (TextView) findViewById(R.id.visualizarImovelTextTitle);
-		txtBairro = (TextView) findViewById(R.id.visualizarImovelTextBairro);
-		txtCidadeEstado = (TextView) findViewById(R.id.visualizarImovelTextCidadeEstado);
-		txtQtds = (TextView) findViewById(R.id.visualizarImovelTextQtds);
-		txtArea = (TextView) findViewById(R.id.visualizarImovelTextArea);
-		txtObservacao = (TextView) findViewById(R.id.visualizarImovelTextObservacao);
-
-		txtPreco = (TextView) findViewById(R.id.visualizarImovelTextPreco);
+		txtTitle = (TextView) findViewById(R.id.visualizarImovelFavorTextTitle);
+		txtBairro = (TextView) findViewById(R.id.visualizarImovelFavorTextBairro);
+		txtCidadeEstado = (TextView) findViewById(R.id.visualizarImovelFavorTextCidadeEstado);
+		txtQtds = (TextView) findViewById(R.id.visualizarImovelFavorTextQtds);
+		txtArea = (TextView) findViewById(R.id.visualizarImovelFavorTextArea);
+		txtObservacao = (TextView) findViewById(R.id.visualizarImovelFavorTextObservacao);
 
 		txtTitle.setText(imovel.getTipoImovel().getDescricao() + " - "
 				+ imovel.getBairro().getNome() + " " + imovel.getDormitorios()
 				+ " Dorm");
-		DecimalFormat df = new DecimalFormat("###,###,###.00");
-		
-		String preco = "";
-		
-		if(imovel.getIntencao().equals("C")){
-			
-			if(imovel.getPreco().doubleValue() == 0){
-				preco = "Compra: Entre em contato";
-			} else {
-				preco = "Compra: R$ " +  df.format(imovel.getPreco().doubleValue());
-			}
-			txtPreco.setText(preco);
-		} else {
-			if(imovel.getPreco().doubleValue() == 0){
-				preco = "Aluga: Entre em contato";
-			} else {
-				preco = "Aluga: R$ " +  df.format(imovel.getPreco().doubleValue());
-			}
-			txtPreco.setText(preco);
-		}
-		
-		txtBairro.setText("Bairro: " + imovel.getBairro().getNome());
+		txtBairro.setText(imovel.getBairro().getNome());
 		txtCidadeEstado.setText(imovel.getCidade().getNome() + "-"
 				+ imovel.getEstado().getNome());
 		txtQtds.setText(imovel.getDormitorios() + " Dorm, sendo "
-				+ imovel.getSuites() + " su’te - com " + imovel.getGaragens()
+				+ imovel.getSuites() + " su’tes - com " + imovel.getGaragens()
 				+ " Garagens");
-		txtArea.setText("çrea: " + imovel.getAreaConstruida() + "m2 Constru’da - "
-				+ imovel.getAreaTotal() + "m2 Total");
+		txtArea.setText("çrea: " + imovel.getAreaConstruida() + " Constru’da - "
+				+ imovel.getAreaTotal() + " Total");
 		txtObservacao.setText(imovel.getDescricao());
 	}
 
-	private void showDialog(String msg) {
-		progressDialog = ProgressDialog.show(this, "", msg,
+	private void showDialog() {
+		progressDialog = ProgressDialog.show(this, "", "Adicionando...",
 				true, false);
 	}
 }

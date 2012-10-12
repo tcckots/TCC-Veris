@@ -13,6 +13,7 @@ import com.kots.sidim.android.model.Estado;
 import com.kots.sidim.android.model.FiltroImovel;
 import com.kots.sidim.android.model.ImovelMobile;
 import com.kots.sidim.android.model.InteresseCliente;
+import com.kots.sidim.android.model.InteresseClienteId;
 import com.kots.sidim.android.model.TipoImovel;
 import com.kots.sidim.android.model.TipoImovelMobile;
 
@@ -63,7 +64,7 @@ public class SiDIMControllerServer {
 		return sidimAPI.buscarImoveis(filtro);
 	}
 	
-	public boolean enviarInteresse(InteresseCliente interesse) throws SiDIMException{
+	public boolean enviarInteresse(InteresseClienteId interesse) throws SiDIMException{
 		
 		return sidimAPI.enviarInteresse(interesse);
 		

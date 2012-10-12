@@ -71,6 +71,7 @@ public class MainBarActivity extends MapActivity {
 					long arg3) {
 				
 				switch(arg2){
+				case ConfigGlobal.MENU_INDEX_HOME: startActivity(new Intent(instance,MenuPrincipalActivity.class)); break;
 				case ConfigGlobal.MENU_INDEX_FAVORITOS: startActivity(new Intent(instance,FavoritosActivity.class)); break;
 				case ConfigGlobal.MENU_INDEX_CONFIGURACOES: startActivity(new Intent(instance,ConfiguracoesActivity.class)); break;
 				case ConfigGlobal.MENU_INDEX_PESQUISAR_IMOVEL: startActivity(new Intent(instance,PesquisarImovelActivity.class)); break;

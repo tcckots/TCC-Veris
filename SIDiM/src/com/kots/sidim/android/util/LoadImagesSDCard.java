@@ -7,6 +7,8 @@ import java.util.List;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.util.Log;
 
@@ -29,25 +31,44 @@ public class LoadImagesSDCard {
 				
 	}
 	
-	public static void getFirstImageFromSdCard(String images, Bitmap bitmap){
-		
-		String[] listNamesImages = images.split(";");
+	public static Drawable getFirstImageFromSdCard(List<String> images){
 		
 		
-		//Bitmap bitmap = null;
 		
-		
-		if(listNamesImages.length > 0){
+		for(String image : images){
 			
 			try{
-				BitmapFactory.Options options = new BitmapFactory.Options();
-				options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-				String path = Environment.getExternalStorageDirectory().toString()  + File.separator + listNamesImages[0];
-				bitmap = BitmapFactory.decodeFile(path,options);
+				
+				String path = Environment.getExternalStorageDirectory() + File.separator + "appsidim" + File.separator + image;
+				Drawable draw = BitmapDrawable.createFromPath(path);
+				
+				return draw;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} 			
+		} 		
+		
+		return null;
+	}
+	
+	public static Drawable getImageFromSdCard(String nameImage){
+		
+		
+		
+		
+			
+			try{
+				
+				String path = Environment.getExternalStorageDirectory() + File.separator + "appsidim" + File.separator + nameImage;
+				Drawable draw = BitmapDrawable.createFromPath(path);
+				
+				return draw;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		 		
+		
+		return null;
 	}
 	
 	public static Bitmap ShowPicture(String fileName) { 

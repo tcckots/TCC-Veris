@@ -1,10 +1,15 @@
 package com.kots.sidim.android.adapter;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import com.kots.sidim.android.R;
+import com.kots.sidim.android.activities.VisualizarImovelActivity;
 import com.kots.sidim.android.model.ImovelMobile;
 import com.kots.sidim.android.util.DrawableConnectionManager;
+import com.kots.sidim.android.util.SessionUserSidim;
+
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -61,24 +66,45 @@ public class ImovelAdapter extends BaseAdapter {
 		View v = inflater.inflate(R.layout.item_list, null);
 	
 		TextView txtTitleContent = (TextView) v.findViewById(R.id.favorItemInputTitle);
-		txtTitleContent.setText(imovel.getBairro().getNome() + ", " + imovel.getTipoImovel().getDescricao() + imovel.getDormitorios() + " Dorm");
+		txtTitleContent.setText(imovel.getBairro().getNome() + ", " + imovel.getTipoImovel().getDescricao() + " - " + imovel.getDormitorios() + " Dorm");
 		
 		TextView txtDescriptionContent = (TextView) v.findViewById(R.id.favorItemInputCity);
 		txtDescriptionContent.setText(imovel.getCidade().getNome() + "-" + imovel.getCidade().getEstado().getUf());
 		
+		DecimalFormat df = new DecimalFormat("###,###,###.00");
+		
 		TextView txtPreco = (TextView) v.findViewById(R.id.favorItemInputPrice);
-		txtPreco.setText("Venda " + ": " + imovel.getPreco().doubleValue());
+		
+		//txtPreco.setText("Venda " + ": R$ " + df.format(imovel.getPreco().doubleValue()));
+String preco = "";
+		
+		if(imovel.getIntencao().equals("C")){
+			
+			if(imovel.getPreco().doubleValue() == 0){
+				preco = "Compra: Entre em contato";
+			} else {
+				preco = "Compra: R$ " +  df.format(imovel.getPreco().doubleValue());
+			}
+			txtPreco.setText(preco);
+		} else {
+			if(imovel.getPreco().doubleValue() == 0){
+				preco = "Aluga: Entre em contato";
+			} else {
+				preco = "Aluga: R$ " +  df.format(imovel.getPreco().doubleValue());
+			}
+			txtPreco.setText(preco);
+		}
 		
 		ImageView imgPreview = (ImageView) v.findViewById(R.id.favorItemImgFoto);
+				
 		
-		
-		
-		
-//		if(SessionUserSidim.images.containsKey(imovel.getIdImovel())){
-//		    imgPreview.setImageBitmap(SessionUserSidim.images.get(imovel.getIdImovel()));
-//		} else {
-//		    drawManager.fetchDrawableOnThread("", imgPreview);                                   
-//		}
+		if(imovel.getFotos() != null & imovel.getFotos().size() > 0){
+			if(SessionUserSidim.images.containsKey(imovel.getFotos().get(0))){
+			    imgPreview.setImageBitmap(SessionUserSidim.images.get(imovel.getFotos().get(0)));
+			} else {
+			    drawManager.fetchDrawableOnThread(imovel.getFotos().get(0), imgPreview);                                   
+			}
+		}
 		
 
 		
@@ -87,9 +113,9 @@ public class ImovelAdapter extends BaseAdapter {
                     
                     @Override
                     public void onClick(View v) {
-//                        Intent intent = new Intent(context, ContentDetailsActivity.class);
-//                        intent.putExtra("contentdetails", content);
-//                        context.startActivity(intent);
+                        Intent intent = new Intent(context, VisualizarImovelActivity.class);
+                        intent.putExtra("imoveldetalhes", imovel);
+        				context.startActivity(intent);
                         
                     }
                 });
@@ -100,9 +126,10 @@ public class ImovelAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View v) {
                        
-//                        Intent lVideoIntent = new Intent(null, Uri.parse("ytv://"+ content.getId()), context, OpenYouTubePlayerActivity.class);
-//                        context.startActivity(lVideoIntent);
-                        
+                    	Intent intent = new Intent(context, VisualizarImovelActivity.class);
+                        intent.putExtra("imoveldetalhes", imovel);
+        				context.startActivity(intent);                    	
+                    	
                     }
                 });									
 		

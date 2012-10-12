@@ -4,7 +4,7 @@ import java.util.Date;
 
 
 
-public class InteresseCliente extends ResultWebService implements java.io.Serializable {
+public class InteresseCliente implements java.io.Serializable {
 	
 	private ImovelMobile imovel;
 	private Cliente cliente;

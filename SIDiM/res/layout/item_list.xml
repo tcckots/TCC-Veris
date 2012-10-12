@@ -57,7 +57,7 @@
             android:id="@+id/favorItemLayoutDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/gray_hard"
+            android:background="@drawable/item_selector_description_content"
             android:gravity="center" >
 
             <TextView
