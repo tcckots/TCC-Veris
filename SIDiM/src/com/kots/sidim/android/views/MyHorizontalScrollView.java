@@ -21,6 +21,9 @@
  */
 package com.kots.sidim.android.views;
 
+import com.kots.sidim.android.R;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -66,13 +69,14 @@ public class MyHorizontalScrollView extends HorizontalScrollView {
      * @param sizeCallback
      *            A SizeCallback to interact with the HSV.
      */
-    public void initViews(View[] children, int scrollToViewIdx, SizeCallback sizeCallback) {
+	public void initViews(View[] children, int scrollToViewIdx, SizeCallback sizeCallback) {
         // A ViewGroup MUST be the only child of the HSV
         ViewGroup parent = (ViewGroup) getChildAt(0);
 
         // Add all the children, but add them invisible so that the layouts are calculated, but you can't see the Views
         for (int i = 0; i < children.length; i++) {
             children[i].setVisibility(View.INVISIBLE);
+          //  children[i].setBackgroundColor(R.color.color_background_screens);
             parent.addView(children[i]);
         }
 
@@ -98,7 +102,8 @@ public class MyHorizontalScrollView extends HorizontalScrollView {
      * An OnGlobalLayoutListener impl that passes on the call to onGlobalLayout to a SizeCallback, before removing all the Views
      * in the HSV and adding them again with calculated widths and heights.
      */
-    class MyOnGlobalLayoutListener implements OnGlobalLayoutListener {
+    @SuppressLint("ResourceAsColor")
+	class MyOnGlobalLayoutListener implements OnGlobalLayoutListener {
         ViewGroup parent;
         View[] children;
         int scrollToViewIdx;
@@ -117,6 +122,7 @@ public class MyHorizontalScrollView extends HorizontalScrollView {
          */
         public MyOnGlobalLayoutListener(ViewGroup parent, View[] children, int scrollToViewIdx, SizeCallback sizeCallback) {
             this.parent = parent;
+            
             this.children = children;
             this.scrollToViewIdx = scrollToViewIdx;
             this.sizeCallback = sizeCallback;

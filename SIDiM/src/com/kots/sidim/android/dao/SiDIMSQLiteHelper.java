@@ -62,6 +62,10 @@ public class SiDIMSQLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_FOTOS = "fotos";
     public static final int COLUMN_FOTOS_INDEX = 14;
     
+    public static final String COLUMN_INTENCAO = "intencao";
+    public static final int COLUMN_INTENCAO_INDEX = 15;
+    
+    
     
     
     private static final String DATABASE_NAME = "sidim.db";
@@ -85,7 +89,8 @@ public class SiDIMSQLiteHelper extends SQLiteOpenHelper {
                     + COLUMN_RUA				    + " text,"
                     + COLUMN_PRECO				    + " number,"
                     + COLUMN_DESCRICAO   		    + " text,"
-                    + COLUMN_FOTOS                  + " text);";
+                    + COLUMN_FOTOS                  + " text," 
+                    + COLUMN_INTENCAO               + " text);";
     
     
     

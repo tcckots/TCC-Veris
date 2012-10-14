@@ -263,25 +263,7 @@ public class ResultPesquisaActivity extends MainBarActivity {
 
 
 	}
-	// public Imovel getNewImovel(){
-	//
-	// Imovel imovel = new Imovel();
-	// imovel.setIdImovel(1);
-	// imovel.setEstado(new Estado("SP","São Paulo"));
-	// imovel.setCidade(new Cidade(1, new Estado("SP","São Paulo"), "Sumaré",
-	// ""));
-	// imovel.setArea(40);
-	// imovel.setDormitorios((short)3);
-	// imovel.setSuites((short) 2);
-	// imovel.setGaragens((byte) 1);
-	// imovel.setBairro(new Bairro(1, null, "Jd. Amanda", ""));
-	// imovel.setDescricao("Linda Casa");
-	// imovel.setPreco(new BigDecimal(130000));
-	// imovel.setTipoImovel(new TipoImovel((short) 1, "Casa"));
-	//
-	// return imovel;
-	//
-	// }
+	
 	
 	private void showDialog() {
 		progressDialog = ProgressDialog.show(this, "", "Buscando Imóveis...",

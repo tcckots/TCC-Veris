@@ -11,10 +11,13 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.ImageView;
 
 public class LoadImagesSDCard {
 	
 	public static void getImagesFromSdCard(String images, List<Bitmap> bitmaps){
+		
+		
 		
 		String[] listNamesImages = images.split(";");
 		
@@ -31,71 +34,57 @@ public class LoadImagesSDCard {
 				
 	}
 	
-	public static Drawable getFirstImageFromSdCard(List<String> images){
+	public static void getFirstImageFromSdCard(List<String> images, ImageView imageView){
 		
 		
 		
-		for(String image : images){
+		if(images == null || images.size() == 0)
+			return;
+			
+		String image = images.get(0);
+	
+			
+			if(SessionUserSidim.images.containsKey(image)){
+				imageView.setImageBitmap(SessionUserSidim.images.get(image));										
+				return;
+			}
 			
 			try{
 				
 				String path = Environment.getExternalStorageDirectory() + File.separator + "appsidim" + File.separator + image;
 				Drawable draw = BitmapDrawable.createFromPath(path);
+				imageView.setImageDrawable(draw);
 				
-				return draw;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} 		
+			
 		
-		return null;
+		
 	}
 	
-	public static Drawable getImageFromSdCard(String nameImage){
-		
-		
-		
-		
+	public static void getImageFromSdCard(String nameImage, ImageView image){
 			
+		if(SessionUserSidim.images.containsKey(nameImage)){
+			image.setImageBitmap(SessionUserSidim.images.get(nameImage));										
+			return;
+		}
+		
 			try{
 				
 				String path = Environment.getExternalStorageDirectory() + File.separator + "appsidim" + File.separator + nameImage;
 				Drawable draw = BitmapDrawable.createFromPath(path);
+				SessionUserSidim.images.put(nameImage, ((BitmapDrawable) draw).getBitmap());
+				image.setImageDrawable(draw);
 				
-				return draw;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		 		
 		
-		return null;
+		
 	}
 	
-	public static Bitmap ShowPicture(String fileName) { 
-		
-		String[] listNamesImages = fileName.split(";");
-		
-		File root = new File(Environment.getExternalStorageDirectory(), "appsidim");
-		File imageFileimage = new File(root, listNamesImages[0]);
-		
-		if(imageFileimage.exists()){
-			FileInputStream is = null; 
-		    try { 
-		        is = new FileInputStream(imageFileimage); 
-		        Bitmap bitmap = BitmapFactory.decodeStream(is, null, null); 
-			    return bitmap;
-		        
-		    } catch (FileNotFoundException e) {
-		        Log.d("error: ",String.format( "ShowPicture.java file[%s]Not Found",fileName)); 
-		        return null; 
-		    }
-			
-		}
-	     
-	     return null;
-	    
-	    
-	}
 	
 	
 

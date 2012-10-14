@@ -6,7 +6,6 @@ import java.util.Date;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,7 +21,6 @@ import android.widget.Toast;
 
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.adapter.FotoGaleriaAdapter;
-import com.kots.sidim.android.adapter.FotoGaleriaFavorAdapter;
 import com.kots.sidim.android.config.ConfigGlobal;
 import com.kots.sidim.android.config.ValidacaoGeral;
 import com.kots.sidim.android.dao.FavoritosDAO;
@@ -33,10 +31,9 @@ import com.kots.sidim.android.model.InteresseCliente;
 import com.kots.sidim.android.model.InteresseClienteId;
 import com.kots.sidim.android.server.SiDIMControllerServer;
 import com.kots.sidim.android.util.DrawableConnectionManager;
-import com.kots.sidim.android.util.LoadImagesSDCard;
 import com.kots.sidim.android.util.SessionUserSidim;
 
-public class VisualizarImovelActivity extends MainBarActivity {
+public class VisualizarImovelActivity2 extends MainBarActivity {
 
 	Button btEnviarInteresse, addFavoritos;
 	SiDIMControllerServer controller;
@@ -49,8 +46,6 @@ public class VisualizarImovelActivity extends MainBarActivity {
 	FavoritosDAO favoritosDao;
 
 	DrawableConnectionManager drawManager;
-	
-	boolean cameFavoritosScreen, removeFavor;
 
 	//private ArrayList<String> list;
 
@@ -65,7 +60,6 @@ public class VisualizarImovelActivity extends MainBarActivity {
 
 		drawManager = new DrawableConnectionManager();
 		favoritosDao = new FavoritosDAO(instance);
-				
 
 		if (getIntent() != null) {
 			if (getIntent().getSerializableExtra("imoveldetalhes") instanceof ImovelMobile) {
@@ -73,14 +67,6 @@ public class VisualizarImovelActivity extends MainBarActivity {
 						"imoveldetalhes");
 				loadIds();
 			}
-			
-			// Verificar se veio do favoritos e setar aqui
-			if(favoritosDao.getImovel(imovel) != null){
-				addFavoritos.setText("- Favoritos");	
-				removeFavor = true;
-			}
-			
-			cameFavoritosScreen = getIntent().getBooleanExtra("cameFavoriteScreen", false);
 		}
 
 		controller = SiDIMControllerServer.getInstance(this);
@@ -92,23 +78,16 @@ public class VisualizarImovelActivity extends MainBarActivity {
 
 
 		if(imovel != null && imovel.getFotos() != null && imovel.getFotos().size() > 0){
-			if (SessionUserSidim.images.containsKey(imovel.getFotos().get(0))) {				
-					imgMain.setImageBitmap(SessionUserSidim.images.get(imovel.getFotos().get(0)));				
+			if (SessionUserSidim.images.containsKey(imovel.getFotos().get(0))) {
+				
+					imgMain.setImageBitmap(SessionUserSidim.images.get(imovel.getFotos().get(0)));
+				
 			} else {
-				if(cameFavoritosScreen){
-					LoadImagesSDCard.getFirstImageFromSdCard(imovel.getFotos(),imgMain);
-					//imgMain.setImageDrawable(draw);
-				}else{
-					drawManager.fetchDrawableOnThread(imovel.getFotos().get(0), imgMain);
-				}
+				drawManager.fetchDrawableOnThread(imovel.getFotos().get(0), imgMain);
 			}
-			if(cameFavoritosScreen){
-				FotoGaleriaFavorAdapter adapter = new FotoGaleriaFavorAdapter(this, imovel.getFotos());
-				gallery.setAdapter(adapter);
-			} else {
-				FotoGaleriaAdapter adapter = new FotoGaleriaAdapter(this, imovel.getFotos());
-				gallery.setAdapter(adapter);
-			}
+			FotoGaleriaAdapter adapter = new FotoGaleriaAdapter(this, imovel.getFotos());
+
+			gallery.setAdapter(adapter);
 
 		}
 
@@ -123,12 +102,7 @@ public class VisualizarImovelActivity extends MainBarActivity {
 				if (SessionUserSidim.images.containsKey(imovel.getFotos().get(arg2))) {
 					imgMain.setImageBitmap(SessionUserSidim.images.get(imovel.getFotos().get(arg2)));
 				} else {
-					if(cameFavoritosScreen){
-						LoadImagesSDCard.getImageFromSdCard(imovel.getFotos().get(arg2),imgMain);
-						//imgMain.setImageDrawable(draw);
-					}else{
-						drawManager.fetchDrawableOnThread(imovel.getFotos().get(arg2), imgMain);
-					}
+					drawManager.fetchDrawableOnThread(imovel.getFotos().get(arg2), imgMain);
 				}
 
 			}
@@ -143,22 +117,61 @@ public class VisualizarImovelActivity extends MainBarActivity {
 			}
 		});
 
-		
-		if(cameFavoritosScreen || removeFavor){
-			addFavoritos.setText("- Favoritos");			
-		}
+		addFavoritos = (Button) findViewById(R.id.visualizarImovelBtAddFavoritos);
 		addFavoritos.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 
-				if(cameFavoritosScreen || removeFavor){
-					removeFavoritos();
-					removeFavor = false;
-				} else {
-					addFavoritos();
-					
-				}
+				instance.runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						showDialog("Adicionando...");
+					}
+				});
+
+				final Handler handler = new Handler() {
+					@Override
+					public void handleMessage(final Message msgs) {
+
+						String msgerror = msgs.getData().getString("msgerror");
+						if (ValidacaoGeral.validaCampoVazio(msgerror)) {
+							Toast.makeText(instance, msgerror,
+									Toast.LENGTH_LONG).show();
+						}else {
+							Toast.makeText(instance, "Im—vel adicionado aos favoritos",
+									Toast.LENGTH_LONG).show();
+						}
+						
+						
+
+						if (progressDialog != null) {
+							progressDialog.dismiss();
+						}
+
+					}
+				};
+
+				Thread thread = new Thread() {
+
+					@Override
+					public void run() {
+
+						try {
+							favoritosDao.insertFavorito(imovel, imovel.getFotos());
+							handler.sendEmptyMessage(2);
+						} catch (SiDIMException e) {
+							Bundle data = new Bundle();
+							data.putString("msgerror", e.getMessage());
+							Message msg = new Message();
+							msg.setData(data);
+							handler.sendMessage(msg);
+							
+						}
+					}
+				};
+				
+				thread.start();
 
 			}
 		});
@@ -231,7 +244,6 @@ public class VisualizarImovelActivity extends MainBarActivity {
 	}
 
 	private void loadIds() {
-		addFavoritos = (Button) findViewById(R.id.visualizarImovelBtAddFavoritos);
 		txtTitle = (TextView) findViewById(R.id.visualizarImovelTextTitle);
 		txtBairro = (TextView) findViewById(R.id.visualizarImovelTextBairro);
 		txtCidadeEstado = (TextView) findViewById(R.id.visualizarImovelTextCidadeEstado);
@@ -283,110 +295,6 @@ public class VisualizarImovelActivity extends MainBarActivity {
 		txtQtdGarag.setText(imovel.getGaragens() + "");
 	}
 
-	
-	private void addFavoritos(){
-		
-		instance.runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				showDialog("Adicionando...");
-			}
-		});
-
-		final Handler handler = new Handler() {
-			@Override
-			public void handleMessage(final Message msgs) {
-
-				String msgerror = msgs.getData().getString("msgerror");
-				if (ValidacaoGeral.validaCampoVazio(msgerror)) {
-					Toast.makeText(instance, msgerror,
-							Toast.LENGTH_LONG).show();
-				}else {
-					Toast.makeText(instance, "Im—vel adicionado aos favoritos",
-							Toast.LENGTH_LONG).show();
-				}
-				
-				addFavoritos.setText("- Favoritos");
-				cameFavoritosScreen = true;
-				
-
-				if (progressDialog != null) {
-					progressDialog.dismiss();
-				}
-
-			}
-		};
-
-		Thread thread = new Thread() {
-
-			@Override
-			public void run() {
-
-				try {
-					favoritosDao.insertFavorito(imovel, imovel.getFotos());
-					handler.sendEmptyMessage(2);
-				} catch (SiDIMException e) {
-					Bundle data = new Bundle();
-					data.putString("msgerror", e.getMessage());
-					Message msg = new Message();
-					msg.setData(data);
-					handler.sendMessage(msg);
-					
-				}
-			}
-		};
-		
-		thread.start();
-	}
-	
-	private void removeFavoritos(){
-		
-		instance.runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				showDialog("Removendo...");
-			}
-		});
-
-		final Handler handler = new Handler() {
-			@Override
-			public void handleMessage(final Message msgs) {
-
-				String msgerror = msgs.getData().getString("msgerror");
-				if (ValidacaoGeral.validaCampoVazio(msgerror)) {
-					Toast.makeText(instance, msgerror,
-							Toast.LENGTH_LONG).show();
-				}else {
-					Toast.makeText(instance, "Im—vel removido dos favoritos",
-							Toast.LENGTH_LONG).show();
-				}
-				
-				addFavoritos.setText("+Favoritos");
-				cameFavoritosScreen = false;
-				
-				if (progressDialog != null) {
-					progressDialog.dismiss();
-				}
-
-			}
-		};
-
-		Thread thread = new Thread() {
-
-			@Override
-			public void run() {
-
-				
-					favoritosDao.removerImovel(imovel);
-					handler.sendEmptyMessage(2);				
-					
-				
-			}
-		};
-		
-		thread.start();
-	}
-	
 	private void showDialog(String msg) {
 		progressDialog = ProgressDialog.show(this, "", msg,
 				true, false);

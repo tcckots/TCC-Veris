@@ -8,6 +8,6 @@
         android:id="@+id/fotogaleriaitem"
         android:layout_width="90dp"
         android:layout_height="70dp"
-        android:src="@drawable/casabonita" />
+        android:src="@drawable/carregandofoto" />
 
 </LinearLayout>

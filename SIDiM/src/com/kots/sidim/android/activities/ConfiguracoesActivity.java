@@ -37,7 +37,7 @@ public class ConfiguracoesActivity extends MainBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_configuracoes,
 				ConfigGlobal.MENU_INDEX_CONFIGURACOES);
@@ -82,7 +82,7 @@ public class ConfiguracoesActivity extends MainBarActivity {
 					final Handler handler = new Handler() {
 						@Override
 						public void handleMessage(final Message msgs) {
-
+							
 							String msgerror = msgs.getData().getString(
 									"msgerror");
 							if (ValidacaoGeral.validaCampoVazio(msgerror)) {
@@ -149,7 +149,7 @@ public class ConfiguracoesActivity extends MainBarActivity {
 		btSalvar = (Button) findViewById(R.id.configBtSalvar);
 		btCancel = (Button) findViewById(R.id.configBtCancel);
 
-		chNotific = (CheckBox) findViewById(R.id.configCheckNotific);
+		// = (CheckBox) findViewById(R.id.configCheckNotific);
 		chAutoLogin = (CheckBox) findViewById(R.id.configCheckAutoLogin);
 
 		edEmail.setEnabled(false);
@@ -163,8 +163,8 @@ public class ConfiguracoesActivity extends MainBarActivity {
 				ConfigGlobal.SHARED_PREFERENCES_CIDADE_USER, ""));
 		edTelefone.setText(globalPrefs.getString(
 				ConfigGlobal.SHARED_PREFERENCES_TELEFONE_USER, ""));
-		chNotific.setChecked(globalPrefs.getBoolean(
-				ConfigGlobal.SHARED_PREFERENCES_RECEBER_NOTIFIC, false));
+//		chNotific.setChecked(globalPrefs.getBoolean(
+//				ConfigGlobal.SHARED_PREFERENCES_RECEBER_NOTIFIC, false));
 		chAutoLogin.setChecked(globalPrefs.getBoolean(
 				ConfigGlobal.SHARED_PREFERENCES_LOGIN_AUTO, false));
 
@@ -188,9 +188,9 @@ public class ConfiguracoesActivity extends MainBarActivity {
 						editor.putBoolean(
 								ConfigGlobal.SHARED_PREFERENCES_LOGIN_AUTO,
 								chAutoLogin.isChecked());
-						editor.putBoolean(
-								ConfigGlobal.SHARED_PREFERENCES_RECEBER_NOTIFIC,
-								chNotific.isChecked());
+//						editor.putBoolean(
+//								ConfigGlobal.SHARED_PREFERENCES_RECEBER_NOTIFIC,
+//								chNotific.isChecked());
 						editor.putString(
 								ConfigGlobal.SHARED_PREFERENCES_CIDADE_USER,
 								edCidade.getText().toString());
@@ -225,8 +225,8 @@ public class ConfiguracoesActivity extends MainBarActivity {
 			valid = true;
 			editor.putBoolean(ConfigGlobal.SHARED_PREFERENCES_LOGIN_AUTO,
 					chAutoLogin.isChecked());
-			editor.putBoolean(ConfigGlobal.SHARED_PREFERENCES_RECEBER_NOTIFIC,
-					chNotific.isChecked());
+//			editor.putBoolean(ConfigGlobal.SHARED_PREFERENCES_RECEBER_NOTIFIC,
+//					chNotific.isChecked());
 			editor.putString(ConfigGlobal.SHARED_PREFERENCES_CIDADE_USER,
 					edCidade.getText().toString());
 			editor.putString(ConfigGlobal.SHARED_PREFERENCES_TELEFONE_USER,

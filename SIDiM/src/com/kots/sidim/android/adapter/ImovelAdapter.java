@@ -74,9 +74,8 @@ public class ImovelAdapter extends BaseAdapter {
 		DecimalFormat df = new DecimalFormat("###,###,###.00");
 		
 		TextView txtPreco = (TextView) v.findViewById(R.id.favorItemInputPrice);
-		
-		//txtPreco.setText("Venda " + ": R$ " + df.format(imovel.getPreco().doubleValue()));
-String preco = "";
+				
+		String preco = "";
 		
 		if(imovel.getIntencao().equals("C")){
 			

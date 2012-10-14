@@ -76,10 +76,7 @@ public class FavoritosDAO {
 		values.put(SiDIMSQLiteHelper.COLUMN_PRECO, imovel.getPreco()
 				.doubleValue());
 		values.put(SiDIMSQLiteHelper.COLUMN_DESCRICAO, imovel.getDescricao());
-		
-				
-
-				
+		values.put(SiDIMSQLiteHelper.COLUMN_INTENCAO, imovel.getIntencao());
 		
 		
 		// SALVAR FOTOS NO SDCARD
@@ -104,8 +101,8 @@ public class FavoritosDAO {
 	        	
 	        	
 	        	String nameFile = imovel.getIdImovel() + "00"  + i + ".png";
-	        	File file = new File(root, imovel.getIdImovel() + nameFile);
-	        	allPhotos = nameFile + ";";
+	        	File file = new File(root, nameFile);
+	        	allPhotos += nameFile + ";";
 	        	os = new FileOutputStream(file);
 	        	
 	        	bitmap.compress(CompressFormat.PNG, 100, os);
@@ -149,56 +146,56 @@ public class FavoritosDAO {
 
 	}
 
-	public ImovelMobile getResponseAPI(int idMovel) {
-
-		Cursor cursor = database.query(SiDIMSQLiteHelper.TABLE_FAVORITOS, null,
-				SiDIMSQLiteHelper.COLUMN_ID_MOVEL + " = " + idMovel, null,
-				null, null, null);
-		ImovelMobile imovel = null;
-
-		if (cursor.moveToFirst()) {
-
-			try {
-				imovel = new ImovelMobile();
-				imovel.setIdImovel(cursor
-						.getInt(SiDIMSQLiteHelper.COLUMN_ID_MOVEL_INDEX));
-				imovel.setEstado(new Estado(cursor
-						.getString(SiDIMSQLiteHelper.COLUMN_ID_MOVEL_INDEX), ""));
-				imovel.setTipoImovel(new TipoImovel((short) 0, cursor
-						.getString(SiDIMSQLiteHelper.COLUMN_TIPO_IMOVEL_INDEX)));
-				imovel.setCidade(new Cidade(0, null, cursor
-						.getString(SiDIMSQLiteHelper.COLUMN_CIDADE_INDEX), ""));
-				imovel.setBairro(new Bairro(0, null, cursor
-						.getString(SiDIMSQLiteHelper.COLUMN_BAIRRO_INDEX), ""));
-				imovel.setDormitorios((byte) cursor
-						.getInt(SiDIMSQLiteHelper.COLUMN_QTD_DORM_INDEX));
-				imovel.setAreaConstruida(cursor
-						.getDouble(SiDIMSQLiteHelper.COLUMN_AREA_CONSTRUIDA_INDEX));
-				imovel.setAreaTotal(cursor
-						.getDouble(SiDIMSQLiteHelper.COLUMN_AREA_TOTAL_INDEX));
-				imovel.setSuites((byte) cursor
-						.getInt(SiDIMSQLiteHelper.COLUMN_QTD_SUITES_INDEX));
-				imovel.setGaragens((byte) cursor
-						.getInt(SiDIMSQLiteHelper.COLUMN_QTD_SUITES_INDEX));
-				imovel.setCep(cursor
-						.getString(SiDIMSQLiteHelper.COLUMN_CEP_INDEX));
-				imovel.setRua(cursor
-						.getString(SiDIMSQLiteHelper.COLUMN_RUA_INDEX));
-				imovel.setPreco(new BigDecimal(cursor
-						.getDouble(SiDIMSQLiteHelper.COLUMN_PRECO_INDEX)));
-				imovel.setDescricao(cursor
-						.getString(SiDIMSQLiteHelper.COLUMN_DESCRICAO_INDEX));
-
-			} catch (Exception e) {
-				imovel = null;
-			} finally {
-				cursor.close();
-			}
-		}
-
-		return imovel;
-
-	}
+//	public ImovelMobile getResponseAPI(int idMovel) {
+//
+//		Cursor cursor = database.query(SiDIMSQLiteHelper.TABLE_FAVORITOS, null,
+//				SiDIMSQLiteHelper.COLUMN_ID_MOVEL + " = " + idMovel, null,
+//				null, null, null);
+//		ImovelMobile imovel = null;
+//
+//		if (cursor.moveToFirst()) {
+//
+//			try {
+//				imovel = new ImovelMobile();
+//				imovel.setIdImovel(cursor
+//						.getInt(SiDIMSQLiteHelper.COLUMN_ID_MOVEL_INDEX));
+//				imovel.setEstado(new Estado(cursor
+//						.getString(SiDIMSQLiteHelper.COLUMN_ID_MOVEL_INDEX), ""));
+//				imovel.setTipoImovel(new TipoImovel((short) 0, cursor
+//						.getString(SiDIMSQLiteHelper.COLUMN_TIPO_IMOVEL_INDEX)));
+//				imovel.setCidade(new Cidade(0, null, cursor
+//						.getString(SiDIMSQLiteHelper.COLUMN_CIDADE_INDEX), ""));
+//				imovel.setBairro(new Bairro(0, null, cursor
+//						.getString(SiDIMSQLiteHelper.COLUMN_BAIRRO_INDEX), ""));
+//				imovel.setDormitorios((byte) cursor
+//						.getInt(SiDIMSQLiteHelper.COLUMN_QTD_DORM_INDEX));
+//				imovel.setAreaConstruida(cursor
+//						.getDouble(SiDIMSQLiteHelper.COLUMN_AREA_CONSTRUIDA_INDEX));
+//				imovel.setAreaTotal(cursor
+//						.getDouble(SiDIMSQLiteHelper.COLUMN_AREA_TOTAL_INDEX));
+//				imovel.setSuites((byte) cursor
+//						.getInt(SiDIMSQLiteHelper.COLUMN_QTD_SUITES_INDEX));
+//				imovel.setGaragens((byte) cursor
+//						.getInt(SiDIMSQLiteHelper.COLUMN_QTD_SUITES_INDEX));
+//				imovel.setCep(cursor
+//						.getString(SiDIMSQLiteHelper.COLUMN_CEP_INDEX));
+//				imovel.setRua(cursor
+//						.getString(SiDIMSQLiteHelper.COLUMN_RUA_INDEX));
+//				imovel.setPreco(new BigDecimal(cursor
+//						.getDouble(SiDIMSQLiteHelper.COLUMN_PRECO_INDEX)));
+//				imovel.setDescricao(cursor
+//						.getString(SiDIMSQLiteHelper.COLUMN_DESCRICAO_INDEX));
+//
+//			} catch (Exception e) {
+//				imovel = null;
+//			} finally {
+//				cursor.close();
+//			}
+//		}
+//
+//		return imovel;
+//
+//	}
 
 	public void removerImovel(ImovelMobile imovel) {
 
@@ -255,6 +252,7 @@ public class FavoritosDAO {
 				imovel.setDescricao(cursor
 						.getString(SiDIMSQLiteHelper.COLUMN_DESCRICAO_INDEX));
 				imovel.setFotos(SessionUserSidim.getListPhotoUrl(cursor.getString(SiDIMSQLiteHelper.COLUMN_FOTOS_INDEX)));
+				imovel.setIntencao(cursor.getString(SiDIMSQLiteHelper.COLUMN_INTENCAO_INDEX));
 
 				imoveis.add(imovel);
 				
@@ -273,5 +271,64 @@ public class FavoritosDAO {
 	}
 	
 	
+	
+	public ImovelMobile getImovel(ImovelMobile imovelParam) {
+
+		open();
+		
+		ImovelMobile imovel = null;
+
+		Cursor cursor = database.query(SiDIMSQLiteHelper.TABLE_FAVORITOS, null,
+				SiDIMSQLiteHelper.COLUMN_ID_MOVEL + " = "
+						+ imovelParam.getIdImovel(), null, null, null, null);
+		
+
+		if (cursor.moveToNext()) {
+
+			try {
+				imovel = new ImovelMobile();
+				imovel.setIdImovel(cursor
+						.getInt(SiDIMSQLiteHelper.COLUMN_ID_MOVEL_INDEX));
+				imovel.setEstado(new Estado(cursor
+						.getString(SiDIMSQLiteHelper.COLUMN_ESTADO_INDEX), ""));
+				imovel.setTipoImovel(new TipoImovel((short) 0, cursor
+						.getString(SiDIMSQLiteHelper.COLUMN_TIPO_IMOVEL_INDEX)));
+				imovel.setCidade(new Cidade(0, null, cursor
+						.getString(SiDIMSQLiteHelper.COLUMN_CIDADE_INDEX), ""));
+				imovel.setBairro(new Bairro(0, null, cursor
+						.getString(SiDIMSQLiteHelper.COLUMN_BAIRRO_INDEX), ""));
+				imovel.setDormitorios((byte) cursor
+						.getInt(SiDIMSQLiteHelper.COLUMN_QTD_DORM_INDEX));
+				imovel.setAreaConstruida(cursor
+						.getDouble(SiDIMSQLiteHelper.COLUMN_AREA_CONSTRUIDA_INDEX));
+				imovel.setAreaTotal(cursor
+						.getDouble(SiDIMSQLiteHelper.COLUMN_AREA_TOTAL_INDEX));
+				imovel.setSuites((byte) cursor
+						.getInt(SiDIMSQLiteHelper.COLUMN_QTD_SUITES_INDEX));
+				imovel.setGaragens((byte) cursor
+						.getInt(SiDIMSQLiteHelper.COLUMN_QTD_GARAG_INDEX));
+				imovel.setCep(cursor
+						.getString(SiDIMSQLiteHelper.COLUMN_CEP_INDEX));
+				imovel.setRua(cursor
+						.getString(SiDIMSQLiteHelper.COLUMN_RUA_INDEX));
+				imovel.setPreco(new BigDecimal(cursor
+						.getDouble(SiDIMSQLiteHelper.COLUMN_PRECO_INDEX)));
+				imovel.setDescricao(cursor
+						.getString(SiDIMSQLiteHelper.COLUMN_DESCRICAO_INDEX));
+				imovel.setFotos(SessionUserSidim.getListPhotoUrl(cursor.getString(SiDIMSQLiteHelper.COLUMN_FOTOS_INDEX)));
+				imovel.setIntencao(cursor.getString(SiDIMSQLiteHelper.COLUMN_INTENCAO_INDEX));
+				
+			} catch (Exception e) {
+				imovel = null;
+			} finally {
+				cursor.close();
+				close();
+				
+			}
+		}
+
+		return imovel;
+
+	}
 
 }

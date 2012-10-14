@@ -6,6 +6,7 @@
         <shape  android:shape="rectangle">
 
             <solid android:color="#d8d8d8" />
+            <!-- @color/color_background_screens -->
             <corners android:radius="12dp" />
 
         </shape>
@@ -16,7 +17,7 @@
 
         <shape  android:shape="rectangle">
 
-        <solid android:color="#ffffff" />
+        <solid android:color="@color/color_background_screens" />
         <corners android:radius="12dp" />
 
 

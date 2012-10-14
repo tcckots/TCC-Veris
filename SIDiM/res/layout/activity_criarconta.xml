@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/color_background_screens"
     android:orientation="vertical" >
 
     <ScrollView
@@ -10,11 +9,12 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_margin="15dp" android:background="@drawable/round_bounds">
-
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#ffffff" android:orientation="vertical">
+            android:background="@color/color_background_screens"
+            android:orientation="vertical" >
 
             <LinearLayout
                 android:layout_width="fill_parent"

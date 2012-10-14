@@ -57,7 +57,7 @@ public class FotoGaleriaFavorAdapter extends BaseAdapter {
 		
 		ImageView imgOption = (ImageView) v.findViewById(R.id.fotogaleriaitem);
 		
-		imgOption.setImageDrawable(LoadImagesSDCard.getImageFromSdCard(url));											
+		LoadImagesSDCard.getImageFromSdCard(url,imgOption);											
 		
 		return v;
 		

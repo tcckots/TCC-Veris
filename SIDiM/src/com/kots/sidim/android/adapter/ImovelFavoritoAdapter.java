@@ -1,9 +1,15 @@
 package com.kots.sidim.android.adapter;
 
+import java.io.File;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kots.sidim.android.R;
+import com.kots.sidim.android.activities.VisualizarImovelActivity;
 import com.kots.sidim.android.model.ImovelMobile;
 import com.kots.sidim.android.util.LoadImagesSDCard;
 
@@ -64,38 +71,51 @@ public class ImovelFavoritoAdapter extends BaseAdapter {
 		txtTitleContent.setText(imovel.getBairro().getNome() + ", " + imovel.getTipoImovel().getDescricao() + imovel.getDormitorios() + " Dorm");
 		
 		TextView txtDescriptionContent = (TextView) v.findViewById(R.id.favorItemInputCity);
-		txtDescriptionContent.setText(imovel.getCidade().getNome() + "-" + imovel.getEstado().getUf());
+		txtDescriptionContent.setText(imovel.getCidade().getNome() + "-" + imovel.getEstado().getUf());				
+		
+		DecimalFormat df = new DecimalFormat("###,###,###.00");
 		
 		TextView txtPreco = (TextView) v.findViewById(R.id.favorItemInputPrice);
-		txtPreco.setText("Venda " + ": " + imovel.getPreco().doubleValue());
+				
+		String preco = "";
+		
+		if(imovel.getIntencao().equals("C")){
+			
+			if(imovel.getPreco().doubleValue() == 0){
+				preco = "Compra: Entre em contato";
+			} else {
+				preco = "Compra: R$ " +  df.format(imovel.getPreco().doubleValue());
+			}
+			txtPreco.setText(preco);
+		} else {
+			if(imovel.getPreco().doubleValue() == 0){
+				preco = "Aluga: Entre em contato";
+			} else {
+				preco = "Aluga: R$ " +  df.format(imovel.getPreco().doubleValue());
+			}
+			txtPreco.setText(preco);
+		}
 		
 		ImageView imgPreview = (ImageView) v.findViewById(R.id.favorItemImgFoto);
-		Bitmap image = null;//LoadImagesSDCard.ShowPicture(imovel.getFotoslocal());
-		//LoadImagesSDCard.getFirstImageFromSdCard(imovel.getFotos(), image);
-		
-		
-		imgPreview.setImageBitmap(image);
-		
-		
-		
-		
-		
-//		if(SessionUserSidim.images.containsKey(imovel.getIdImovel())){
-//		    imgPreview.setImageBitmap(SessionUserSidim.images.get(imovel.getIdImovel()));
-//		} else {
-//		    drawManager.fetchDrawableOnThread("", imgPreview);                                   
-//		}
-		
+//		
 
+//		String path = Environment.getExternalStorageDirectory() + File.separator + "fotoss" + File.separator + "testeimage.png";
+		if(imovel.getFotos() != null && imovel.getFotos().size() > 0){
+			LoadImagesSDCard.getFirstImageFromSdCard(imovel.getFotos(),imgPreview);
+			//imgPreview.setImageDrawable(draw);
+		}
+		
+		
 		
 		RelativeLayout linearDescription = (RelativeLayout) v.findViewById(R.id.favorItemLayoutDesc);
 		linearDescription.setOnClickListener(new OnClickListener() {
                     
                     @Override
                     public void onClick(View v) {
-//                        Intent intent = new Intent(context, ContentDetailsActivity.class);
-//                        intent.putExtra("contentdetails", content);
-//                        context.startActivity(intent);
+                        Intent intent = new Intent(context, VisualizarImovelActivity.class);
+                        intent.putExtra("imoveldetalhes", imovel);
+                        intent.putExtra("cameFavoriteScreen", true);
+        				context.startActivity(intent);
                         
                     }
                 });
@@ -106,11 +126,24 @@ public class ImovelFavoritoAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View v) {
                        
-//                        Intent lVideoIntent = new Intent(null, Uri.parse("ytv://"+ content.getId()), context, OpenYouTubePlayerActivity.class);
-//                        context.startActivity(lVideoIntent);
-                        
+                    	Intent intent = new Intent(context, VisualizarImovelActivity.class);
+                        intent.putExtra("imoveldetalhes", imovel);
+                        intent.putExtra("cameFavoriteScreen", true);
+        				context.startActivity(intent);                    	
+                    	
                     }
-                });									
+                });	
+		
+				
+//		if(SessionUserSidim.images.containsKey(imovel.getIdImovel())){
+//		    imgPreview.setImageBitmap(SessionUserSidim.images.get(imovel.getIdImovel()));
+//		} else {
+//		    drawManager.fetchDrawableOnThread("", imgPreview);                                   
+//		}
+		
+
+		
+								
 		
 		return v;
 		

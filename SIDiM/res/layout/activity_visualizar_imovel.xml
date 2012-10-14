@@ -8,108 +8,10 @@
     tools:context=".activities.LoginActivity" >
 
     <LinearLayout
-        android:id="@+id/viewFotos"
-        android:layout_width="wrap_content"
-        android:layout_height="270dp"
-        android:orientation="vertical" >
-
-        <ImageView
-            android:id="@+id/visualizarImovelImageMain"
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:layout_marginTop="2dp"
-            android:src="@drawable/casafera" />
-
-        <Gallery
-            android:id="@+id/visualizarImovelGallery"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:spacing="2dp" />
-
-    </LinearLayout>
-
-    <ScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        android:layout_weight="0.71"
-        android:scrollbarAlwaysDrawVerticalTrack="true"
-        android:fadeScrollbars="false" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/visualizarImovelTextTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Casa 3 Dorm, Amplo quintal - JD Aurélia"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:orientation="vertical" >
-
-                <TextView
-                    android:id="@+id/visualizarImovelTextPreco"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Compra: " />
-
-                <TextView
-                    android:id="@+id/visualizarImovelTextBairro"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Bairro: JD Aurélia" />
-
-                <TextView
-                    android:id="@+id/visualizarImovelTextCidadeEstado"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Campinas - São Paulo" />
-
-                <TextView
-                    android:id="@+id/visualizarImovelTextQtds"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="3 Dorm - 2 Suítes - 2 Garagens" />
-
-                <TextView
-                    android:id="@+id/visualizarImovelTextArea"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Área: 80m Contruída, 200m Total " />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/visualizarImovelTextObservacao"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ótima Localização, Amplo Quintal, Casa Nova, Aceita Financiamento, Preço Negociável" />
-        </LinearLayout>
-    </ScrollView>
-
-    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="right"
         android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/visualizarImovelButtonInteresse"
-            style="@style/ButtonCleanOrange"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Enviar Interesse" />
 
         <Button
             android:id="@+id/visualizarImovelBtAddFavoritos"
@@ -118,7 +20,287 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            android:text="+ Favoritos" />
+            android:text="+ Favoritos"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/visualizarImovelButtonInteresse"
+            style="@style/ButtonCleanOrange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enviar Interesse"
+            android:textSize="12dp" />
+
     </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/viewFotos"
+                android:layout_width="match_parent"
+                android:layout_height="270dp"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/visualizarImovelImageMain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:src="@drawable/carregandofoto" />
+
+                <Gallery
+                    android:id="@+id/visualizarImovelGallery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:spacing="2dp" />
+            </LinearLayout>
+
+            <ScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="0.71"
+                android:fadeScrollbars="false"
+                android:scrollbarAlwaysDrawVerticalTrack="true" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/visualizarImovelTextTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Carregando"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/round_bounds"
+                        android:orientation="vertical" >
+
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <TableRow
+                                android:id="@+id/tableRow1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" >
+
+                                <TextView
+                                    android:id="@+id/visualizarImovelTextIntencaoValor"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="right"
+                                    android:layout_marginLeft="10dp"
+                                    android:text="Valor:"
+                                    android:textColor="#00688B"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/visualizarImovelTextPreco"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="left"
+                                    android:layout_marginLeft="10dp"
+                                    android:text="Carregando" />
+
+                            </TableRow>
+
+                            <TableRow
+                                android:id="@+id/tableRow2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" >
+
+                                <TextView
+                                    android:id="@+id/textView2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="right"
+                                    android:layout_marginLeft="10dp"
+                                    android:text="Bairro:"
+                                    android:textColor="#00688B"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/visualizarImovelTextBairro"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="left"
+                                    android:layout_marginLeft="10dp"
+                                    android:text="Carregando" />
+
+                            </TableRow>
+
+                            <TableRow
+                                android:id="@+id/tableRow3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" >
+
+                                <TextView
+                                    android:id="@+id/textView3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="right"
+                                    android:layout_marginLeft="10dp"
+                                    android:text="Cidade:"
+                                    android:textColor="#00688B"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/visualizarImovelTextCidadeEstado"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="left"
+                                    android:layout_marginLeft="10dp"
+                                    android:text="Carregando" />
+
+                            </TableRow>
+
+                            <TableRow
+                                android:id="@+id/tableRow4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" >
+
+                                <TextView
+                                    android:id="@+id/textView4"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="right"
+                                    android:layout_marginLeft="10dp"
+                                    android:text="Dorm:"
+                                    android:textColor="#00688B"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/visualizarImovelTextQtdsDorm"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="left"
+                                    android:layout_marginLeft="10dp"
+                                    android:text="Carregando" />
+
+                            </TableRow>
+
+                            <TableRow
+                                android:id="@+id/tableRow5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" >
+
+                                <TextView
+                                    android:id="@+id/textView5"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="right"
+                                    android:layout_marginLeft="10dp"
+                                    android:text="Garagens:"
+                                    android:textColor="#00688B"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/visualizarImovelTextQtdGaragens"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:text="Carregando" />
+
+                            </TableRow>
+
+                            <TableRow
+                                android:id="@+id/tableRow6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" >
+
+                                <TextView
+                                    android:id="@+id/textView6"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="right"
+                                    android:layout_marginLeft="10dp"
+                                    android:text="Área:"
+                                    android:textColor="#00688B"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/visualizarImovelTextAreaContruida"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="left"
+                                    android:layout_marginLeft="10dp"
+                                    android:text="Carregando" />
+
+                            </TableRow>
+
+                            <TableRow
+                                android:id="@+id/tableRow7"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" >
+
+                                <TextView
+                                    android:id="@+id/textView1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="right"
+                                    android:layout_marginLeft="10dp" />
+
+                                <TextView
+                                    android:id="@+id/visualizarImovelTextAreaTotal"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="left"
+                                    android:layout_marginLeft="10dp"
+                                    android:text="Carregando" />
+
+                            </TableRow>
+
+                        </TableLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="3dp"
+                            android:layout_marginRight="3dp"
+                            android:orientation="vertical" >
+
+                            <TextView
+                                android:id="@+id/visualizarImovelTextObservacao"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="4dp"
+                                android:layout_marginLeft="3dp"
+                                android:layout_marginRight="3dp"
+                                android:layout_marginTop="4dp"
+                                android:text="Descrição: Carregando" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </ScrollView>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

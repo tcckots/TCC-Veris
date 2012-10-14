@@ -1,6 +1,5 @@
 package com.kots.sidim.android.activities;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
@@ -10,14 +9,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
-
 import com.google.android.maps.MapActivity;
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.adapter.MenuAdapter;
@@ -27,7 +24,19 @@ import com.kots.sidim.android.views.MyHorizontalScrollView.SizeCallback;
 
 
 public class MainBarActivity extends MapActivity {
-	
+//	
+//	@Override
+//	protected void onResume() {
+//
+//		if(menuOn){
+//			btnSlide.performClick();
+//		} else{
+//			super.onBackPressed();
+//		}
+//		
+//		super.onResume();
+//	}
+
 	MyHorizontalScrollView scrollView;
     View menu;
     View app;
@@ -54,6 +63,10 @@ public class MainBarActivity extends MapActivity {
         app = inflater.inflate(layoutResID, null);
         bar = inflater.inflate(R.layout.layout_bar_app, null);
         
+       // menu.setBackgroundColor(R.color.color_background_screens);
+       // app.setBackgroundColor(R.color.color_background_screens);
+       // bar.setBackgroundColor(R.color.color_background_screens);
+        
         LinearLayout linear = new LinearLayout(this);
         linear.setOrientation(LinearLayout.VERTICAL);
         linear.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
@@ -79,9 +92,10 @@ public class MainBarActivity extends MapActivity {
 				
 				}
 			}});
-        
+                
         
         ViewGroup tabBar = (ViewGroup) bar.findViewById(R.id.layoutBarApp);
+        //tabBar.setBackgroundColor(R.color.color_background_screens);
         
         btnSlide = (ImageButton) tabBar.findViewById(R.id.barImgBtSlideMenu);
         btnSlide.setOnClickListener(new ClickListenerForScrolling(scrollView, menu));
@@ -129,21 +143,21 @@ public class MainBarActivity extends MapActivity {
 
 
 	
-	private void setListviewSelection(final ListView list, final int pos) {
-		list.post(new Runnable() 
-		   {
-		    @Override
-		    public void run() 
-		      {
-		        list.setSelection(pos);
-		        View v = list.getChildAt(pos);
-		        if (v != null) 
-		        {
-		            v.requestFocus();
-		        }
-		    }
-		});
-		}
+//	private void setListviewSelection(final ListView list, final int pos) {
+//		list.post(new Runnable() 
+//		   {
+//		    @Override
+//		    public void run() 
+//		      {
+//		        list.setSelection(pos);
+//		        View v = list.getChildAt(pos);
+//		        if (v != null) 
+//		        {
+//		            v.requestFocus();
+//		        }
+//		    }
+//		});
+//		}
 
 
 
@@ -189,10 +203,7 @@ public class MainBarActivity extends MapActivity {
         }
     }
 
-    /**
-     * Helper that remembers the width of the 'slide' button, so that the 'slide' button remains in view, even when the menu is
-     * showing.
-     */
+    
     static class SizeCallbackForMenu implements SizeCallback {
         int btnWidth;
         View btnSlide;
@@ -221,7 +232,6 @@ public class MainBarActivity extends MapActivity {
 
 	@Override
 	protected boolean isRouteDisplayed() {
-		// TODO Auto-generated method stub
 		return false;
 	}
     
