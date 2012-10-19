@@ -40,29 +40,7 @@ public class ContatoActivity extends MainBarActivity {
 	public void onCreate(Bundle savedInstace){
 		super.onCreate(savedInstace);
 		setContentView(R.layout.activity_contato, ConfigGlobal.MENU_INDEX_CONTATO);
-		
-		mapView = (MapView) findViewById(R.id.contatoMapview);
-		
-		mapView.setClickable(true);
-		mapView.setBuiltInZoomControls(true);
-		mapView.displayZoomControls(true);
-		mapView.getController().setZoom(17);
-		mapView.invalidate();
-		mapView.getController().animateTo(new Point(-22.897634,-47.049541));
-		
-		
-		List<Overlay> mapOverlays = mapView.getOverlays();
-		mapOverlays.clear();
-		
-		ArrayList<OverlayItem> overlays = new ArrayList<OverlayItem>();
-		overlays.add(new OverlayItem(new Point(-22.897634,-47.049541),"P‡dua Im—veis","Imobili‡ria"));
-	
-		Drawable drawable = this.getResources().getDrawable(R.drawable.overlay);
-        SurfSpotsItemizedOverlay itemizedoverlay = new SurfSpotsItemizedOverlay(drawable, this);
-                
-        itemizedoverlay.addListOverlay(overlays);
-        
-        mapOverlays.add(itemizedoverlay);
+
         
         Button btAddContato = (Button) findViewById(R.id.contatoBtAddContato);
         btAddContato.setOnClickListener(new OnClickListener() {
@@ -70,7 +48,7 @@ public class ContatoActivity extends MainBarActivity {
 			@Override
 			public void onClick(View v) {
 			
-				insert("Imobili‡ria", "P‡dua Im—veis", "32525659", null,"paduaimoveis@paduaimovies.com.br","http://www.paduaimoveis.com.br","Campinas","Brasil","R. Barreto Leme, 2345 - Cambu’","13025-085","S‹o Paulo");
+				insert("Imobili‡ria", "P‡dua Im—veis", "01932525659", null,"paduaimoveis@paduaimovies.com.br","http://www.paduaimoveis.com.br","Campinas","Brasil","R. Barreto Leme, 2345 - Cambu’","13025-085","S‹o Paulo");
 				
 			}
 		});
@@ -81,7 +59,7 @@ public class ContatoActivity extends MainBarActivity {
 			@Override
 			public void onClick(View v) {
 				
-				ligar("32525659");
+				ligar("01932525659");
 				
 			}
 		});
@@ -92,7 +70,7 @@ public class ContatoActivity extends MainBarActivity {
 			@Override
 			public void onClick(View v) {
 				
-				ligar("32525659");
+				ligar("01932525659");
 				
 			}
 		});
@@ -228,6 +206,16 @@ public class ContatoActivity extends MainBarActivity {
 
 	    return name;
 	}
+	
+//	@Override
+//	protected void onResume() {
+//
+//		if(menuOn){
+//			btnSlide.performClick();
+//		} 
+//		
+//		super.onResume();
+//	}
 	
 
 }

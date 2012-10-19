@@ -28,6 +28,7 @@ import com.kots.sidim.android.exception.SiDIMException;
 import com.kots.sidim.android.model.FiltroImovel;
 import com.kots.sidim.android.model.ImovelMobile;
 import com.kots.sidim.android.server.SiDIMControllerServer;
+import com.kots.sidim.android.util.SessionUserSidim;
 
 public class ResultPesquisaActivity extends MainBarActivity {
 
@@ -197,18 +198,22 @@ public class ResultPesquisaActivity extends MainBarActivity {
 //							if (ValidacaoGeral.validaCampoVazio(msgerror)) {
 //								Toast.makeText(instance, msgerror,
 //										Toast.LENGTH_LONG).show();
-//							} else {
+//							} else {							
 								if (imoveis != null && imoveis.size() > 0) {
-									Parcelable state = listResult.onSaveInstanceState();
-
+									
+									SessionUserSidim.clearImages();
+									
+									Parcelable state = listResult.onSaveInstanceState();									
 									adapter = new ImovelAdapter(instance,
 											imoveis);
 									listResult.setAdapter(adapter);
 									adapter.notifyDataSetChanged();
 									listResult.onRestoreInstanceState(state);
-									buscando = false;
+									buscando = false;									
 								} else {
 									buscando = true;
+									Parcelable state = listResult.onSaveInstanceState();
+									listResult.onRestoreInstanceState(state);
 								}
 							//}
 

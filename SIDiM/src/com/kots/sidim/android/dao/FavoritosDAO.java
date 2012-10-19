@@ -118,7 +118,10 @@ public class FavoritosDAO {
 	        values.put(SiDIMSQLiteHelper.COLUMN_FOTOS, allPhotos);
 	        
 	        
-	     } catch(Exception e)
+	     } catch (NumberFormatException e2){
+	    	 throw new NumberFormatException();
+	     }
+			catch(Exception e)
 	     {
 	    	 throw new SiDIMException("Seu SDCard n‹o est‡ dispon’vel para salvar as fotos");
 	     }

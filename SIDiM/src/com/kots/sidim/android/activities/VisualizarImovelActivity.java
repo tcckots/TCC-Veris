@@ -304,10 +304,11 @@ public class VisualizarImovelActivity extends MainBarActivity {
 				}else {
 					Toast.makeText(instance, "Im—vel adicionado aos favoritos",
 							Toast.LENGTH_LONG).show();
+					addFavoritos.setText("- Favoritos");
+					cameFavoritosScreen = true;
 				}
 				
-				addFavoritos.setText("- Favoritos");
-				cameFavoritosScreen = true;
+				
 				
 
 				if (progressDialog != null) {
@@ -325,13 +326,20 @@ public class VisualizarImovelActivity extends MainBarActivity {
 				try {
 					favoritosDao.insertFavorito(imovel, imovel.getFotos());
 					handler.sendEmptyMessage(2);
+				} catch (NumberFormatException e2){
+					
+					Bundle data = new Bundle();
+					data.putString("msgerror", "Por favor conecte-se a uma rede para adicionar favoritos");
+					Message msg = new Message();
+					msg.setData(data);
+					handler.sendMessage(msg);
+					
 				} catch (SiDIMException e) {
 					Bundle data = new Bundle();
 					data.putString("msgerror", e.getMessage());
 					Message msg = new Message();
 					msg.setData(data);
-					handler.sendMessage(msg);
-					
+					handler.sendMessage(msg);	
 				}
 			}
 		};
@@ -359,10 +367,11 @@ public class VisualizarImovelActivity extends MainBarActivity {
 				}else {
 					Toast.makeText(instance, "Im—vel removido dos favoritos",
 							Toast.LENGTH_LONG).show();
+					addFavoritos.setText("+Favoritos");
+					cameFavoritosScreen = false;
 				}
 				
-				addFavoritos.setText("+Favoritos");
-				cameFavoritosScreen = false;
+				
 				
 				if (progressDialog != null) {
 					progressDialog.dismiss();

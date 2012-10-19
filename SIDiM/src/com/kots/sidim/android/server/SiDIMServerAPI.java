@@ -24,7 +24,7 @@ import com.kots.sidim.android.util.HttpUtil;
 
 public class SiDIMServerAPI {
 
-	private static final String URL_SERVER_API = "http://10.1.1.10/SIDiM_web/ws/service";
+	private static final String URL_SERVER_API = "http://192.168.241.1/SIDiM_web/ws/service";
 	
 	
 	private static Gson GSON = new Gson();

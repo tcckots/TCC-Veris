@@ -29,52 +29,23 @@ public class FavoritosActivity extends MainBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_favoritos, ConfigGlobal.MENU_INDEX_FAVORITOS);
 		
-		favoritosDao = new FavoritosDAO(instance);
 		
+								
+	
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
 		
-		
-		List<ImovelMobile> imoveis = favoritosDao.getImoveis();
-//		imoveis.add(getNewImovel());
-//		imoveis.add(getNewImovel());
-//		imoveis.add(getNewImovel());
-//		imoveis.add(getNewImovel());
-//		imoveis.add(getNewImovel());
-//		imoveis.add(getNewImovel());
-//		imoveis.add(getNewImovel());
-//		imoveis.add(getNewImovel());
-//		imoveis.add(getNewImovel());
-//		imoveis.add(getNewImovel());
-//		imoveis.add(getNewImovel());
-//		imoveis.add(getNewImovel());
-//		imoveis.add(getNewImovel());
-		
+		favoritosDao = new FavoritosDAO(instance);		
+		List<ImovelMobile> imoveis = favoritosDao.getImoveis();		
 		ImovelFavoritoAdapter adapter = new ImovelFavoritoAdapter(this, imoveis);
 		
 		ListView list = (ListView) findViewById(R.id.favoritosListResultados);
 		list.setDivider( null ); 
         list.setAdapter(adapter);
-								
-	
 	}
-	
-//	public Imovel getNewImovel(){
-//		
-//		Imovel imovel = new Imovel();
-//		imovel.setIdImovel(1);
-//		imovel.setEstado(new Estado("SP","São Paulo"));
-//		imovel.setCidade(new Cidade(1, new Estado("SP","São Paulo"), "Campinas", ""));
-//		imovel.setAreaTotal(40);
-//		imovel.setDormitorios((short)3);
-//		imovel.setSuites((short) 2);
-//		imovel.setGaragens((byte) 1);
-//		imovel.setBairro(new Bairro(1, null, "Jd. Aurélia", ""));
-//		imovel.setDescricao("Linda Casa");
-//		imovel.setPreco(new BigDecimal(130000));
-//		imovel.setTipoImovel(new TipoImovel((short) 1, "Casa"));
-//		
-//		return imovel;
-//		
-//	}
 	
 	
 

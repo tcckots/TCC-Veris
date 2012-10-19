@@ -51,7 +51,8 @@ public class DrawableConnectionManager {
         } catch (MalformedURLException e) {
             Log.e(this.getClass().getSimpleName(), "fetchDrawable failed", e);	            
         } catch (IOException e) {
-            Log.e(this.getClass().getSimpleName(), "fetchDrawable failed", e);	            
+            Log.e(this.getClass().getSimpleName(), "fetchDrawable failed", e);	  
+            throw new NumberFormatException();
         }
         return bitmap;
     }

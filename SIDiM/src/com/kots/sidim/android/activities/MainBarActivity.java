@@ -2,6 +2,7 @@ package com.kots.sidim.android.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,23 +20,14 @@ import com.google.android.maps.MapActivity;
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.adapter.MenuAdapter;
 import com.kots.sidim.android.config.ConfigGlobal;
+import com.kots.sidim.android.util.SessionUserSidim;
 import com.kots.sidim.android.views.MyHorizontalScrollView;
 import com.kots.sidim.android.views.MyHorizontalScrollView.SizeCallback;
 
 
-public class MainBarActivity extends MapActivity {
-//	
-//	@Override
-//	protected void onResume() {
-//
-//		if(menuOn){
-//			btnSlide.performClick();
-//		} else{
-//			super.onBackPressed();
-//		}
-//		
-//		super.onResume();
-//	}
+public class MainBarActivity extends Activity {
+	
+
 
 	MyHorizontalScrollView scrollView;
     View menu;
@@ -50,7 +42,16 @@ public class MainBarActivity extends MapActivity {
     ListView listMenu;
     int indexActivity;
     Activity instance;
-	
+    
+    
+
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		SessionUserSidim.clearImages();
+	}
+
 	@Override
 	public void setContentView(int layoutResID) {		
 		instance = this;
@@ -62,10 +63,6 @@ public class MainBarActivity extends MapActivity {
 		menu = inflater.inflate(R.layout.horz_scroll_menu, null);
         app = inflater.inflate(layoutResID, null);
         bar = inflater.inflate(R.layout.layout_bar_app, null);
-        
-       // menu.setBackgroundColor(R.color.color_background_screens);
-       // app.setBackgroundColor(R.color.color_background_screens);
-       // bar.setBackgroundColor(R.color.color_background_screens);
         
         LinearLayout linear = new LinearLayout(this);
         linear.setOrientation(LinearLayout.VERTICAL);
@@ -82,6 +79,10 @@ public class MainBarActivity extends MapActivity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
+				
+				if(menuOn){
+					btnSlide.performClick();
+				}
 				
 				switch(arg2){
 				case ConfigGlobal.MENU_INDEX_HOME: startActivity(new Intent(instance,MenuPrincipalActivity.class)); break;
@@ -229,12 +230,5 @@ public class MainBarActivity extends MapActivity {
             }
         }
     }
-
-	@Override
-	protected boolean isRouteDisplayed() {
-		return false;
-	}
-    
-    
 
 }
