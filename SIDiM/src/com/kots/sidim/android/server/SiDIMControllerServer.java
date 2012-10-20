@@ -15,6 +15,7 @@ import com.kots.sidim.android.model.Estado;
 import com.kots.sidim.android.model.FiltroImovel;
 import com.kots.sidim.android.model.ImovelMobile;
 import com.kots.sidim.android.model.InteresseClienteId;
+import com.kots.sidim.android.model.ResultWebService;
 import com.kots.sidim.android.model.TipoImovel;
 import com.kots.sidim.android.model.TipoImovelMobile;
 
@@ -52,8 +53,8 @@ public class SiDIMControllerServer {
 	
 	public boolean criarConta(Cliente conta) throws SiDIMException{
 				
-		//return sidimAPI.criarConta(conta);
-		return true;
+		return sidimAPI.criarConta(conta);
+		//return true;
 	}
 	
 	public boolean atualizarConta(Cliente conta) throws SiDIMException{		
@@ -70,26 +71,26 @@ public class SiDIMControllerServer {
 			e.printStackTrace();
 		}
 		
-		List<ImovelMobile> imoveis = new ArrayList<ImovelMobile>();
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
-		imoveis.add(getNewImovel());
+//		List<ImovelMobile> imoveis = new ArrayList<ImovelMobile>();
+//		imoveis.add(getNewImovel());
+//		imoveis.add(getNewImovel());
+//		imoveis.add(getNewImovel());
+//		imoveis.add(getNewImovel());
+//		imoveis.add(getNewImovel());
+//		imoveis.add(getNewImovel());
+//		imoveis.add(getNewImovel());
+//		imoveis.add(getNewImovel());
+//		imoveis.add(getNewImovel());
+//		imoveis.add(getNewImovel());
+//		imoveis.add(getNewImovel());
+//		imoveis.add(getNewImovel());
+//		imoveis.add(getNewImovel());
+//		imoveis.add(getNewImovel());
+//		imoveis.add(getNewImovel());
+//		
+//		return imoveis;
 		
-		return imoveis;
-		
-		//return sidimAPI.buscarImoveis(filtro);
+		return sidimAPI.buscarImoveis(filtro);
 		
 	}
 	
@@ -107,6 +108,12 @@ public class SiDIMControllerServer {
 	public List<ImovelMobile> getRandomImoveis(String cidade) throws SiDIMException{
 		
 		return sidimAPI.getRandomImoveis(cidade);
+	}
+	
+	public ImovelMobile getImovel(int id) throws SiDIMException {
+		
+		return sidimAPI.getImovel(id);
+		
 	}
 	
 	public List<String> getCidades(String uf) throws SiDIMException{
@@ -132,7 +139,12 @@ public class SiDIMControllerServer {
 	public List<String> getBairro(String cidade) throws SiDIMException{
 		
 		List<String> sBairros = new ArrayList<String>();
-		List<Bairro> bairros = sidimAPI.getBairro(cidade);
+		
+		ResultWebService result = new ResultWebService();
+		result.setSuccess(true);
+		result.setMensagem(cidade);
+		
+		List<Bairro> bairros = sidimAPI.getBairro(result);
 		
 		for(Bairro item : bairros){
 			sBairros.add(item.getNome());

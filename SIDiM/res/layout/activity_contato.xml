@@ -56,6 +56,12 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/color_text_color" />
 
+            <CheckBox
+                android:id="@+id/checkBox1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CheckBox" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >

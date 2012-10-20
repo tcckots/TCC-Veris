@@ -12,13 +12,15 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 
 import android.util.Log;
 
@@ -88,7 +90,10 @@ public class HttpUtil {
             httpPost.setHeader("Accept", "application/json");
             httpPost.setHeader("Content-type", "application/json; charset=utf-8");
             
-            HttpResponse response = new DefaultHttpClient().execute(httpPost);
+            final HttpParams httpParams = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpParams, 90000);
+            
+            HttpResponse response = new DefaultHttpClient(httpParams).execute(httpPost);
             br = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
             
             String line;

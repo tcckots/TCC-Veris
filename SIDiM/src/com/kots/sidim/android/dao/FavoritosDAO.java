@@ -55,7 +55,7 @@ public class FavoritosDAO {
 
 	public int insertFavorito(ImovelMobile imovel, List<String> photos) throws SiDIMException {
 
-		removerImovel(imovel);
+		
 		
 		ContentValues values = new ContentValues();
 		values.put(SiDIMSQLiteHelper.COLUMN_ID_MOVEL, imovel.getIdImovel());
@@ -115,6 +115,7 @@ public class FavoritosDAO {
 	            
 	        }
 	        
+	        removerImovel(imovel);
 	        values.put(SiDIMSQLiteHelper.COLUMN_FOTOS, allPhotos);
 	        
 	        

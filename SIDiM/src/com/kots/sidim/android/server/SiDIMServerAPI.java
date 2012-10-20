@@ -24,11 +24,12 @@ import com.kots.sidim.android.util.HttpUtil;
 
 public class SiDIMServerAPI {
 
-	private static final String URL_SERVER_API = "http://192.168.241.1/SIDiM_web/ws/service";
+	private static final String URL_SERVER_API = "http://23.22.250.78/sidim/ws/service";
 	
 	
 	private static Gson GSON = new Gson();
 	Type typeOfImovel = new TypeToken<ArrayList<ImovelMobile>>() {}.getType();
+	Type typeOfImovelId = new TypeToken<ImovelMobile>() {}.getType();
 	Type typeOfCidade = new TypeToken<ArrayList<Cidade>>() {}.getType();
 	Type typeOfBairro = new TypeToken<ArrayList<Bairro>>() {}.getType();
 	Type typeOfTipo = new TypeToken<ArrayList<TipoImovelMobile>>() {}.getType();
@@ -211,7 +212,7 @@ public class SiDIMServerAPI {
         	throw new SiDIMException("Nenhum Resultado Encontrado");
         }		
 	}
-
+	
 	public List<Cidade> getCidades(String uf) throws SiDIMException {
 
 		ArrayList<Cidade> cidades = null;
@@ -235,14 +236,37 @@ public class SiDIMServerAPI {
 		
 	}
 
-	public List<Bairro> getBairro(String cidade) throws SiDIMException {
+	public ImovelMobile getImovel(int id) throws SiDIMException {
 
-		ArrayList<Bairro> bairros = null;
-		String url = URL_SERVER_API + "/buscarBairros/" + URLEncoder.encode(cidade);		
+		ImovelMobile imovel = null;
+		String url = URL_SERVER_API + "/getImovel/" + id;		
 		String response = "";
 		
         try {
             response = HttpUtil.doHttpGet(url);
+            imovel = GSON.fromJson(response, typeOfImovelId);                       
+            
+        } catch (Exception e) {            
+            e.printStackTrace();
+        }
+        
+        if(imovel != null){
+	        return imovel;
+        } else {
+        	throw new SiDIMException("Você não está conectado, conecte-se a uma rede");
+        }
+		
+		
+	}
+
+	public List<Bairro> getBairro(ResultWebService result) throws SiDIMException {
+
+		ArrayList<Bairro> bairros = null;
+		String url = URL_SERVER_API + "/buscarBairros";		
+		String response = "";
+		
+        try {
+            response = HttpUtil.doHttpPost(url,GSON.toJson(result));
             bairros = GSON.fromJson(response, typeOfBairro);                       
             
         } catch (Exception e) {            

@@ -29,9 +29,6 @@ public class FavoritosActivity extends MainBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_favoritos, ConfigGlobal.MENU_INDEX_FAVORITOS);
 		
-		
-								
-	
 	}
 
 	@Override

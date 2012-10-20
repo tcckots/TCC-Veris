@@ -193,37 +193,35 @@ public class ResultPesquisaActivity extends MainBarActivity {
 						@Override
 						public void handleMessage(final Message msgs) {
 
-//							String msgerror = msgs.getData().getString(
-//									"msgerror");
-//							if (ValidacaoGeral.validaCampoVazio(msgerror)) {
-//								Toast.makeText(instance, msgerror,
-//										Toast.LENGTH_LONG).show();
-//							} else {							
+							String msgerror = msgs.getData().getString("msgerror");
+							if (!ValidacaoGeral.validaCampoVazio(msgerror)) {
+				
 								if (imoveis != null && imoveis.size() > 0) {
 									
 									SessionUserSidim.clearImages();
 									
-									Parcelable state = listResult.onSaveInstanceState();									
-									adapter = new ImovelAdapter(instance,
-											imoveis);
-									listResult.setAdapter(adapter);
-									adapter.notifyDataSetChanged();
-									listResult.onRestoreInstanceState(state);
-									buscando = false;									
-								} else {
-									buscando = true;
-									Parcelable state = listResult.onSaveInstanceState();
-									listResult.onRestoreInstanceState(state);
-								}
-							//}
+									if(msgs.obj != null){
+									
+											List<ImovelMobile> newImoveis = (List<ImovelMobile>)msgs.obj ;
+											if(newImoveis != null && newImoveis.size() > 0){
+												adapter = new ImovelAdapter(instance,
+														imoveis);
+												listResult.setAdapter(adapter);
+												adapter.notifyDataSetChanged();
+												
+												Parcelable state = listResult.onSaveInstanceState();
+												listResult.onRestoreInstanceState(state);
+											}
+		
+											buscando = false;									
+											} else {
+												buscando = true;
+												
+											}
+									}																
+							}
 
-							//listResult.removeFooterView(layoutLoading);
-							progressBar.setVisibility(View.INVISIBLE);
-							
-							
-//							if(progressDialog != null){
-//								progressDialog.dismiss();
-//							}
+								progressBar.setVisibility(View.INVISIBLE);
 
 						}
 					};
@@ -239,9 +237,14 @@ public class ResultPesquisaActivity extends MainBarActivity {
 									newImoveis = sidimController.buscarImoveis(filtro);
 									if(newImoveis == null || newImoveis.size() <= 0){
 										paraBusca = true;
+									} else {
+										filtro.setIndexBuscas(filtro.getIndexBuscas() + 15);
+										imoveis.addAll(newImoveis);
+										Message message = handler2.obtainMessage(1, newImoveis);
+										handler2.sendMessage(message);
 									}
-									filtro.setIndexBuscas(filtro.getIndexBuscas() + 15);
-									imoveis.addAll(newImoveis);
+									
+									
 								} catch (SiDIMException e) {
 									paraBusca = true;
 									Bundle data = new Bundle();
@@ -251,8 +254,8 @@ public class ResultPesquisaActivity extends MainBarActivity {
 									handler2.sendMessage(msg);
 
 								}
-
-								handler2.sendEmptyMessage(2);
+								Message message = handler2.obtainMessage(1, null);
+								handler2.sendMessage(message);
 							}
 						}
 					};

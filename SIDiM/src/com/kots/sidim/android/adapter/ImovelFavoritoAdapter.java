@@ -4,39 +4,53 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.util.List;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.activities.VisualizarImovelActivity;
+import com.kots.sidim.android.config.ValidacaoGeral;
+import com.kots.sidim.android.dao.FavoritosDAO;
+import com.kots.sidim.android.exception.SiDIMException;
 import com.kots.sidim.android.model.ImovelMobile;
+import com.kots.sidim.android.server.SiDIMControllerServer;
 import com.kots.sidim.android.util.LoadImagesSDCard;
 
 public class ImovelFavoritoAdapter extends BaseAdapter {
 	
-	private Context context;
+	private Activity context;
 	private List<ImovelMobile> imoveis;
+	SiDIMControllerServer controller;
+	ProgressDialog progressDialog;
+	FavoritosDAO favoritosDao;
 	
 	
-	
-	public ImovelFavoritoAdapter(Context context, List<ImovelMobile> imoveis){
+	public ImovelFavoritoAdapter(Activity context, List<ImovelMobile> imoveis){
 		
 		this.context = context;
 		this.imoveis = imoveis;
-			
+		this.controller = SiDIMControllerServer.getInstance(context);
+		favoritosDao = new FavoritosDAO(context);
 	}
 
 	@Override
@@ -112,13 +126,11 @@ public class ImovelFavoritoAdapter extends BaseAdapter {
                     
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(context, VisualizarImovelActivity.class);
-                        intent.putExtra("imoveldetalhes", imovel);
-                        intent.putExtra("cameFavoriteScreen", true);
-        				context.startActivity(intent);
                         
+                    	openImovel(imovel);
+                    	
                     }
-                });
+          });
 		
 		FrameLayout layoutPreview = (FrameLayout) v.findViewById(R.id.favorItemLayoutImg);
 		layoutPreview.setOnClickListener(new OnClickListener() {
@@ -126,29 +138,88 @@ public class ImovelFavoritoAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View v) {
                        
-                    	Intent intent = new Intent(context, VisualizarImovelActivity.class);
-                        intent.putExtra("imoveldetalhes", imovel);
-                        intent.putExtra("cameFavoriteScreen", true);
-        				context.startActivity(intent);                    	
+                    	openImovel(imovel);                    	
                     	
                     }
-                });	
-		
-				
-//		if(SessionUserSidim.images.containsKey(imovel.getIdImovel())){
-//		    imgPreview.setImageBitmap(SessionUserSidim.images.get(imovel.getIdImovel()));
-//		} else {
-//		    drawManager.fetchDrawableOnThread("", imgPreview);                                   
-//		}
-		
-
-		
-								
-		
+          });	
+						
 		return v;
 		
 	}
 	
 	
+	private void openImovel(final ImovelMobile imovel){
+		
+		context.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				showDialog();
+			}
+		});
 
+		
+		final Handler handler2 = new Handler() {
+			@Override
+			public void handleMessage(final Message msgs) {
+				
+				if(progressDialog != null){
+					progressDialog.dismiss();
+				}
+
+				String msgerror = msgs.getData().getString("msgerror");
+				if (ValidacaoGeral.validaCampoVazio(msgerror)) {
+					
+					Intent intent = new Intent(context, VisualizarImovelActivity.class);
+                    intent.putExtra("imoveldetalhes", imovel);
+                    intent.putExtra("cameFavoriteScreen", true);
+    				context.startActivity(intent);
+					
+				} else {
+					
+					ImovelMobile imovelMobile = (ImovelMobile )msgs.obj;
+					Intent intent = new Intent(context, VisualizarImovelActivity.class);
+                    intent.putExtra("imoveldetalhes", imovelMobile);
+                    intent.putExtra("cameFavoriteScreen", false);
+    				context.startActivity(intent);
+					
+				}
+
+			}
+		};
+
+		Thread thread2 = new Thread() {
+
+			@Override
+			public void run() {
+
+				try {
+
+					
+					ImovelMobile imovelMobile	= controller.getImovel(imovel.getIdImovel());					
+					Message message = handler2.obtainMessage(1, imovelMobile);
+					favoritosDao.insertFavorito(imovelMobile, imovelMobile.getFotos());
+					
+					
+					handler2.sendMessage(message);
+
+				} catch (SiDIMException e) {
+					Bundle data = new Bundle();
+					data.putString("msgerror", e.getMessage());
+					Message msg = new Message();
+					msg.setData(data);
+					handler2.sendMessage(msg);
+				}
+
+			}
+		};
+		
+		thread2.start();
+		
+	}
+	
+	private void showDialog() {
+		progressDialog = ProgressDialog.show(context, "", "Verificando Atualização Imóvel...",
+				true, false);
+	}
+	
 }
