@@ -67,6 +67,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
+                    android:maxLength="50"
                     android:inputType="textPersonName" />
 
             </LinearLayout>
@@ -84,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:text="Senha*:"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="#a9a9a9"
+                    android:textColor="#a9a9a9"                    
                     android:textStyle="bold" />
 
                 <EditText
@@ -94,6 +95,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textPassword"
+                    android:maxLength="15"
                     android:textColor="#a9a9a9" />
 
             </LinearLayout>
@@ -111,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:text="Confirmar Senha*:"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="#a9a9a9"
+                    android:textColor="#a9a9a9"                    
                     android:textStyle="normal|bold" />
 
                 <EditText
@@ -121,6 +123,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textPassword"
+                    android:maxLength="15"
                     android:textColor="#a9a9a9" />
 
             </LinearLayout>
@@ -148,6 +151,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textPersonName"
+                    android:maxLength="50"
                     android:textColor="#a9a9a9" >                    
                 </EditText>
             </LinearLayout>
@@ -166,6 +170,7 @@
                     android:layout_height="wrap_content"
                     android:text="Cidade:"
                     android:textAppearance="?android:attr/textAppearanceMedium"
+                    
                     android:textColor="#a9a9a9" />
 
                 <AutoCompleteTextView
@@ -175,6 +180,7 @@
                     android:layout_height="26dp"
                     android:ems="10"
                     android:padding="2dp"
+                    android:maxLength="50"
                     android:textColor="#a9a9a9" />
 
             </LinearLayout>
@@ -202,6 +208,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textPersonName"
+                    android:maxLength="14"
                     android:textColor="#a9a9a9" />
 
             </LinearLayout>

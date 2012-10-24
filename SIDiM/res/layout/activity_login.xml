@@ -33,6 +33,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/loginImgLogin"
                 android:ems="10"
+                android:maxLength="50"
                 android:hint="E-mail" >
 
                 <requestFocus />
@@ -57,6 +58,7 @@
                 android:layout_toRightOf="@id/loginImgSenhaLogin"
                 android:ems="10"
                 android:hint="Senha"
+                android:maxLength="15"
                 android:inputType="textPassword" />
 
             <LinearLayout

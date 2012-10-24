@@ -172,28 +172,7 @@ public class SiDIMServerAPI {
 		
 	}
 
-	public boolean enviarSenha(String login) throws SiDIMException {
-
-		ResultWebService trocaSenha = null;
-		String url = URL_SERVER_API + "/enviarInteresse?login=" + login;		
-		String response = "";
-		
-        try {
-            response = HttpUtil.doHttpGet(url);
-            trocaSenha = GSON.fromJson(response, typeInteresseCliente);                       
-            
-        } catch (Exception e) {            
-            e.printStackTrace();
-        }
-        
-        if(trocaSenha != null && trocaSenha.isSuccess()){
-        	return true;
-        } else {
-        	throw new SiDIMException(trocaSenha.getMensagem());
-        }
-
-	}
-
+	
 	public List<ImovelMobile> getRandomImoveis(String cidade) throws SiDIMException {
 
 		ArrayList<ImovelMobile> imoveis = null;
@@ -260,6 +239,34 @@ public class SiDIMServerAPI {
 		
 		
 	}
+	
+	public boolean enviarSenha(String login) throws SiDIMException {
+
+		ResultWebService trocaSenha = new ResultWebService();
+		ResultWebService result = null;
+		String url = URL_SERVER_API + "/enviarSenha";		
+		String response = "";
+		
+        try {
+            response = HttpUtil.doHttpPost(url,GSON.toJson(trocaSenha));
+            result = GSON.fromJson(response, typeResultAPI);                       
+            
+        } catch (Exception e) {            
+            e.printStackTrace();
+        }
+        
+        if(result != null && result.isSuccess()){
+        	return true;
+        } else {
+        	if(result != null){
+        		throw new SiDIMException(result.getMensagem());
+        	} else {
+        		throw new SiDIMException("Você não está conectado a uma rede.");
+        	}
+        }
+
+	}
+
 
 	public List<Bairro> getBairro(ResultWebService result) throws SiDIMException {
 
