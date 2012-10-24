@@ -573,16 +573,18 @@ public class PesquisarImovelActivity extends MainBarActivity {
 				if (ValidacaoGeral.validaCampoVazio(msgerror)) {
 					Toast.makeText(instance, msgerror, Toast.LENGTH_LONG)
 							.show();
-				} else {
 					
-					ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-							instance,
-							android.R.layout.simple_dropdown_item_1line,cidades);
-					
-					adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-					
-					spinnerCidade.setAdapter(adapter);
+					cidades.add("Campinas");
 				}
+				
+				
+				ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+						instance,
+						android.R.layout.simple_dropdown_item_1line,cidades);
+				
+				adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				
+				spinnerCidade.setAdapter(adapter);
 				
 //				progressDialog.cancel();
 //				progressDialog.dismiss();

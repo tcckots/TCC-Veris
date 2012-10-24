@@ -164,7 +164,7 @@ public class SiDIMServerAPI {
         	if(result != null){
         		throw new SiDIMException(result.getMensagem());
         	} else {
-        		throw new SiDIMException("Você não está conectado, conecte-se a uma rede");
+        		throw new SiDIMException("Houve um problema na conexão, tente novamente ou vá em nossa área de contatos e clique em Ligar");
         	}
         	
         }
