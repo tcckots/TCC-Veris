@@ -64,13 +64,7 @@ public class SiDIMControllerServer {
 	
 	public List<ImovelMobile> buscarImoveis(FiltroImovel filtro) throws SiDIMException{
 		
-		try {
-			Thread.sleep(8000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+				
 //		List<ImovelMobile> imoveis = new ArrayList<ImovelMobile>();
 //		imoveis.add(getNewImovel());
 //		imoveis.add(getNewImovel());

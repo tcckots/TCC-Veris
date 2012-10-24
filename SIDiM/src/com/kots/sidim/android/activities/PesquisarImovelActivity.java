@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
@@ -23,8 +24,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +51,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 
 	WheelView estados, intencao;
 
-	List<Cidade> cidades = new ArrayList<Cidade>();
+	List<String> cidades = new ArrayList<String>();
 
 	List<String> bairros = new ArrayList<String>();
 
@@ -58,7 +61,9 @@ public class PesquisarImovelActivity extends MainBarActivity {
 
 	TextView txtBairros, txtTipos, txtPreco;
 
-	AutoCompleteTextView autoEditCidades, autoEditBairros;
+	AutoCompleteTextView /* autoEditCidades, */ autoEditBairros;
+	
+	Spinner spinnerCidade;
 
 	SiDIMControllerServer controller;
 
@@ -74,6 +79,8 @@ public class PesquisarImovelActivity extends MainBarActivity {
 	EditText ediTextQtdQuartos, ediTextQtdSuites, editTextGaragens;
 
 	SeekBar barPreco;
+	
+	ProgressDialog progressDialog;
 
 	List<TipoImovelMobile> newListTipoImovelMobile;
 
@@ -168,7 +175,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 			public void onClick(View v) {
 
 				filtro = new FiltroImovel();
-				filtro.setCidade(autoEditCidades.getText().toString());
+				filtro.setCidade(spinnerCidade.getSelectedItem().toString());
 				filtro.setUf(ufs[estados.getCurrentItem()]);
 
 				ArrayList<String> filtroBairros = new ArrayList<String>();
@@ -226,9 +233,11 @@ public class PesquisarImovelActivity extends MainBarActivity {
 
 			}
 		});
+		
+		loadCidades(ufs[estados.getCurrentItem()]);
 
-		//autoEditCidades.setThreshold(3);
-		autoEditCidades.setOnFocusChangeListener(new OnFocusChangeListener() {
+
+		spinnerCidade.setOnFocusChangeListener(new OnFocusChangeListener() {
 
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
@@ -236,7 +245,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 				if (!hasFocus) {
 					// loadBairros(autoEditCidades.getText().toString());
 				} else {
-					loadCidades(ufs[estados.getCurrentItem()]);
+					
 				}
 
 			}
@@ -455,7 +464,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 			}
 		});
 		dialog.show();
-		loadBairros(autoEditCidades.getText().toString());
+		loadBairros(spinnerCidade.getSelectedItem().toString());
 	}
 
 	private void updateBairros(ListView listView) {
@@ -545,6 +554,16 @@ public class PesquisarImovelActivity extends MainBarActivity {
 
 	@SuppressWarnings("unchecked")
 	public void loadCidades(final String uf) {
+		
+		
+//		instance.runOnUiThread(new Runnable() {
+//			@Override
+//			public void run() {
+//								
+//				showDialog();
+//			}
+//		});
+		
 
 		final Handler handler = new Handler() {
 			@Override
@@ -555,8 +574,19 @@ public class PesquisarImovelActivity extends MainBarActivity {
 					Toast.makeText(instance, msgerror, Toast.LENGTH_LONG)
 							.show();
 				} else {
-					autoEditCidades.setAdapter((ArrayAdapter<String>) msgs.obj);
+					
+					ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+							instance,
+							android.R.layout.simple_dropdown_item_1line,cidades);
+					
+					adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+					
+					spinnerCidade.setAdapter(adapter);
 				}
+				
+//				progressDialog.cancel();
+//				progressDialog.dismiss();
+				
 
 			}
 		};
@@ -568,11 +598,9 @@ public class PesquisarImovelActivity extends MainBarActivity {
 
 				try {
 
-					ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-							instance,
-							android.R.layout.simple_dropdown_item_1line,
-							controller.getCidades(uf));
-					Message message = handler.obtainMessage(1, adapter);
+					
+					cidades = controller.getCidades(uf);
+					Message message = handler.obtainMessage(1);
 					handler.sendMessage(message);
 
 				} catch (SiDIMException e) {
@@ -641,7 +669,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 
 		txtBairros = (TextView) findViewById(R.id.pesquisarTextBairros);
 		txtTipos = (TextView) findViewById(R.id.pesquisarTxtTipoImovel);
-		autoEditCidades = (AutoCompleteTextView) findViewById(R.id.pesquisarAutoEditCidades);
+		spinnerCidade = (Spinner) findViewById(R.id.pesquisarSpinnerCidade);
 		linearBairro = (LinearLayout) findViewById(R.id.pesquisarLinearBairro);
 		linearTipos = (LinearLayout) findViewById(R.id.pesquisarLinearTipoImovel);
 		txtPreco = (TextView) findViewById(R.id.pesquisarTxtPreco);
@@ -650,6 +678,11 @@ public class PesquisarImovelActivity extends MainBarActivity {
 		ediTextQtdQuartos = (EditText) findViewById(R.id.pesquisarInputQtdDorm);
 		ediTextQtdSuites = (EditText) findViewById(R.id.pesquisarInputQtdSuites);
 		editTextGaragens = (EditText) findViewById(R.id.pesquisarInputQtdGaragem);
+	}
+	
+	private void showDialog() {
+		progressDialog = ProgressDialog.show(this, "", "Carregando Cidades...",
+				true, false);
 	}
 
 }

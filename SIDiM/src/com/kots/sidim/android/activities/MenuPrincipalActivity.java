@@ -47,12 +47,7 @@ public class MenuPrincipalActivity extends Activity {
 //		list.setDivider( null ); 
 //        list.setAdapter(adapter);
 		
-		TextView textBemvindo = (TextView) findViewById(R.id.menuPrincipalTextBemVindo);
-		if(nome != null){
-			textBemvindo.setText("Bem-vindo " + nome);
-		} else {
-			textBemvindo.setText("Bem-vindo");
-		}
+	
         
 		LinearLayout btFavor = (LinearLayout) findViewById(R.id.menuPrincipalBtFavor);
 		btFavor.setOnClickListener(new OnClickListener() {

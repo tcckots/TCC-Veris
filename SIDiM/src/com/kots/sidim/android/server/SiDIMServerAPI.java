@@ -134,12 +134,14 @@ public class SiDIMServerAPI {
             e.printStackTrace();
         }
         
-        if(imoveis != null && imoveis.size() > 0){
-	        return imoveis;
-        } else {
+        if(imoveis == null){
+        	throw new SiDIMException("Você não está conectado, conecte-se a uma rede");
+        } else if (imoveis.size() == 0){
         	throw new SiDIMException("Nenhum Resultado Encontrado");
+        } else {
+        	return imoveis;
         }
-		
+
 	}
 
 	public boolean enviarInteresse(InteresseClienteId interesse) throws SiDIMException {
