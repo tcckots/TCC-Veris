@@ -150,56 +150,6 @@ public class FavoritosDAO {
 
 	}
 
-//	public ImovelMobile getResponseAPI(int idMovel) {
-//
-//		Cursor cursor = database.query(SiDIMSQLiteHelper.TABLE_FAVORITOS, null,
-//				SiDIMSQLiteHelper.COLUMN_ID_MOVEL + " = " + idMovel, null,
-//				null, null, null);
-//		ImovelMobile imovel = null;
-//
-//		if (cursor.moveToFirst()) {
-//
-//			try {
-//				imovel = new ImovelMobile();
-//				imovel.setIdImovel(cursor
-//						.getInt(SiDIMSQLiteHelper.COLUMN_ID_MOVEL_INDEX));
-//				imovel.setEstado(new Estado(cursor
-//						.getString(SiDIMSQLiteHelper.COLUMN_ID_MOVEL_INDEX), ""));
-//				imovel.setTipoImovel(new TipoImovel((short) 0, cursor
-//						.getString(SiDIMSQLiteHelper.COLUMN_TIPO_IMOVEL_INDEX)));
-//				imovel.setCidade(new Cidade(0, null, cursor
-//						.getString(SiDIMSQLiteHelper.COLUMN_CIDADE_INDEX), ""));
-//				imovel.setBairro(new Bairro(0, null, cursor
-//						.getString(SiDIMSQLiteHelper.COLUMN_BAIRRO_INDEX), ""));
-//				imovel.setDormitorios((byte) cursor
-//						.getInt(SiDIMSQLiteHelper.COLUMN_QTD_DORM_INDEX));
-//				imovel.setAreaConstruida(cursor
-//						.getDouble(SiDIMSQLiteHelper.COLUMN_AREA_CONSTRUIDA_INDEX));
-//				imovel.setAreaTotal(cursor
-//						.getDouble(SiDIMSQLiteHelper.COLUMN_AREA_TOTAL_INDEX));
-//				imovel.setSuites((byte) cursor
-//						.getInt(SiDIMSQLiteHelper.COLUMN_QTD_SUITES_INDEX));
-//				imovel.setGaragens((byte) cursor
-//						.getInt(SiDIMSQLiteHelper.COLUMN_QTD_SUITES_INDEX));
-//				imovel.setCep(cursor
-//						.getString(SiDIMSQLiteHelper.COLUMN_CEP_INDEX));
-//				imovel.setRua(cursor
-//						.getString(SiDIMSQLiteHelper.COLUMN_RUA_INDEX));
-//				imovel.setPreco(new BigDecimal(cursor
-//						.getDouble(SiDIMSQLiteHelper.COLUMN_PRECO_INDEX)));
-//				imovel.setDescricao(cursor
-//						.getString(SiDIMSQLiteHelper.COLUMN_DESCRICAO_INDEX));
-//
-//			} catch (Exception e) {
-//				imovel = null;
-//			} finally {
-//				cursor.close();
-//			}
-//		}
-//
-//		return imovel;
-//
-//	}
 
 	public void removerImovel(ImovelMobile imovel) {
 
@@ -212,9 +162,21 @@ public class FavoritosDAO {
 		close();
 
 	}
+	
+	public void removerTudo(){
+open();
+		
+		database.delete(
+				SiDIMSQLiteHelper.TABLE_FAVORITOS,
+				null, null);
+		close();
+		
+	}
 
 	public List<ImovelMobile> getImoveis() {
-
+	
+		
+		
 		open();
 		
 		List<ImovelMobile> imoveis = new ArrayList<ImovelMobile>();
@@ -264,11 +226,13 @@ public class FavoritosDAO {
 			} catch (Exception e) {
 				imovel = null;
 			} finally {
-				cursor.close();
-				close();
+				
 				
 			}
 		}
+		
+		cursor.close();
+		close();
 
 		return imoveis;
 

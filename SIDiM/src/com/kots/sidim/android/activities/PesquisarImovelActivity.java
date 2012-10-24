@@ -68,9 +68,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 
 	FiltroImovel filtro;
 
-	String[] ufs = { "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO",
-			"MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN",
-			"RS", "RO", "RR", "SC", "SP", "SE", "TO" };
+	String[] ufs = { "SP" };
 	String[] sIntencao = { "Comprar", "Alugar" };
 
 	EditText ediTextQtdQuartos, ediTextQtdSuites, editTextGaragens;
@@ -161,6 +159,8 @@ public class PesquisarImovelActivity extends MainBarActivity {
 
 			}
 		});
+		
+		barPreco.setProgress(21);
 
 		btPesquisar.setOnClickListener(new OnClickListener() {
 

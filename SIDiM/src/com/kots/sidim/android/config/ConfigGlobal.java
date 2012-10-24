@@ -23,6 +23,8 @@ public class ConfigGlobal {
 	public static final int MENU_INDEX_CONFIGURACOES = 3;
 	public static final int MENU_INDEX_CONTATO = 4;
 	
+	public static final String BASE_URL_PHOTOS = "http://sidim.no-ip.info/";
+	
 public static final String[] menuList = {MENU_HOME,MENU_PESQUISAR_IMOVEL,MENU_FAVORITOS,MENU_CONFIGURACOES,MENU_CONTATO};
 	
 	public static final String[] menuPrincipalList = {MENU_PESQUISAR_IMOVEL,MENU_FAVORITOS,MENU_CONFIGURACOES,MENU_CONTATO};
