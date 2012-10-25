@@ -19,236 +19,225 @@
             android:layout_margin="7dp"
             android:orientation="vertical" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:orientation="horizontal" >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="Estado:"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <com.kots.sidim.android.views.WheelView
+                        android:id="@+id/pesquisaWhellUf"
+                        android:layout_width="170dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="fill_horizontal"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_weight="1" />
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/textView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:text="Estado:"
+                    android:text="Cidade:"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <com.kots.sidim.android.views.WheelView
-                    android:id="@+id/pesquisaWhellUf"
-                    android:layout_width="170dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="fill_horizontal"
-                    android:layout_marginLeft="8dp"
+                <Spinner
+                    android:id="@+id/pesquisarSpinnerCidade"
+                    android:layout_width="152dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="left"
                     android:layout_marginTop="3dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="0.86" />
+
+                <ProgressBar
+                    android:id="@+id/pesquisaProgressBarCidade"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
             </LinearLayout>
 
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/pesquisarLinearBairro"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="8dp"
+                android:background="@drawable/item_selector_bairro" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+                <TextView
+                    android:id="@+id/pesquisarTextBairros"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Bairro: Todos"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="12dp" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:text="Cidade:"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+            <LinearLayout
+                android:id="@+id/pesquisarLinearTipoImovel"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/item_selector_bairro" >
 
-            <Spinner
-                android:id="@+id/pesquisarSpinnerCidade"
-                android:layout_width="152dp"
-                android:layout_height="50dp"
-                android:layout_gravity="left"
-                android:layout_marginTop="3dp"
-                android:layout_weight="0.86" />
-
-            <ProgressBar
-                android:id="@+id/pesquisaProgressBarCidade"
-                style="?android:attr/progressBarStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/pesquisarLinearBairro"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginLeft="8dp"
-            android:background="@drawable/item_selector_bairro" >
-
-            <TextView
-                android:id="@+id/pesquisarTextBairros"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Bairro: Todos"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="12dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/pesquisarLinearTipoImovel"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/item_selector_bairro" >
-
-            <TextView
-                android:id="@+id/pesquisarTxtTipoImovel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Tipo Imóvel: Todos"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="12dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:orientation="horizontal" >
+                <TextView
+                    android:id="@+id/pesquisarTxtTipoImovel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Tipo Imóvel: Todos"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="12dp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:orientation="horizontal" >
 
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:text="Intenção"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" >
 
-                <com.kots.sidim.android.views.WheelView
-                    android:id="@+id/pesquisarWhellIntencao"
-                    android:layout_width="100dp"
-                    android:layout_height="60dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="7dp"
-                    android:layout_weight="1" />
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="Intenção"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <com.kots.sidim.android.views.WheelView
+                        android:id="@+id/pesquisarWhellIntencao"
+                        android:layout_width="100dp"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_weight="1" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
-            android:layout_marginLeft="7dp"
-            android:layout_marginTop="10dp" >
-
-            <TextView
-                android:id="@+id/labelDorm"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:text="Dorm:"
-                android:textColor="@color/color_text_color" />
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp" >
 
-            <EditText
-                android:id="@+id/pesquisarInputQtdDorm"
-                style="@style/EditTextClean"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@id/labelDorm"
-                android:ems="10"
-                android:maxLength="2"
-                android:inputType="number"
-                android:textSize="25dp" >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
 
-                
-            </EditText>
+                    <TextView
+                        android:id="@+id/TextView02"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dorm:" />
+
+                    <Button
+                        android:id="@+id/pesquisarBtDorm"
+                        style="@style/ButtonCleanOrange"
+                        android:layout_width="70dp"
+                        android:layout_height="40dp"
+                        android:text="Todos" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/TextView01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Suítes:" />
+
+                    <Button
+                        android:id="@+id/pesquisarBtSuite"
+                        style="@style/ButtonCleanOrange"
+                        android:layout_width="70dp"
+                        android:layout_height="40dp"
+                        android:text="Todos" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/labelDorm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Garagem:" />
+
+                    <Button
+                        android:id="@+id/pesquisarBtGaragem"
+                        style="@style/ButtonCleanOrange"
+                        android:layout_width="70dp"
+                        android:layout_height="40dp"
+                        android:text="Todos" />
+
+                </LinearLayout>
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/labelSuite"
+                android:id="@+id/pesquisarTxtPreco"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:layout_toRightOf="@id/pesquisarInputQtdDorm"
-                android:text="Suítes:"
-                android:textColor="@color/color_text_color" />
+                android:layout_marginTop="4dp"
+                android:text="Até R$ 100.000,00"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <EditText
-                android:id="@+id/pesquisarInputQtdSuites"
-                style="@style/EditTextClean"
-                android:layout_width="70dp"
+            <SeekBar
+                android:id="@+id/pesquisarSeekBarPreco"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/labelSuite"
-                android:layout_below="@+id/labelSuite"
-                android:ems="10"
-                android:inputType="number"
-                android:maxLength="2"
-                android:textSize="25dp" />
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="2dp" />
 
-            <TextView
-                android:id="@+id/labelGaragem"
+            <Button
+                android:id="@+id/pesquisarBtPesquisar"
+                style="@style/ButtonCleanOrange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="false"
-                android:layout_marginLeft="8dp"
-                android:layout_toRightOf="@id/pesquisarInputQtdSuites"
-                android:text="Garagens:"
-                android:textColor="@color/color_text_color" />
-
-            <EditText
-                android:id="@+id/pesquisarInputQtdGaragem"
-                style="@style/EditTextClean"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/labelGaragem"
-                android:layout_below="@+id/labelGaragem"
-                android:ems="10"
-                android:inputType="number"
-                android:maxLength="2"
-                android:textSize="25dp" />
-
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/pesquisarTxtPreco"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="4dp"
-            android:text="Até R$ 100.000,00"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <SeekBar
-            android:id="@+id/pesquisarSeekBarPreco"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="2dp" />
-
-        <Button
-            android:id="@+id/pesquisarBtPesquisar"
-            style="@style/ButtonCleanOrange"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="7dp"
-            android:text="Pesquisar" />
-
+                android:layout_gravity="center"
+                android:layout_marginBottom="7dp"
+                android:text="Pesquisar" />
         </LinearLayout>
+
     </ScrollView>
 
 </LinearLayout>

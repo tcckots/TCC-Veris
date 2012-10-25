@@ -80,8 +80,10 @@ public class PesquisarImovelActivity extends MainBarActivity {
 	String[] ufs = { "SP" };
 	String[] sIntencao = { "Comprar", "Alugar" };
 
-	EditText ediTextQtdQuartos, ediTextQtdSuites, editTextGaragens;
+	
 
+	Button btDorm, btSuite, btGarag;
+	
 	SeekBar barPreco;
 	
 	ProgressBar progressBarCidade, progressBarBairro;
@@ -213,21 +215,21 @@ public class PesquisarImovelActivity extends MainBarActivity {
 				}
 
 				try {
-					filtro.setQtdDorm(Integer.parseInt(ediTextQtdQuartos
+					filtro.setQtdDorm(Integer.parseInt(btDorm
 							.getText().toString().trim()));
 				} catch (Exception e) {
 					filtro.setQtdDorm(0);
 				}
 
 				try {
-					filtro.setQtdSuite(Integer.parseInt(ediTextQtdSuites
+					filtro.setQtdSuite(Integer.parseInt(btSuite
 							.getText().toString().trim()));
 				} catch (Exception e) {
 					filtro.setQtdSuite(0);
 				}
 
 				try {
-					filtro.setQtdGaragens(Integer.parseInt(editTextGaragens
+					filtro.setQtdGaragens(Integer.parseInt(btGarag
 							.getText().toString().trim()));
 				} catch (Exception e) {
 					filtro.setQtdGaragens(0);
@@ -693,12 +695,13 @@ public class PesquisarImovelActivity extends MainBarActivity {
 
 	}
 	
-	private void showDialogNumberPicker(final EditText editTextNumber, int valueOrig) {
+	private void showDialogNumberPicker(final Button buttonNumberPicker, String titleDialog) {
 
-		valueNumberPicker = valueOrig;
+		//valueNumberPicker = valueOrig;
 		final Dialog dialog = new Dialog(this, R.style.myDialogStyleSearch);
 
 		dialog.setContentView(R.layout.dialog_numberpicker);		
+		dialog.setTitle(titleDialog);
 		Button btAdd = (Button) dialog.findViewById(R.id.dialogNumberPickerBtAdd);
 		Button btRemove = (Button) dialog.findViewById(R.id.dialogNumberPickerBtRemove);
 		final EditText editNumber = (EditText) dialog.findViewById(R.id.dialogNumberPickerEditNumber);
@@ -744,9 +747,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 			@Override
 			public void onDismiss(DialogInterface dialog) {
 
-				if(valueNumberPicker > 0){
-					editNumber.setText(valueNumberPicker+"");
-				}
+				
 				
 			}
 		});
@@ -759,9 +760,9 @@ public class PesquisarImovelActivity extends MainBarActivity {
 			public void onClick(View v) {
 
 				if(valueNumberPicker > 0){
-					editTextNumber.setText(valueNumberPicker+"");
+					buttonNumberPicker.setText(valueNumberPicker+"");
 				} else {
-					editTextNumber.setText("");
+					buttonNumberPicker.setText("Todos");
 				}
 				
 				dialog.dismiss();
@@ -775,7 +776,10 @@ public class PesquisarImovelActivity extends MainBarActivity {
 			
 			@Override
 			public void onShow(DialogInterface dialog) {
-				// TODO Auto-generated method stub
+				
+				if(valueNumberPicker > 0){
+					editNumber.setText(valueNumberPicker+"");
+				}
 				
 			}
 		});
@@ -794,46 +798,72 @@ public class PesquisarImovelActivity extends MainBarActivity {
 		txtPreco = (TextView) findViewById(R.id.pesquisarTxtPreco);
 		barPreco = (SeekBar) findViewById(R.id.pesquisarSeekBarPreco);
 		btPesquisar = (Button) findViewById(R.id.pesquisarBtPesquisar);
-		ediTextQtdQuartos = (EditText) findViewById(R.id.pesquisarInputQtdDorm);
-		ediTextQtdSuites = (EditText) findViewById(R.id.pesquisarInputQtdSuites);
-		editTextGaragens = (EditText) findViewById(R.id.pesquisarInputQtdGaragem);
+		
+		btDorm = (Button) findViewById(R.id.pesquisarBtDorm);
+		btSuite = (Button) findViewById(R.id.pesquisarBtSuite);
+		btGarag = (Button) findViewById(R.id.pesquisarBtGaragem);
+		
 		progressBarCidade = (ProgressBar) findViewById(R.id.pesquisaProgressBarCidade);
 		progressBarCidade.setVisibility(View.INVISIBLE);
 		progressBarCidade.setClickable(false);
 		progressBarCidade.setEnabled(false);
+				
 		
-		//ediTextQtdQuartos.setEnabled(false);
-		
-		ediTextQtdQuartos.setInputType(InputType.TYPE_NULL);
-		
-		ediTextQtdQuartos.setOnClickListener(new OnClickListener() {
+		btDorm.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 		
-					
+				
+				try{
+					valueNumberPicker = Integer.parseInt(btDorm.getText().toString().trim());
+				} catch (Exception e) {
+					valueNumberPicker = 0;
 				}
 				
-			
+				showDialogNumberPicker(btDorm,"Quantidade Dormit—ros");
+							
+			}
+				
 		});
 		
-		ediTextQtdQuartos.setOnEditorActionListener(new OnEditorActionListener() {
+		btSuite.setOnClickListener(new OnClickListener() {
 			
 			@Override
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+			public void onClick(View v) {
+		
 				
-				int valueOrig = 0;
 				try{
-					Integer.parseInt(ediTextQtdQuartos.getText().toString().trim());
+					valueNumberPicker = Integer.parseInt(btSuite.getText().toString().trim());
 				} catch (Exception e) {
-					valueOrig = 0;
+					valueNumberPicker = 0;
 				}
 				
-				showDialogNumberPicker(ediTextQtdQuartos, valueOrig);
-				
-				return false;
+				showDialogNumberPicker(btSuite,"Quantidade Su’tes");
+							
 			}
+				
 		});
+		
+		btGarag.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+		
+				
+				try{
+					valueNumberPicker = Integer.parseInt(btGarag.getText().toString().trim());
+				} catch (Exception e) {
+					valueNumberPicker = 0;
+				}
+				
+				showDialogNumberPicker(btGarag, "Quantidade Garagens");
+							
+			}
+				
+		});
+		
+		
 			
 				
 				
