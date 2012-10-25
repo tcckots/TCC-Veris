@@ -25,7 +25,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/menuLogoLayout"
         android:layout_gravity="center"
-        android:background="@drawable/round_bounds" >
+        android:background="@drawable/round_bounds"
+        android:layoutAnimation="@anim/anim1" >
 
         <TableRow
             android:id="@+id/tableRow1"

@@ -11,6 +11,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:background="@drawable/round_bounds"
+        android:layoutAnimation="@anim/anim1"
         android:orientation="vertical" >
 
         <RelativeLayout

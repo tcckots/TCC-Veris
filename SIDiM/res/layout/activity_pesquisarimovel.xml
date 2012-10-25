@@ -67,11 +67,18 @@
 
             <Spinner
                 android:id="@+id/pesquisarSpinnerCidade"
-                android:layout_width="170dp"
+                android:layout_width="152dp"
                 android:layout_height="50dp"
                 android:layout_gravity="left"
                 android:layout_marginTop="3dp"
-                android:layout_weight="1" />
+                android:layout_weight="0.86" />
+
+            <ProgressBar
+                android:id="@+id/pesquisaProgressBarCidade"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
 
         </LinearLayout>
 
@@ -141,22 +148,6 @@
             </LinearLayout>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/pesquisarTxtPreco"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="4dp"
-            android:text="Até R$ 100.000,00"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <SeekBar
-            android:id="@+id/pesquisarSeekBarPreco"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="2dp" />
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -184,7 +175,7 @@
                 android:inputType="number"
                 android:textSize="25dp" >
 
-                <requestFocus />
+                
             </EditText>
 
             <TextView
@@ -231,6 +222,22 @@
                 android:textSize="25dp" />
 
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/pesquisarTxtPreco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="4dp"
+            android:text="Até R$ 100.000,00"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <SeekBar
+            android:id="@+id/pesquisarSeekBarPreco"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="2dp" />
 
         <Button
             android:id="@+id/pesquisarBtPesquisar"

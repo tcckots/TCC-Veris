@@ -59,6 +59,11 @@ public class LoginActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				
+				if(!ValidacaoGeral.validate(edLogin.getText().toString().trim())){
+					Toast.makeText(instance, "Campo Login precisa ser um e-mail", Toast.LENGTH_SHORT).show();
+					return;
+				}
 
 				instance.runOnUiThread(new Runnable() {
 					@Override
@@ -105,9 +110,11 @@ public class LoginActivity extends Activity {
 							if (controller.validarLogin(cliente) != null) {
 								SessionUserSidim.criarContaClienteLocal(
 										instance, cliente);
+								verifyAutoLogin();
 								handler.sendEmptyMessage(2);
 								startActivity(new Intent(instance,
 										MenuPrincipalActivity.class));
+								
 								finish();
 							} else {
 
@@ -132,11 +139,12 @@ public class LoginActivity extends Activity {
 											editor.putBoolean(
 													ConfigGlobal.SHARED_PREFERENCES_SENT_USER_PROFILE,
 													true);
-											editor.commit();
+											editor.commit();											
 										} catch (SiDIMException e1) {
 											e1.printStackTrace();
 										}
 										handler.sendEmptyMessage(2);
+										verifyAutoLogin();
 										startActivity(new Intent(instance,
 												MenuPrincipalActivity.class));
 										finish();
@@ -155,6 +163,7 @@ public class LoginActivity extends Activity {
 
 								if (validarLoginLocal(userEmail, senha)) {
 									handler.sendEmptyMessage(2);
+									verifyAutoLogin();
 									startActivity(new Intent(instance,
 											MenuPrincipalActivity.class));
 									finish();
@@ -256,16 +265,20 @@ public class LoginActivity extends Activity {
 	private boolean validarLoginLocal(String userEmail, String senha) {
 		if (validarLogin(userEmail) && validarSenha(senha)) {
 
-			if (chLoginAuto.isChecked()) {
-				SharedPreferences.Editor editor = globalPrefs.edit();
-				editor.putBoolean(ConfigGlobal.SHARED_PREFERENCES_LOGIN_AUTO,
-						true);
-				editor.commit();
-			}
+			verifyAutoLogin();
 
 			return true;
 		} else {
 			return false;
+		}
+	}
+	
+	private void verifyAutoLogin(){
+		if (chLoginAuto.isChecked()) {
+			SharedPreferences.Editor editor = globalPrefs.edit();
+			editor.putBoolean(ConfigGlobal.SHARED_PREFERENCES_LOGIN_AUTO,
+					true);
+			editor.commit();
 		}
 	}
 

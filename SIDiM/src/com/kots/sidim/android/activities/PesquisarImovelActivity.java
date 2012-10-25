@@ -8,13 +8,17 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
+import android.content.DialogInterface.OnShowListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.InputType;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -29,6 +33,7 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import com.kots.sidim.android.R;
@@ -37,7 +42,6 @@ import com.kots.sidim.android.config.ConfigGlobal;
 import com.kots.sidim.android.config.ValidacaoGeral;
 import com.kots.sidim.android.exception.SiDIMException;
 import com.kots.sidim.android.model.Bairro;
-import com.kots.sidim.android.model.Cidade;
 import com.kots.sidim.android.model.FiltroImovel;
 import com.kots.sidim.android.model.TipoImovelMobile;
 import com.kots.sidim.android.server.SiDIMControllerServer;
@@ -80,11 +84,14 @@ public class PesquisarImovelActivity extends MainBarActivity {
 
 	SeekBar barPreco;
 	
+	ProgressBar progressBarCidade, progressBarBairro;
 	ProgressDialog progressDialog;
 
 	List<TipoImovelMobile> newListTipoImovelMobile;
 
 	int faixaPreco;
+	
+	int valueNumberPicker;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +101,9 @@ public class PesquisarImovelActivity extends MainBarActivity {
 				ConfigGlobal.MENU_INDEX_PESQUISAR_IMOVEL);
 
 		instance = this;
+		
+		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		
 		findIds();
 		controller = SiDIMControllerServer.getInstance(instance);
 		prepareWhellViews();
@@ -381,6 +391,8 @@ public class PesquisarImovelActivity extends MainBarActivity {
 
 		autoEditBairros = (AutoCompleteTextView) dialog
 				.findViewById(R.id.dialogBairroInputBairro);
+		
+		progressBarBairro = (ProgressBar) dialog.findViewById(R.id.dialogBairroProgressBarBairro);
 
 		Button btAdicionar = (Button) dialog
 				.findViewById(R.id.dialogBairroBtAdd);
@@ -556,13 +568,13 @@ public class PesquisarImovelActivity extends MainBarActivity {
 	public void loadCidades(final String uf) {
 		
 		
-//		instance.runOnUiThread(new Runnable() {
-//			@Override
-//			public void run() {
-//								
-//				showDialog();
-//			}
-//		});
+		instance.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+								
+				progressBarCidade.setVisibility(View.VISIBLE);
+			}
+		});
 		
 
 		final Handler handler = new Handler() {
@@ -574,7 +586,8 @@ public class PesquisarImovelActivity extends MainBarActivity {
 					Toast.makeText(instance, msgerror, Toast.LENGTH_LONG)
 							.show();
 					
-					cidades.add("Campinas");
+					if(!cidades.contains("Campinas"))
+						cidades.add("Campinas");
 				}
 				
 				
@@ -586,8 +599,11 @@ public class PesquisarImovelActivity extends MainBarActivity {
 				
 				spinnerCidade.setAdapter(adapter);
 				
-//				progressDialog.cancel();
-//				progressDialog.dismiss();
+				
+				progressBarCidade.setVisibility(View.GONE);
+				progressBarCidade.clearFocus();
+				
+				
 				
 
 			}
@@ -621,6 +637,14 @@ public class PesquisarImovelActivity extends MainBarActivity {
 	}
 
 	public void loadBairros(final String cidade) {
+		
+		instance.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+								
+				progressBarBairro.setVisibility(View.VISIBLE);
+			}
+		});
 
 		final Handler handler2 = new Handler() {
 			@Override
@@ -633,6 +657,8 @@ public class PesquisarImovelActivity extends MainBarActivity {
 				} else {
 					autoEditBairros.setAdapter((ArrayAdapter<String>) msgs.obj);
 				}
+				
+				progressBarBairro.setVisibility(View.INVISIBLE);
 
 			}
 		};
@@ -666,6 +692,97 @@ public class PesquisarImovelActivity extends MainBarActivity {
 		thread2.start();
 
 	}
+	
+	private void showDialogNumberPicker(final EditText editTextNumber, int valueOrig) {
+
+		valueNumberPicker = valueOrig;
+		final Dialog dialog = new Dialog(this, R.style.myDialogStyleSearch);
+
+		dialog.setContentView(R.layout.dialog_numberpicker);		
+		Button btAdd = (Button) dialog.findViewById(R.id.dialogNumberPickerBtAdd);
+		Button btRemove = (Button) dialog.findViewById(R.id.dialogNumberPickerBtRemove);
+		final EditText editNumber = (EditText) dialog.findViewById(R.id.dialogNumberPickerEditNumber);
+		editNumber.setEnabled(false);
+		
+		
+		
+		btAdd.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				if(valueNumberPicker < 100){
+					valueNumberPicker++;
+				}
+				
+				editNumber.setText(valueNumberPicker+"");
+				
+			}
+		});
+		
+		btRemove.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+			
+				if(valueNumberPicker > 0){
+					valueNumberPicker--;
+				}
+				
+				if(valueNumberPicker > 0){
+					editNumber.setText(valueNumberPicker+"");
+				} else {
+					editNumber.setText("");
+				}
+				
+			}
+		});
+		
+
+		dialog.setOnDismissListener(new OnDismissListener() {
+
+			@Override
+			public void onDismiss(DialogInterface dialog) {
+
+				if(valueNumberPicker > 0){
+					editNumber.setText(valueNumberPicker+"");
+				}
+				
+			}
+		});
+
+		Button btConcluido = (Button) dialog
+				.findViewById(R.id.dialogNumberPickerBtConcluido);
+		btConcluido.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				if(valueNumberPicker > 0){
+					editTextNumber.setText(valueNumberPicker+"");
+				} else {
+					editTextNumber.setText("");
+				}
+				
+				dialog.dismiss();
+
+			}
+		});
+
+		
+
+		dialog.setOnShowListener(new OnShowListener() {
+			
+			@Override
+			public void onShow(DialogInterface dialog) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		dialog.show();
+
+	}
 
 	private void findIds() {
 
@@ -680,6 +797,48 @@ public class PesquisarImovelActivity extends MainBarActivity {
 		ediTextQtdQuartos = (EditText) findViewById(R.id.pesquisarInputQtdDorm);
 		ediTextQtdSuites = (EditText) findViewById(R.id.pesquisarInputQtdSuites);
 		editTextGaragens = (EditText) findViewById(R.id.pesquisarInputQtdGaragem);
+		progressBarCidade = (ProgressBar) findViewById(R.id.pesquisaProgressBarCidade);
+		progressBarCidade.setVisibility(View.INVISIBLE);
+		progressBarCidade.setClickable(false);
+		progressBarCidade.setEnabled(false);
+		
+		//ediTextQtdQuartos.setEnabled(false);
+		
+		ediTextQtdQuartos.setInputType(InputType.TYPE_NULL);
+		
+		ediTextQtdQuartos.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+		
+					
+				}
+				
+			
+		});
+		
+		ediTextQtdQuartos.setOnEditorActionListener(new OnEditorActionListener() {
+			
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				
+				int valueOrig = 0;
+				try{
+					Integer.parseInt(ediTextQtdQuartos.getText().toString().trim());
+				} catch (Exception e) {
+					valueOrig = 0;
+				}
+				
+				showDialogNumberPicker(ediTextQtdQuartos, valueOrig);
+				
+				return false;
+			}
+		});
+			
+				
+				
+	
+
 	}
 	
 	private void showDialog() {

@@ -243,6 +243,7 @@ public class SiDIMServerAPI {
 	public boolean enviarSenha(String login) throws SiDIMException {
 
 		ResultWebService trocaSenha = new ResultWebService();
+		trocaSenha.setMensagem(login);
 		ResultWebService result = null;
 		String url = URL_SERVER_API + "/enviarSenha";		
 		String response = "";

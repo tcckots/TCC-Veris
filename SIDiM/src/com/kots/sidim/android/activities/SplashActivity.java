@@ -4,6 +4,9 @@ import com.kots.sidim.android.R;
 import com.kots.sidim.android.R.layout;
 import com.kots.sidim.android.config.ConfigGlobal;
 import com.kots.sidim.android.config.ValidacaoGeral;
+import com.kots.sidim.android.exception.SiDIMException;
+import com.kots.sidim.android.server.SiDIMControllerServer;
+import com.kots.sidim.android.util.SessionUserSidim;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -42,7 +45,10 @@ public class SplashActivity extends Activity {
 
         final long now = System.currentTimeMillis();
         final long finalMinMillisToShowSplash = minMillisToShowSplash;
-
+        final boolean lastSent = globalPrefs.getBoolean(ConfigGlobal.SHARED_PREFERENCES_SENT_USER_PROFILE, true);
+        
+        final SiDIMControllerServer controller = SiDIMControllerServer.getInstance(instance);
+        
 
         AsyncTask<Void, Void, Void> asyncTask = new AsyncTask<Void, Void, Void>() {
 
@@ -59,6 +65,25 @@ public class SplashActivity extends Activity {
 
                 handler.postDelayed(new Runnable() {
                     public void run() {
+                    	 if(!lastSent){
+                    		   
+     						try {
+								controller
+								.atualizarConta(SessionUserSidim
+										.getContaCliente(instance));
+							} catch (SiDIMException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+     						
+     						SharedPreferences.Editor editor = globalPrefs
+     								.edit();
+     						editor.putBoolean(
+     								ConfigGlobal.SHARED_PREFERENCES_SENT_USER_PROFILE,
+     								false);
+     						editor.commit();
+     						
+                    	 }
 
                         Intent intent = null;
                         String userEmail = globalPrefs.getString(ConfigGlobal.SHARED_PREFERENCES_EMAIL_USER, null);
