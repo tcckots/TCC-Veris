@@ -36,6 +36,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
+
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.adapter.TipoImovelAdapter;
 import com.kots.sidim.android.config.ConfigGlobal;
@@ -48,6 +49,9 @@ import com.kots.sidim.android.server.SiDIMControllerServer;
 import com.kots.sidim.android.views.OnWheelChangedListener;
 import com.kots.sidim.android.views.WheelView;
 import com.kots.sidim.android.views.adapters.ArrayWheelAdapter;
+
+import de.neofonie.mobile.app.android.widget.crouton.Crouton;
+import de.neofonie.mobile.app.android.widget.crouton.Style;
 
 public class PesquisarImovelActivity extends MainBarActivity {
 
@@ -187,7 +191,11 @@ public class PesquisarImovelActivity extends MainBarActivity {
 			public void onClick(View v) {
 
 				filtro = new FiltroImovel();
-				filtro.setCidade(spinnerCidade.getSelectedItem().toString());
+				try{
+					filtro.setCidade(spinnerCidade.getSelectedItem().toString());
+				} catch(Exception e){
+					filtro.setCidade("Campinas");
+				}
 				filtro.setUf(ufs[estados.getCurrentItem()]);
 
 				ArrayList<String> filtroBairros = new ArrayList<String>();
@@ -246,7 +254,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 			}
 		});
 		
-		loadCidades(ufs[estados.getCurrentItem()]);
+		//loadCidades(ufs[estados.getCurrentItem()]);
 
 
 		spinnerCidade.setOnFocusChangeListener(new OnFocusChangeListener() {
@@ -302,6 +310,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 					}
 				}
 				txtTipos.setText(sTipos);
+				
 			}
 		});
 
@@ -356,7 +365,8 @@ public class PesquisarImovelActivity extends MainBarActivity {
 
 	private void showDialogBairros() {
 
-		// set up dialog
+		fixMenu();
+		
 		final Dialog dialog = new Dialog(this, R.style.myDialogStyleSearch);
 
 		dialog.setContentView(R.layout.dialog_bairro);
@@ -384,6 +394,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 					}
 				}
 				txtBairros.setText(sBairros);
+				fixMenuAppear();
 			}
 		});
 
@@ -393,6 +404,17 @@ public class PesquisarImovelActivity extends MainBarActivity {
 
 		autoEditBairros = (AutoCompleteTextView) dialog
 				.findViewById(R.id.dialogBairroInputBairro);
+		
+		autoEditBairros.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				setMenuOn(true);
+				
+				
+			}
+		});
 		
 		progressBarBairro = (ProgressBar) dialog.findViewById(R.id.dialogBairroProgressBarBairro);
 
@@ -406,8 +428,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 				String bairro = autoEditBairros.getText().toString();
 				if (ValidacaoGeral.validaCampoVazio(bairro)) {
 					if (bairros.contains(bairro)) {
-						Toast.makeText(instance, "Bairro j‡ inserido",
-								Toast.LENGTH_LONG).show();
+						Crouton.makeText(instance, "Bairro j‡ inserido", Style.ALERT).show();						
 					} else {
 						bairros.add(0, bairro);
 						updateBairros(list);
@@ -458,10 +479,8 @@ public class PesquisarImovelActivity extends MainBarActivity {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				Toast.makeText(instance,
-						"Para remover mantenha o bairro pressionado",
-						Toast.LENGTH_SHORT).show();
+					long arg3) {				
+				Toast.makeText(instance, "Para remover mantenha o bairro pressionado", Toast.LENGTH_SHORT).show();
 			}
 		});
 
@@ -532,7 +551,6 @@ public class PesquisarImovelActivity extends MainBarActivity {
 			@Override
 			public void onChanged(WheelView wheel, int oldValue, int newValue) {
 
-				// loadCidades(ufs[newValue]);
 
 			}
 		});
@@ -541,8 +559,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
-				Toast.makeText(instance, "Estados FOCUS " + hasFocus,
-						Toast.LENGTH_LONG).show();
+
 				if (!hasFocus) {
 					loadCidades(ufs[estados.getCurrentItem()]);
 				}
@@ -569,7 +586,6 @@ public class PesquisarImovelActivity extends MainBarActivity {
 	@SuppressWarnings("unchecked")
 	public void loadCidades(final String uf) {
 		
-		
 		instance.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
@@ -585,8 +601,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 
 				String msgerror = msgs.getData().getString("msgerror");
 				if (ValidacaoGeral.validaCampoVazio(msgerror)) {
-					Toast.makeText(instance, msgerror, Toast.LENGTH_LONG)
-							.show();
+					Crouton.makeText(instance, msgerror, Style.ALERT).show();					
 					
 					if(!cidades.contains("Campinas"))
 						cidades.add("Campinas");
@@ -654,8 +669,8 @@ public class PesquisarImovelActivity extends MainBarActivity {
 
 				String msgerror = msgs.getData().getString("msgerror");
 				if (ValidacaoGeral.validaCampoVazio(msgerror)) {
-					Toast.makeText(instance, msgerror, Toast.LENGTH_LONG)
-							.show();
+
+					Crouton.makeText(instance, msgerror, Style.ALERT).show();
 				} else {
 					autoEditBairros.setAdapter((ArrayAdapter<String>) msgs.obj);
 				}
@@ -875,5 +890,13 @@ public class PesquisarImovelActivity extends MainBarActivity {
 		progressDialog = ProgressDialog.show(this, "", "Carregando Cidades...",
 				true, false);
 	}
+	
+	@Override
+	  protected void onDestroy() {
+	    // Workaround until there's a way to detach the Activity from Crouton while
+	    // there are still some in the Queue.
+	    Crouton.clearCroutonsForActivity(this);
+	    super.onDestroy();
+	  }
 
 }

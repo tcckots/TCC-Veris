@@ -22,19 +22,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.maps.MapView;
-import com.google.android.maps.Overlay;
-import com.google.android.maps.OverlayItem;
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.config.ConfigGlobal;
-import com.kots.sidim.android.mapview.Point;
-import com.kots.sidim.android.mapview.SurfSpotsItemizedOverlay;
+
+import de.neofonie.mobile.app.android.widget.crouton.Crouton;
+import de.neofonie.mobile.app.android.widget.crouton.Style;
 
 public class ContatoActivity extends MainBarActivity {
 	
-	MapView mapView;
+	
 
 	@Override
 	public void onCreate(Bundle savedInstace){
@@ -167,18 +163,21 @@ public class ContatoActivity extends MainBarActivity {
 		        if (res != null && res[0] != null)
 		        {
 		            String uri = res[0].uri.getPath().substring(14);
-		            Toast.makeText(getBaseContext(), "Contato Adicionado com Sucesso", Toast.LENGTH_LONG).show();
+		            
+		            Crouton.makeText(instance, "Contato Adicionado com Sucesso", Style.CONFIRM).show();
 		            return new Integer(uri).intValue(); // Book ID
 		        }
 		    }
 		    catch (Exception e)
 		    {
-		    	Toast.makeText(getBaseContext(), "Falha ao adicionar Contato", Toast.LENGTH_LONG).show();
+		    	Crouton.makeText(instance, "Falha ao adicionar Contato", Style.ALERT).show();
+		    	
 		        e.printStackTrace();
 		    }
 		    return 0;
 		} else {
-			Toast.makeText(getBaseContext(), "Contato J‡ Existe em sua Agenda", Toast.LENGTH_LONG).show();
+			Crouton.makeText(instance, "Contato J‡ Existe em sua Agenda", Style.ALERT).show();
+			
 		}
 		return 0;
 	}
@@ -206,6 +205,14 @@ public class ContatoActivity extends MainBarActivity {
 
 	    return name;
 	}
+	
+	@Override
+	  protected void onDestroy() {
+	    // Workaround until there's a way to detach the Activity from Crouton while
+	    // there are still some in the Queue.
+	    Crouton.clearCroutonsForActivity(this);
+	    super.onDestroy();
+	  }
 	
 //	@Override
 //	protected void onResume() {

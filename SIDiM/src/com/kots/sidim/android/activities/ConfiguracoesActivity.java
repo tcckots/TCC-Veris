@@ -12,7 +12,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Toast;
+
 
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.config.ConfigGlobal;
@@ -21,6 +21,9 @@ import com.kots.sidim.android.exception.SiDIMException;
 import com.kots.sidim.android.model.Cliente;
 import com.kots.sidim.android.server.SiDIMControllerServer;
 import com.kots.sidim.android.util.SessionUserSidim;
+
+import de.neofonie.mobile.app.android.widget.crouton.Crouton;
+import de.neofonie.mobile.app.android.widget.crouton.Style;
 
 public class ConfiguracoesActivity extends MainBarActivity {
 
@@ -86,8 +89,8 @@ public class ConfiguracoesActivity extends MainBarActivity {
 							String msgerror = msgs.getData().getString(
 									"msgerror");
 							if (ValidacaoGeral.validaCampoVazio(msgerror)) {
-								Toast.makeText(instance, msgerror,
-										Toast.LENGTH_LONG).show();
+								
+								Crouton.makeText(instance, msgerror, Style.ALERT).show();
 							}
 
 							if (progressDialog != null) {
@@ -204,21 +207,16 @@ public class ConfiguracoesActivity extends MainBarActivity {
 						editor.commit();
 						valid = true;
 					} else {
-						Toast.makeText(
-								this,
-								"Nova Senha e Campo Confirmar senha n‹o conferem",
-								Toast.LENGTH_LONG).show();
+						Crouton.makeText(instance, "Nova Senha e Campo Confirmar senha n‹o conferem", Style.ALERT).show();
+						
 						valid = false;
 					}
 				} else {
-					Toast.makeText(this,
-							"Senha precisa ter no min’mo 6 caracteres",
-							Toast.LENGTH_LONG).show();
-					valid = false;
+					Crouton.makeText(instance, "Senha precisa ter no min’mo 6 caracteres", Style.ALERT).show();					
 				}
 			} else {
-				Toast.makeText(this, "Senha Atual Digitada n‹o Ž v‡lida",
-						Toast.LENGTH_LONG).show();
+				Crouton.makeText(instance, "Senha Atual Digitada n‹o Ž v‡lida", Style.ALERT).show();
+				
 				valid = false;
 			}
 		} else {
@@ -244,5 +242,12 @@ public class ConfiguracoesActivity extends MainBarActivity {
 		progressDialog = ProgressDialog.show(this, "", "Atualizando Dados...",
 				true, false);
 	}
+	@Override
+	  protected void onDestroy() {
+	    // Workaround until there's a way to detach the Activity from Crouton while
+	    // there are still some in the Queue.
+	    Crouton.clearCroutonsForActivity(this);
+	    super.onDestroy();
+	  }
 
 }

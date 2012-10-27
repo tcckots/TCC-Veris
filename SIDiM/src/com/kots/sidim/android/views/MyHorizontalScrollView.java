@@ -27,6 +27,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +62,18 @@ public class MyHorizontalScrollView extends HorizontalScrollView {
         setVerticalFadingEdgeEnabled(false);
     }
 
-    /**
+    
+    
+    @Override
+	public void scrollTo(int x, int y) {
+    	Log.i("ScrollView", "value x = " + x);
+    	if(mScrollable){
+    		super.scrollTo(x, y);
+    	}
+		
+	}
+
+	/**
      * @param children
      *            The child Views to add to parent.
      * @param scrollToViewIdx
@@ -86,16 +98,35 @@ public class MyHorizontalScrollView extends HorizontalScrollView {
         getViewTreeObserver().addOnGlobalLayoutListener(listener);
     }
 
+	private boolean mScrollable = true;
+
+    public void setScrollingEnabled(boolean enabled) {
+        mScrollable = enabled;        
+    }
+
+    public boolean isScrollable() {
+        return mScrollable;
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        // Do not allow touch events.
-        return false;
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                // if we can scroll pass the event to the superclass
+                if (mScrollable) return super.onTouchEvent(ev);
+                // only continue to handle the touch event if scrolling enabled
+                return mScrollable; // mScrollable is always false at this point
+            default:
+                return super.onTouchEvent(ev);
+        }
     }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        // Do not allow touch events.
-        return false;
+        // Don't do anything with intercepted touch events if 
+        // we are not scrollable
+        if (!mScrollable) return false;
+        else return super.onInterceptTouchEvent(ev);
     }
 
     /**

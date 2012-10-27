@@ -12,7 +12,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.config.ConfigGlobal;
@@ -20,6 +20,9 @@ import com.kots.sidim.android.config.ValidacaoGeral;
 import com.kots.sidim.android.exception.SiDIMException;
 import com.kots.sidim.android.model.Cliente;
 import com.kots.sidim.android.server.SiDIMControllerServer;
+
+import de.neofonie.mobile.app.android.widget.crouton.Crouton;
+import de.neofonie.mobile.app.android.widget.crouton.Style;
 
 public class CriarContaActivity extends Activity {
 
@@ -64,8 +67,8 @@ public class CriarContaActivity extends Activity {
 						
 						String msgerror = msgs.getData().getString("msgerror");
 						if(ValidacaoGeral.validaCampoVazio(msgerror)){
-							Toast.makeText(instance, msgerror,
-									Toast.LENGTH_LONG).show();
+
+							Crouton.makeText(instance, msgerror, Style.ALERT).show();
 						}
 						
 						if(progressDialog != null){
@@ -147,8 +150,7 @@ public class CriarContaActivity extends Activity {
 			return true;
 
 		} else {
-			Toast.makeText(this, "Campo Nome Ž obrigat—rio", Toast.LENGTH_LONG)
-					.show();
+			Crouton.makeText(instance, "Campo Nome Ž obrigat—rio", Style.ALERT).show();			
 			return false;
 		}
 
@@ -157,16 +159,16 @@ public class CriarContaActivity extends Activity {
 	private boolean validaEmail(String email) {
 
 		if (ValidacaoGeral.validaCampoVazio(email)) {
-			if (email.contains("@"))
+			if (ValidacaoGeral.validate(email))
 				return true;
 			else {
-				Toast.makeText(this, "N‹o Ž um e-mail v‡lido",
-						Toast.LENGTH_LONG).show();
+				Crouton.makeText(instance, "N‹o Ž um e-mail v‡lido", Style.ALERT).show();
+				
 				return false;
+				
 			}
-		} else {
-			Toast.makeText(this, "Campo e-mail Ž obrigat—rio",
-					Toast.LENGTH_LONG).show();
+		} else {			
+			Crouton.makeText(instance, "Campo e-mail Ž obrigat—rio", Style.ALERT).show();
 			return false;
 		}
 
@@ -178,10 +180,7 @@ public class CriarContaActivity extends Activity {
 				&& ValidacaoGeral.validaCampoVazio(confirmarSenha)) {
 
 			if (senha.length() < 6) {
-
-				Toast.makeText(this,
-						"Campo Senha precisa ter no min’mo 6 caracteres",
-						Toast.LENGTH_LONG).show();
+				Crouton.makeText(instance, "Campo Senha precisa ter no min’mo 6 caracteres", Style.ALERT).show();				
 				return false;
 
 			}
@@ -189,16 +188,13 @@ public class CriarContaActivity extends Activity {
 			if (senha.equals(confirmarSenha)) {
 				return true;
 			} else {
-				Toast.makeText(this,
-						"Campo Senha e Confirmar Senha n‹o conferem",
-						Toast.LENGTH_LONG).show();
+				Crouton.makeText(instance, "Campo Senha e Confirmar Senha n‹o conferem", Style.ALERT).show();
+				
 				return false;
 			}
 
 		} else {
-			Toast.makeText(this,
-					"Campo Senha e Confirmar Senha s‹o obrigat—rio",
-					Toast.LENGTH_LONG).show();
+			Crouton.makeText(instance, "Campo Senha e Confirmar Senha s‹o obrigat—rio", Style.ALERT).show();			
 			return false;
 		}
 
@@ -236,5 +232,13 @@ public class CriarContaActivity extends Activity {
 		progressDialog = ProgressDialog.show(this, "", "Criando Conta...",
 				true, false);
 	}
+	
+	@Override
+	  protected void onDestroy() {
+	    // Workaround until there's a way to detach the Activity from Crouton while
+	    // there are still some in the Queue.
+	    Crouton.clearCroutonsForActivity(this);
+	    super.onDestroy();
+	  }
 
 }

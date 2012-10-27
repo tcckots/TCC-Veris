@@ -1,12 +1,9 @@
 package com.kots.sidim.android.activities;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Date;
-
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,8 +15,6 @@ import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.adapter.FotoGaleriaAdapter;
 import com.kots.sidim.android.adapter.FotoGaleriaFavorAdapter;
@@ -29,12 +24,14 @@ import com.kots.sidim.android.dao.FavoritosDAO;
 import com.kots.sidim.android.exception.SiDIMException;
 import com.kots.sidim.android.model.Cliente;
 import com.kots.sidim.android.model.ImovelMobile;
-import com.kots.sidim.android.model.InteresseCliente;
 import com.kots.sidim.android.model.InteresseClienteId;
 import com.kots.sidim.android.server.SiDIMControllerServer;
 import com.kots.sidim.android.util.DrawableConnectionManager;
 import com.kots.sidim.android.util.LoadImagesSDCard;
 import com.kots.sidim.android.util.SessionUserSidim;
+
+import de.neofonie.mobile.app.android.widget.crouton.Crouton;
+import de.neofonie.mobile.app.android.widget.crouton.Style;
 
 public class VisualizarImovelActivity extends MainBarActivity {
 
@@ -189,8 +186,11 @@ public class VisualizarImovelActivity extends MainBarActivity {
 
 				String msgerror = msgs.getData().getString("msgerror");
 				if (ValidacaoGeral.validaCampoVazio(msgerror)) {
-					Toast.makeText(instance, msgerror,
-							Toast.LENGTH_LONG).show();
+					Crouton.makeText(instance, msgerror, Style.ALERT).show();
+				}
+				String enviado = msgs.getData().getString("enviado");
+				if (ValidacaoGeral.validaCampoVazio(enviado)) {
+					Crouton.makeText(instance, enviado, Style.CONFIRM).show();
 				}
 
 				if (progressDialog != null) {
@@ -211,7 +211,7 @@ public class VisualizarImovelActivity extends MainBarActivity {
 					controller.enviarInteresse(interesse);
 					
 					Bundle data = new Bundle();
-					data.putString("msgerror", "Interesse Enviado, Em breve entraremos em contato");
+					data.putString("enviado", "Interesse Enviado, Em breve entraremos em contato");
 					Message msg = new Message();
 					msg.setData(data);
 					handler.sendMessage(msg);
@@ -284,6 +284,7 @@ public class VisualizarImovelActivity extends MainBarActivity {
 	}
 
 	
+	@SuppressLint("HandlerLeak")
 	private void addFavoritos(){
 		
 		instance.runOnUiThread(new Runnable() {
@@ -299,11 +300,10 @@ public class VisualizarImovelActivity extends MainBarActivity {
 
 				String msgerror = msgs.getData().getString("msgerror");
 				if (ValidacaoGeral.validaCampoVazio(msgerror)) {
-					Toast.makeText(instance, msgerror,
-							Toast.LENGTH_LONG).show();
+					Crouton.makeText(instance, msgerror, Style.ALERT).show();
 				}else {
-					Toast.makeText(instance, "Im要el adicionado aos favoritos",
-							Toast.LENGTH_LONG).show();
+					Crouton.makeText(instance, "Im要el adicionado aos favoritos", Style.CONFIRM).show();
+					
 					addFavoritos.setText("- Favoritos");
 					cameFavoritosScreen = true;
 				}
@@ -347,6 +347,7 @@ public class VisualizarImovelActivity extends MainBarActivity {
 		thread.start();
 	}
 	
+	@SuppressLint("HandlerLeak")
 	private void removeFavoritos(){
 		
 		instance.runOnUiThread(new Runnable() {
@@ -361,12 +362,12 @@ public class VisualizarImovelActivity extends MainBarActivity {
 			public void handleMessage(final Message msgs) {
 
 				String msgerror = msgs.getData().getString("msgerror");
-				if (ValidacaoGeral.validaCampoVazio(msgerror)) {
-					Toast.makeText(instance, msgerror,
-							Toast.LENGTH_LONG).show();
+				if (ValidacaoGeral.validaCampoVazio(msgerror)) {					
+					Crouton.makeText(instance, msgerror, Style.ALERT).show();
+					
 				}else {
-					Toast.makeText(instance, "Im要el removido dos favoritos",
-							Toast.LENGTH_LONG).show();
+					
+					Crouton.makeText(instance, "Im要el removido dos favoritos", Style.CONFIRM).show();					
 					addFavoritos.setText("+Favoritos");
 					cameFavoritosScreen = false;
 				}
@@ -400,4 +401,12 @@ public class VisualizarImovelActivity extends MainBarActivity {
 		progressDialog = ProgressDialog.show(this, "", msg,
 				true, false);
 	}
+	
+	@Override
+	  protected void onDestroy() {
+	    // Workaround until there's a way to detach the Activity from Crouton while
+	    // there are still some in the Queue.
+	    Crouton.clearCroutonsForActivity(this);
+	    super.onDestroy();
+	  }
 }

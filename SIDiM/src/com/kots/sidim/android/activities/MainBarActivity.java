@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
-import com.google.android.maps.MapActivity;
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.adapter.MenuAdapter;
 import com.kots.sidim.android.config.ConfigGlobal;
@@ -50,6 +49,25 @@ public class MainBarActivity extends Activity {
 	protected void onPause() {
 		super.onPause();
 		SessionUserSidim.clearImages();
+	}
+	
+	public void fixMenu(){
+		
+		scrollView.setScrollingEnabled(false);
+		scrollView.setVisibility(View.INVISIBLE);
+	}
+	
+	public void fixMenuAppear(){
+		
+		scrollView.setVisibility(View.VISIBLE);	
+		if(menuOn){
+			btnSlide.performClick();
+		}
+	}
+	
+	public void setMenuOn(boolean value){
+		menuOn = value;
+		
 	}
 
 	@Override
@@ -188,7 +206,7 @@ public class MainBarActivity extends Activity {
             // Ensure menu is visible
             menu.setVisibility(View.VISIBLE);
 
-            if (!menuOut) {
+            if (!menuOn) {
                 // Scroll to 0 to reveal menu
                 int left = 0;
                 scrollView.smoothScrollTo(left, 0);

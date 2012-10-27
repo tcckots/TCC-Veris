@@ -23,6 +23,9 @@ import com.kots.sidim.android.model.Cliente;
 import com.kots.sidim.android.server.SiDIMControllerServer;
 import com.kots.sidim.android.util.SessionUserSidim;
 
+import de.neofonie.mobile.app.android.widget.crouton.Crouton;
+import de.neofonie.mobile.app.android.widget.crouton.Style;
+
 public class LoginActivity extends Activity {
 
 	SharedPreferences globalPrefs;
@@ -60,8 +63,8 @@ public class LoginActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				
-				if(!ValidacaoGeral.validate(edLogin.getText().toString().trim())){
-					Toast.makeText(instance, "Campo Login precisa ser um e-mail", Toast.LENGTH_SHORT).show();
+				if(!ValidacaoGeral.validate(edLogin.getText().toString().trim())){					
+					Crouton.makeText(instance, "Campo Login precisa ser um e-mail", Style.ALERT).show();
 					return;
 				}
 
@@ -78,8 +81,7 @@ public class LoginActivity extends Activity {
 
 						String msgerror = msgs.getData().getString("msgerror");
 						if (ValidacaoGeral.validaCampoVazio(msgerror)) {
-							Toast.makeText(instance, msgerror,
-									Toast.LENGTH_LONG).show();
+							Crouton.makeText(instance, msgerror, Style.ALERT).show();
 						}
 
 						if (progressDialog != null) {
@@ -216,10 +218,14 @@ public class LoginActivity extends Activity {
 
 						String msgerror = msgs.getData().getString("msgerror");
 						if (ValidacaoGeral.validaCampoVazio(msgerror)) {
-							Toast.makeText(instance, msgerror,
-									Toast.LENGTH_LONG).show();
+							Crouton.makeText(instance, msgerror, Style.ALERT).show();
 						}
 
+						String enviado = msgs.getData().getString("enviado");
+						if (ValidacaoGeral.validaCampoVazio(enviado)) {
+							Crouton.makeText(instance, enviado, Style.CONFIRM).show();
+						}
+						
 						if (progressDialog != null) {
 							progressDialog.dismiss();
 						}
@@ -237,7 +243,7 @@ public class LoginActivity extends Activity {
 						try {
 							if (controller.enviarSenha(emailUser)) {
 								Bundle data = new Bundle();
-								data.putString("msgerror",
+								data.putString("enviado",
 										"Senha Enviada para Email digitado.");
 								Message msg = new Message();
 								msg.setData(data);
@@ -290,13 +296,11 @@ public class LoginActivity extends Activity {
 			if (emailArmazenado.equals(login)) {
 				return true;
 			} else {
-				// Toast.makeText(this, "E-mail inv‡lido",
-				// Toast.LENGTH_LONG).show();
+
 				return false;
 			}
 		} else {
-			// Toast.makeText(this, "E-mail em branco",
-			// Toast.LENGTH_LONG).show();
+
 			return false;
 		}
 	}
@@ -308,14 +312,10 @@ public class LoginActivity extends Activity {
 		if (ValidacaoGeral.validaCampoVazio(senha)) {
 			if (senhaArmazenado.equals(senha)) {
 				return true;
-			} else {
-				// Toast.makeText(this, "Senha inv‡lida",
-				// Toast.LENGTH_LONG).show();
+			} else {				
 				return false;
 			}
-		} else {
-			// Toast.makeText(this, "Senha em branco",
-			// Toast.LENGTH_LONG).show();
+		} else {			
 			return false;
 		}
 	}
@@ -324,5 +324,13 @@ public class LoginActivity extends Activity {
 		progressDialog = ProgressDialog.show(this, "", "Aguarde...", true,
 				false);
 	}
+	
+	@Override
+	  protected void onDestroy() {
+	    // Workaround until there's a way to detach the Activity from Crouton while
+	    // there are still some in the Queue.
+	    Crouton.clearCroutonsForActivity(this);
+	    super.onDestroy();
+	  }
 
 }

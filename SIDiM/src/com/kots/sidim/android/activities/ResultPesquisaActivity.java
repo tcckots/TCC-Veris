@@ -18,8 +18,6 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
-
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.adapter.ImovelAdapter;
 import com.kots.sidim.android.config.ConfigGlobal;
@@ -29,6 +27,9 @@ import com.kots.sidim.android.model.FiltroImovel;
 import com.kots.sidim.android.model.ImovelMobile;
 import com.kots.sidim.android.server.SiDIMControllerServer;
 import com.kots.sidim.android.util.SessionUserSidim;
+
+import de.neofonie.mobile.app.android.widget.crouton.Crouton;
+import de.neofonie.mobile.app.android.widget.crouton.Style;
 
 public class ResultPesquisaActivity extends MainBarActivity {
 
@@ -97,9 +98,8 @@ public class ResultPesquisaActivity extends MainBarActivity {
 				public void handleMessage(final Message msgs) {
 
 					String msgerror = msgs.getData().getString("msgerror");
-					if (ValidacaoGeral.validaCampoVazio(msgerror)) {
-						Toast.makeText(instance, msgerror, Toast.LENGTH_LONG)
-								.show();
+					if (ValidacaoGeral.validaCampoVazio(msgerror)) {						
+						Crouton.makeText(instance, msgerror, Style.ALERT).show();
 					} else {
 						List<ImovelMobile> newImoveis = (List<ImovelMobile>) msgs.obj;
 						if (newImoveis != null && newImoveis.size() > 0) {
@@ -277,5 +277,13 @@ public class ResultPesquisaActivity extends MainBarActivity {
 		progressDialog = ProgressDialog.show(this, "", "Buscando Im—veis...",
 				true, false);
 	}
+	
+	@Override
+	  protected void onDestroy() {
+	    // Workaround until there's a way to detach the Activity from Crouton while
+	    // there are still some in the Queue.
+	    Crouton.clearCroutonsForActivity(this);
+	    super.onDestroy();
+	  }
 
 }
