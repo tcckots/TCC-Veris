@@ -5,8 +5,6 @@ import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -14,10 +12,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Environment;
 import android.widget.ImageView;
-
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.exception.SiDIMException;
 import com.kots.sidim.android.model.Bairro;
@@ -146,7 +142,7 @@ public class FavoritosDAO {
 		
 		
 		
-		return 0;
+		return id;
 
 	}
 

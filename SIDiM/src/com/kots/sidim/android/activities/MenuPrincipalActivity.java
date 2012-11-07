@@ -6,12 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
-
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.config.ConfigGlobal;
 
@@ -29,23 +24,6 @@ public class MenuPrincipalActivity extends Activity {
 		
 		globalPrefs = getSharedPreferences(
 				ConfigGlobal.GLOBAL_SHARED_PREFERENCES, MODE_PRIVATE);
-		
-		String nome = globalPrefs.getString(ConfigGlobal.SHARED_PREFERENCES_NOME_USER,null);
-		
-		
-//		List<ImovelMobile> imoveis = new ArrayList<ImovelMobile>();
-//		
-//		
-//		ImovelAdapter adapter = new ImovelAdapter(this, imoveis);
-//
-//		
-//		
-//        ListView listMenu = (ListView) findViewById(R.id.menuListOptionHome);
-//        listMenu.setAdapter(new MenuAdapter(this, ConfigGlobal.menuPrincipalList));
-//		
-//		ListView list = (ListView) findViewById(R.id.menulist3dImoveis);
-//		list.setDivider( null ); 
-//        list.setAdapter(adapter);
 		
 	
         

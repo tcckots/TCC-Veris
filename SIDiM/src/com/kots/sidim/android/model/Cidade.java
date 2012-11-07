@@ -1,6 +1,7 @@
 package com.kots.sidim.android.model;
 
 
+@SuppressWarnings("serial")
 public class Cidade implements java.io.Serializable {
 
 	private int idCidade;

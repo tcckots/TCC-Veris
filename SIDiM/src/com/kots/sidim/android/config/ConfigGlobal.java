@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.kots.sidim.android.R;
+import com.kots.sidim.android.server.SiDIMServerAPI;
 
 public class ConfigGlobal {
 			
@@ -23,8 +24,8 @@ public class ConfigGlobal {
 	public static final int MENU_INDEX_CONFIGURACOES = 3;
 	public static final int MENU_INDEX_CONTATO = 4;
 	
-	//public static final String BASE_URL_PHOTOS = "http://sidim.no-ip.info/";
-	public static final String BASE_URL_PHOTOS = "http://192.168.43.2/";
+	
+	public static final String BASE_URL_PHOTOS = SiDIMServerAPI.URL_SERVER;
 	
 public static final String[] menuList = {MENU_HOME,MENU_PESQUISAR_IMOVEL,MENU_FAVORITOS,MENU_CONFIGURACOES,MENU_CONTATO};
 	

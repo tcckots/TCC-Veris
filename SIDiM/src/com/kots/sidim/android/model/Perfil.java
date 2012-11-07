@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
+@SuppressWarnings("serial")
 public class Perfil implements java.io.Serializable {
 
 	private int idPerfil;

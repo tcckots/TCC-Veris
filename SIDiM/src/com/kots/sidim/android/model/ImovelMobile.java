@@ -3,6 +3,7 @@ package com.kots.sidim.android.model;
 import java.util.List;
 
 
+@SuppressWarnings("serial")
 public class ImovelMobile extends Imovel implements java.io.Serializable {
 	
 	private List<String> fotos;

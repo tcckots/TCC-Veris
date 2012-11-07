@@ -2,6 +2,7 @@ package com.kots.sidim.android.model;
 
 
 
+@SuppressWarnings("serial")
 public class TipoImovel implements java.io.Serializable {
 
 	private short idTipoImovel;

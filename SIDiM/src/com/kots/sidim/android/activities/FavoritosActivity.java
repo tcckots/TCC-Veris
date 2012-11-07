@@ -1,23 +1,12 @@
 package com.kots.sidim.android.activities;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
-
 import android.os.Bundle;
 import android.widget.ListView;
-
 import com.kots.sidim.android.R;
-import com.kots.sidim.android.adapter.ImovelAdapter;
 import com.kots.sidim.android.adapter.ImovelFavoritoAdapter;
 import com.kots.sidim.android.config.ConfigGlobal;
 import com.kots.sidim.android.dao.FavoritosDAO;
-import com.kots.sidim.android.model.Bairro;
-import com.kots.sidim.android.model.Cidade;
-import com.kots.sidim.android.model.Estado;
 import com.kots.sidim.android.model.ImovelMobile;
-import com.kots.sidim.android.model.TipoImovel;
-import com.kots.sidim.android.views.CoverFlow;
 
 public class FavoritosActivity extends MainBarActivity {
 	

@@ -49,6 +49,9 @@ public class FotoGaleriaAdapter extends BaseAdapter {
 	@Override
 	public View getView(int arg0, View arg1, ViewGroup arg2) {
 				
+		if(arg1 != null){
+			return arg1;
+		}
 
 		final String url = list.get(arg0);	
 		

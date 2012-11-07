@@ -1,7 +1,6 @@
 package com.kots.sidim.android.server;
 
 import java.lang.reflect.Type;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +15,6 @@ import com.kots.sidim.android.model.Cidade;
 import com.kots.sidim.android.model.Cliente;
 import com.kots.sidim.android.model.FiltroImovel;
 import com.kots.sidim.android.model.ImovelMobile;
-import com.kots.sidim.android.model.InteresseCliente;
 import com.kots.sidim.android.model.InteresseClienteId;
 import com.kots.sidim.android.model.ResultWebService;
 import com.kots.sidim.android.model.TipoImovelMobile;
@@ -24,8 +22,11 @@ import com.kots.sidim.android.util.HttpUtil;
 
 public class SiDIMServerAPI {
 
+	//public static final String BASE_URL_PHOTOS = "http://sidim.no-ip.info/";
 	//private static final String URL_SERVER_API = "http://23.22.250.78/sidim/ws/service";
-	private static final String URL_SERVER_API = "http://192.168.43.2/sidim/ws/service";
+	//public static final String URL_SERVER = "http://10.1.1.3/";
+	public static final String URL_SERVER = "http://23.22.250.78/";
+	public static final String URL_SERVER_API = URL_SERVER + "sidim/ws/service";
 	
 	
 	private static Gson GSON = new Gson();

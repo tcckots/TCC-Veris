@@ -1,20 +1,14 @@
 package com.kots.sidim.android.adapter;
 
-import java.util.List;
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.config.ConfigGlobal;
-import com.kots.sidim.android.model.ImovelMobile;
 import com.kots.sidim.android.util.DrawableConnectionManager;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class MenuAdapter extends BaseAdapter {

@@ -2,6 +2,7 @@ package com.kots.sidim.android.model;
 
 
 
+@SuppressWarnings("serial")
 public class InteresseClienteId implements java.io.Serializable {
 
 	private String login;

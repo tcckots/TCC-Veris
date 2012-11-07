@@ -2,6 +2,7 @@ package com.kots.sidim.android.model;
 
 
 
+@SuppressWarnings("serial")
 public class Estado implements java.io.Serializable {
 
 	private String uf;

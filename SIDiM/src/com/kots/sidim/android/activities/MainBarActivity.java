@@ -2,7 +2,6 @@ package com.kots.sidim.android.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,6 +54,7 @@ public class MainBarActivity extends Activity {
 		
 		scrollView.setScrollingEnabled(false);
 		scrollView.setVisibility(View.INVISIBLE);
+		//btnSlide.performClick();
 	}
 	
 	public void fixMenuAppear(){
@@ -62,6 +62,7 @@ public class MainBarActivity extends Activity {
 		scrollView.setVisibility(View.VISIBLE);	
 		if(menuOn){
 			btnSlide.performClick();
+			
 		}
 	}
 	

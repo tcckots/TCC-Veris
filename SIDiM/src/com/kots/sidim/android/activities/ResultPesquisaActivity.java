@@ -3,13 +3,13 @@ package com.kots.sidim.android.activities;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -26,8 +26,6 @@ import com.kots.sidim.android.exception.SiDIMException;
 import com.kots.sidim.android.model.FiltroImovel;
 import com.kots.sidim.android.model.ImovelMobile;
 import com.kots.sidim.android.server.SiDIMControllerServer;
-import com.kots.sidim.android.util.SessionUserSidim;
-
 import de.neofonie.mobile.app.android.widget.crouton.Crouton;
 import de.neofonie.mobile.app.android.widget.crouton.Style;
 
@@ -46,9 +44,9 @@ public class ResultPesquisaActivity extends MainBarActivity {
 	LinearLayout layoutLoading;
 	
 
+	@SuppressLint("HandlerLeak")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_result_pesquisa,
 				ConfigGlobal.MENU_INDEX_PESQUISAR_IMOVEL);
@@ -101,6 +99,7 @@ public class ResultPesquisaActivity extends MainBarActivity {
 					if (ValidacaoGeral.validaCampoVazio(msgerror)) {						
 						Crouton.makeText(instance, msgerror, Style.ALERT).show();
 					} else {
+						@SuppressWarnings("unchecked")
 						List<ImovelMobile> newImoveis = (List<ImovelMobile>) msgs.obj;
 						if (newImoveis != null && newImoveis.size() > 0) {
 							imoveis.addAll(newImoveis);	
@@ -169,15 +168,15 @@ public class ResultPesquisaActivity extends MainBarActivity {
 			@Override
 			public void onScroll(AbsListView view, int firstVisibleItem,
 					int visibleItemCount, int totalItemCount) {
-				Log.i("ListView Results",
-						"(firstVisibleItem + visibleItemCount) = "
-								+ (firstVisibleItem + visibleItemCount));
-				Log.i("ListView Results", "visibleItemCount="
-						+ visibleItemCount + " totalIemCount=" + totalItemCount);
+			//	Log.i("ListView Results",
+			//			"(firstVisibleItem + visibleItemCount) = "
+			//					+ (firstVisibleItem + visibleItemCount));
+			//	Log.i("ListView Results", "visibleItemCount="
+			//			+ visibleItemCount + " totalIemCount=" + totalItemCount);
 				
 				if ((firstVisibleItem + visibleItemCount) == totalItemCount && !buscando && totalItemCount > 0 && !paraBusca) {
 					buscando = true;
-					Log.i("ListView Results", "ENTROU PRA CARRGAR");
+				//	Log.i("ListView Results", "ENTROU PRA CARRGAR");
 					
 					instance.runOnUiThread(new Runnable() {
 						@Override
@@ -190,6 +189,7 @@ public class ResultPesquisaActivity extends MainBarActivity {
 					});
 
 					final Handler handler2 = new Handler() {
+						@SuppressLint("HandlerLeak")
 						@Override
 						public void handleMessage(final Message msgs) {
 
@@ -198,18 +198,21 @@ public class ResultPesquisaActivity extends MainBarActivity {
 				
 								if (imoveis != null && imoveis.size() > 0) {
 									
-									SessionUserSidim.clearImages();
+									//SessionUserSidim.clearImages();
 									
 									if(msgs.obj != null){
 									
+											@SuppressWarnings("unchecked")
 											List<ImovelMobile> newImoveis = (List<ImovelMobile>)msgs.obj ;
 											if(newImoveis != null && newImoveis.size() > 0){
+												Parcelable state = listResult.onSaveInstanceState();
 												adapter = new ImovelAdapter(instance,
 														imoveis);
+												
 												listResult.setAdapter(adapter);
 												adapter.notifyDataSetChanged();
 												
-												Parcelable state = listResult.onSaveInstanceState();
+												
 												listResult.onRestoreInstanceState(state);
 											}
 		

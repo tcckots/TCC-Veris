@@ -1,5 +1,6 @@
 package com.kots.sidim.android.activities;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -13,8 +14,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.config.ConfigGlobal;
 import com.kots.sidim.android.config.ValidacaoGeral;
@@ -26,6 +25,7 @@ import com.kots.sidim.android.util.SessionUserSidim;
 import de.neofonie.mobile.app.android.widget.crouton.Crouton;
 import de.neofonie.mobile.app.android.widget.crouton.Style;
 
+@SuppressLint({ "HandlerLeak", "HandlerLeak", "HandlerLeak" })
 public class LoginActivity extends Activity {
 
 	SharedPreferences globalPrefs;
@@ -122,9 +122,9 @@ public class LoginActivity extends Activity {
 
 							}
 						} catch (SiDIMException e) {
-							if (e.getMessage().contains("Invalido")) {
+							if (e.getMessage().contains("Inv‡lido")) {
 								if (sentLastUpdate) {
-
+									SessionUserSidim.removerClienteCelular(instance);
 									Bundle data = new Bundle();
 									data.putString("msgerror", e.getMessage());
 									Message msg = new Message();

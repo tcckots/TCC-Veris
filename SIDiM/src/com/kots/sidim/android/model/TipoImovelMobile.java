@@ -1,5 +1,6 @@
 package com.kots.sidim.android.model;
 
+@SuppressWarnings("serial")
 public class TipoImovelMobile extends TipoImovel {
 	
 	private boolean check;

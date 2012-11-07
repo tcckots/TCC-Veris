@@ -1,5 +1,6 @@
 package com.kots.sidim.android.activities;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -11,9 +12,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-
-
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.config.ConfigGlobal;
 import com.kots.sidim.android.config.ValidacaoGeral;
@@ -24,6 +22,7 @@ import com.kots.sidim.android.server.SiDIMControllerServer;
 import de.neofonie.mobile.app.android.widget.crouton.Crouton;
 import de.neofonie.mobile.app.android.widget.crouton.Style;
 
+@SuppressLint("HandlerLeak")
 public class CriarContaActivity extends Activity {
 
 	SharedPreferences globalPrefs;
@@ -53,6 +52,19 @@ public class CriarContaActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				
+				final String email = edEmail.getText().toString();
+				final String senha = edSenha.getText().toString();
+				final String confSenha = edConfSenha.getText().toString();
+				final String nome = edNome.getText().toString();
+				final String cidade = edCidade.getText().toString();
+				final String telefone = edTelefone.getText().toString();
+
+				if (validaEmail(email) && validaSenha(senha, confSenha)
+						&& validarNome(nome)) {
+
+					
+					
 
 				instance.runOnUiThread(new Runnable() {
 					@Override
@@ -83,23 +95,13 @@ public class CriarContaActivity extends Activity {
 					@Override
 					public void run() {
 
-						String email = edEmail.getText().toString();
-						String senha = edSenha.getText().toString();
-						String confSenha = edConfSenha.getText().toString();
-						String nome = edNome.getText().toString();
-						String cidade = edCidade.getText().toString();
-						String telefone = edTelefone.getText().toString();
-
-						if (validaEmail(email) && validaSenha(senha, confSenha)
-								&& validarNome(nome)) {
-
-							Cliente cliente = new Cliente(email, nome, senha);
-							cliente.setCidade(cidade);
-							cliente.setTelefone(telefone);
-							SiDIMControllerServer controller = SiDIMControllerServer
-									.getInstance(instance);
+						Cliente cliente = new Cliente(email, nome, senha);
+						cliente.setCidade(cidade);
+						cliente.setTelefone(telefone);
 
 							try {
+								SiDIMControllerServer controller = SiDIMControllerServer
+										.getInstance(instance);
 
 								controller.criarConta(cliente);
 								gravarDadosPreferences(email, confSenha, nome,
@@ -117,7 +119,7 @@ public class CriarContaActivity extends Activity {
 								msg.setData(data);
 								handler.sendMessage(msg);
 							}
-						}
+						
 
 						handler.sendEmptyMessage(2);
 
@@ -127,6 +129,7 @@ public class CriarContaActivity extends Activity {
 				};
 
 				thread.start();
+				}
 
 			}
 		});

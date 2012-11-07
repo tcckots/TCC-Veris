@@ -7,7 +7,6 @@ import com.kots.sidim.android.activities.VisualizarImovelActivity;
 import com.kots.sidim.android.model.ImovelMobile;
 import com.kots.sidim.android.util.DrawableConnectionManager;
 import com.kots.sidim.android.util.SessionUserSidim;
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -17,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -57,23 +55,29 @@ public class ImovelAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int arg0, View arg1, ViewGroup arg2) {
-				
+//		
+//		if(arg1 != null){
+//			return arg1;
+//		}
+//		
 
 		final ImovelMobile imovel = imoveis.get(arg0);
 		
 		
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View v = inflater.inflate(R.layout.item_list, null);
+		if(arg1 == null){
+			arg1 = inflater.inflate(R.layout.item_list, null);
+		}
 	
-		TextView txtTitleContent = (TextView) v.findViewById(R.id.favorItemInputTitle);
+		TextView txtTitleContent = (TextView) arg1.findViewById(R.id.favorItemInputTitle);
 		txtTitleContent.setText(imovel.getBairro().getNome() + ", " + imovel.getTipoImovel().getDescricao() + " - " + imovel.getDormitorios() + " Dorm");
 		
-		TextView txtDescriptionContent = (TextView) v.findViewById(R.id.favorItemInputCity);
+		TextView txtDescriptionContent = (TextView) arg1.findViewById(R.id.favorItemInputCity);
 		txtDescriptionContent.setText(imovel.getCidade().getNome() + "-" + imovel.getCidade().getEstado().getUf());
 		
 		DecimalFormat df = new DecimalFormat("###,###,###.00");
 		
-		TextView txtPreco = (TextView) v.findViewById(R.id.favorItemInputPrice);
+		TextView txtPreco = (TextView) arg1.findViewById(R.id.favorItemInputPrice);
 				
 		String preco = "";
 		
@@ -94,8 +98,8 @@ public class ImovelAdapter extends BaseAdapter {
 			txtPreco.setText(preco);
 		}
 		
-		ImageView imgPreview = (ImageView) v.findViewById(R.id.favorItemImgFoto);
-				
+		ImageView imgPreview = (ImageView) arg1.findViewById(R.id.favorItemImgFoto);
+		imgPreview.setImageResource(R.drawable.carregandofoto2);		
 		
 		if(imovel.getFotos() != null & imovel.getFotos().size() > 0){
 			if(SessionUserSidim.images.containsKey(imovel.getFotos().get(0))){
@@ -107,7 +111,7 @@ public class ImovelAdapter extends BaseAdapter {
 		
 
 		
-		RelativeLayout linearDescription = (RelativeLayout) v.findViewById(R.id.favorItemLayoutDesc);
+		RelativeLayout linearDescription = (RelativeLayout) arg1.findViewById(R.id.favorItemLayoutDesc);
 		linearDescription.setOnClickListener(new OnClickListener() {
                     
                     @Override
@@ -119,7 +123,7 @@ public class ImovelAdapter extends BaseAdapter {
                     }
                 });
 		
-		FrameLayout layoutPreview = (FrameLayout) v.findViewById(R.id.favorItemLayoutImg);
+		FrameLayout layoutPreview = (FrameLayout) arg1.findViewById(R.id.favorItemLayoutImg);
 		layoutPreview.setOnClickListener(new OnClickListener() {
                     
                     @Override
@@ -132,7 +136,7 @@ public class ImovelAdapter extends BaseAdapter {
                     }
                 });									
 		
-		return v;
+		return arg1;
 		
 	}
 	

@@ -2,6 +2,7 @@ package com.kots.sidim.android.model;
 
 
 
+@SuppressWarnings("serial")
 public class Cliente extends ResultWebService implements java.io.Serializable {
 
 	private String login;

@@ -1,33 +1,9 @@
-/*
- * #%L
- * SlidingMenuDemo
- * $Id:$
- * $HeadURL:$
- * %%
- * Copyright (C) 2012 Paul Grime
- * %%
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * #L%
- */
 package com.kots.sidim.android.views;
-
-import com.kots.sidim.android.R;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,15 +39,7 @@ public class MyHorizontalScrollView extends HorizontalScrollView {
     }
 
     
-    
-    @Override
-	public void scrollTo(int x, int y) {
-    	Log.i("ScrollView", "value x = " + x);
-    	if(mScrollable){
-    		super.scrollTo(x, y);
-    	}
-		
-	}
+   
 
 	/**
      * @param children
@@ -110,24 +78,16 @@ public class MyHorizontalScrollView extends HorizontalScrollView {
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                // if we can scroll pass the event to the superclass
-                if (mScrollable) return super.onTouchEvent(ev);
-                // only continue to handle the touch event if scrolling enabled
-                return mScrollable; // mScrollable is always false at this point
-            default:
-                return super.onTouchEvent(ev);
-        }
+      return false;
     }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        // Don't do anything with intercepted touch events if 
-        // we are not scrollable
-        if (!mScrollable) return false;
-        else return super.onInterceptTouchEvent(ev);
-    }
+//    @Override
+//    public boolean onInterceptTouchEvent(MotionEvent ev) {
+//        // Don't do anything with intercepted touch events if 
+//        // we are not scrollable
+//        if (!mScrollable) return false;
+//        else return super.onInterceptTouchEvent(ev);
+//    }
 
     /**
      * An OnGlobalLayoutListener impl that passes on the call to onGlobalLayout to a SizeCallback, before removing all the Views

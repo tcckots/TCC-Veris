@@ -1,8 +1,6 @@
 package com.kots.sidim.android.adapter;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
@@ -15,7 +13,6 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.config.ConfigGlobal;
 import com.kots.sidim.android.model.TipoImovelMobile;

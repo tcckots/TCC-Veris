@@ -1,5 +1,6 @@
 package com.kots.sidim.android.activities;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -25,6 +26,7 @@ import com.kots.sidim.android.util.SessionUserSidim;
 import de.neofonie.mobile.app.android.widget.crouton.Crouton;
 import de.neofonie.mobile.app.android.widget.crouton.Style;
 
+@SuppressLint("HandlerLeak")
 public class ConfiguracoesActivity extends MainBarActivity {
 
 	Activity instance;

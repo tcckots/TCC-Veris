@@ -3,6 +3,7 @@ package com.kots.sidim.android.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+@SuppressWarnings("serial")
 public class FiltroImovel extends ResultWebService implements Serializable  {
 
 	private String uf;

@@ -1,8 +1,7 @@
 package com.kots.sidim.android.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
 
+import java.util.List;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.View;
@@ -11,9 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
-
 import com.kots.sidim.android.config.ConfigGlobal;
-import com.kots.sidim.android.model.Bairro;
 import com.kots.sidim.android.model.Cidade;
 
 
@@ -21,7 +18,6 @@ public class CidadeAdapter extends BaseAdapter implements Filterable{
 	
 	private Context context;
 	private List<Cidade> cidades;
-	private List<Cidade> mOriginalValues;
 	SharedPreferences globalPrefs;
 	SharedPreferences.Editor editor;
 	

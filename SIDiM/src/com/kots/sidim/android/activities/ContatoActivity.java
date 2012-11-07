@@ -2,8 +2,7 @@ package com.kots.sidim.android.activities;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.List;
-
+import android.annotation.SuppressLint;
 import android.content.ContentProviderOperation;
 import android.content.ContentProviderOperation.Builder;
 import android.content.ContentProviderResult;
@@ -12,7 +11,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.BaseColumns;
@@ -24,10 +22,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.config.ConfigGlobal;
-
 import de.neofonie.mobile.app.android.widget.crouton.Crouton;
 import de.neofonie.mobile.app.android.widget.crouton.Style;
 
+@SuppressLint("UseValueOf")
 public class ContatoActivity extends MainBarActivity {
 	
 	

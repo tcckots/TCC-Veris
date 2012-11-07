@@ -3,6 +3,7 @@ package com.kots.sidim.android.activities;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -13,8 +14,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.InputType;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
@@ -33,10 +32,7 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
-
-
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.adapter.TipoImovelAdapter;
 import com.kots.sidim.android.config.ConfigGlobal;
@@ -53,6 +49,7 @@ import com.kots.sidim.android.views.adapters.ArrayWheelAdapter;
 import de.neofonie.mobile.app.android.widget.crouton.Crouton;
 import de.neofonie.mobile.app.android.widget.crouton.Style;
 
+@SuppressLint("HandlerLeak")
 public class PesquisarImovelActivity extends MainBarActivity {
 
 	Activity instance;
@@ -583,7 +580,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 
 	}
 
-	@SuppressWarnings("unchecked")
+
 	public void loadCidades(final String uf) {
 		
 		instance.runOnUiThread(new Runnable() {
@@ -653,6 +650,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 
 	}
 
+	@SuppressLint({ "HandlerLeak", "HandlerLeak", "HandlerLeak" })
 	public void loadBairros(final String cidade) {
 		
 		instance.runOnUiThread(new Runnable() {
@@ -664,6 +662,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 		});
 
 		final Handler handler2 = new Handler() {
+			@SuppressWarnings("unchecked")
 			@Override
 			public void handleMessage(final Message msgs) {
 
@@ -885,11 +884,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 	
 
 	}
-	
-	private void showDialog() {
-		progressDialog = ProgressDialog.show(this, "", "Carregando Cidades...",
-				true, false);
-	}
+
 	
 	@Override
 	  protected void onDestroy() {

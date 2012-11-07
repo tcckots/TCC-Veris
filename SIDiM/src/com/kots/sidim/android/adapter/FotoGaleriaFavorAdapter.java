@@ -8,11 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-
 import com.kots.sidim.android.R;
-import com.kots.sidim.android.util.DrawableConnectionManager;
 import com.kots.sidim.android.util.LoadImagesSDCard;
-import com.kots.sidim.android.util.SessionUserSidim;
+
 
 public class FotoGaleriaFavorAdapter extends BaseAdapter {
 	

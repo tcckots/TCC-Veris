@@ -1,6 +1,7 @@
 package com.kots.sidim.android.activities;
 
 import java.text.DecimalFormat;
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
@@ -14,7 +15,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.ImageView;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.adapter.FotoGaleriaAdapter;
 import com.kots.sidim.android.adapter.FotoGaleriaFavorAdapter;
@@ -33,6 +36,7 @@ import com.kots.sidim.android.util.SessionUserSidim;
 import de.neofonie.mobile.app.android.widget.crouton.Crouton;
 import de.neofonie.mobile.app.android.widget.crouton.Style;
 
+@SuppressLint("HandlerLeak")
 public class VisualizarImovelActivity extends MainBarActivity {
 
 	Button btEnviarInteresse, addFavoritos;
@@ -47,15 +51,17 @@ public class VisualizarImovelActivity extends MainBarActivity {
 
 	DrawableConnectionManager drawManager;
 	
-	boolean cameFavoritosScreen, removeFavor;
+	boolean cameFavoritosScreen, removeFavor, wasAddFavor;
 
 	//private ArrayList<String> list;
 
 	ProgressDialog progressDialog;
 
+	Gallery gallery;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_visualizar_imovel,
 				ConfigGlobal.MENU_INDEX_PESQUISAR_IMOVEL);
@@ -83,7 +89,7 @@ public class VisualizarImovelActivity extends MainBarActivity {
 		controller = SiDIMControllerServer.getInstance(this);
 
 		btEnviarInteresse = (Button) findViewById(R.id.visualizarImovelButtonInteresse);
-		Gallery gallery = (Gallery) findViewById(R.id.visualizarImovelGallery);
+		gallery = (Gallery) findViewById(R.id.visualizarImovelGallery);
 		imgMain = (ImageView) findViewById(R.id.visualizarImovelImageMain);
 
 
@@ -120,12 +126,12 @@ public class VisualizarImovelActivity extends MainBarActivity {
 				if (SessionUserSidim.images.containsKey(imovel.getFotos().get(arg2))) {
 					imgMain.setImageBitmap(SessionUserSidim.images.get(imovel.getFotos().get(arg2)));
 				} else {
-					if(cameFavoritosScreen){
-						LoadImagesSDCard.getImageFromSdCard(imovel.getFotos().get(arg2),imgMain);
-						//imgMain.setImageDrawable(draw);
-					}else{
+//					if(cameFavoritosScreen){
+//						LoadImagesSDCard.getImageFromSdCard(imovel.getFotos().get(arg2),imgMain);
+//						//imgMain.setImageDrawable(draw);
+//					}else{
 						drawManager.fetchDrawableOnThread(imovel.getFotos().get(arg2), imgMain);
-					}
+				//	}
 				}
 
 			}
@@ -284,8 +290,10 @@ public class VisualizarImovelActivity extends MainBarActivity {
 	}
 
 	
-	@SuppressLint("HandlerLeak")
+	@SuppressLint({ "HandlerLeak", "HandlerLeak", "HandlerLeak" })
 	private void addFavoritos(){
+		
+		final SpinnerAdapter adapterFotos = (SpinnerAdapter) gallery.getAdapter();
 		
 		instance.runOnUiThread(new Runnable() {
 			@Override
@@ -306,9 +314,10 @@ public class VisualizarImovelActivity extends MainBarActivity {
 					
 					addFavoritos.setText("- Favoritos");
 					cameFavoritosScreen = true;
+					wasAddFavor = true;
 				}
 				
-				
+				gallery.setAdapter(adapterFotos);
 				
 
 				if (progressDialog != null) {
@@ -370,6 +379,7 @@ public class VisualizarImovelActivity extends MainBarActivity {
 					Crouton.makeText(instance, "Im—vel removido dos favoritos", Style.CONFIRM).show();					
 					addFavoritos.setText("+Favoritos");
 					cameFavoritosScreen = false;
+					wasAddFavor = false;
 				}
 				
 				

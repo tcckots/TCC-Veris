@@ -4,6 +4,7 @@ import java.util.Date;
 
 
 
+@SuppressWarnings("serial")
 public class InteresseCliente implements java.io.Serializable {
 	
 	private ImovelMobile imovel;

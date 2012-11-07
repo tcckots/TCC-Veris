@@ -1,16 +1,12 @@
 package com.kots.sidim.android.util;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.List;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
-import android.util.Log;
 import android.widget.ImageView;
 
 public class LoadImagesSDCard {
@@ -80,12 +76,6 @@ public class LoadImagesSDCard {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		 		
-		
-		
 	}
-	
-	
-	
 
 }

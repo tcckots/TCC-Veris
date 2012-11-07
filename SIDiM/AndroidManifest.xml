@@ -78,6 +78,12 @@
             android:name=".activities.VisualizarImovelActivity" 
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"/>
+        
+        <activity
+            android:name=".activities.VisualizarImovelFavoritosActivity" 
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+        
         <activity
             android:name=".activities.MainBarActivity" 
             android:configChanges="orientation|keyboardHidden"

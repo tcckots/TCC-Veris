@@ -20,6 +20,15 @@ public class SessionUserSidim {
         System.gc();
     }
     
+    public static void removerClienteCelular(Context context){
+    	
+    	SharedPreferences globalPrefs = context.getSharedPreferences(ConfigGlobal.GLOBAL_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+    	SharedPreferences.Editor editor = globalPrefs.edit();
+    	editor.clear();
+    	editor.commit();
+    	
+    }
+    
     public static Cliente getContaCliente(Context context){
     	
     	SharedPreferences globalPrefs = context.getSharedPreferences(ConfigGlobal.GLOBAL_SHARED_PREFERENCES, Context.MODE_PRIVATE);    	    	

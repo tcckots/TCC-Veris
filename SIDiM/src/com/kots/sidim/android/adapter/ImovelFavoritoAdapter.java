@@ -1,34 +1,25 @@
 package com.kots.sidim.android.adapter;
-
-import java.io.File;
 import java.text.DecimalFormat;
 import java.util.List;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.kots.sidim.android.R;
 import com.kots.sidim.android.activities.VisualizarImovelActivity;
+import com.kots.sidim.android.activities.VisualizarImovelFavoritosActivity;
 import com.kots.sidim.android.config.ValidacaoGeral;
 import com.kots.sidim.android.dao.FavoritosDAO;
 import com.kots.sidim.android.exception.SiDIMException;
@@ -169,7 +160,7 @@ public class ImovelFavoritoAdapter extends BaseAdapter {
 				String msgerror = msgs.getData().getString("msgerror");
 				if (ValidacaoGeral.validaCampoVazio(msgerror)) {
 					
-					Intent intent = new Intent(context, VisualizarImovelActivity.class);
+					Intent intent = new Intent(context, VisualizarImovelFavoritosActivity.class);
                     intent.putExtra("imoveldetalhes", imovel);
                     intent.putExtra("cameFavoriteScreen", true);
     				context.startActivity(intent);

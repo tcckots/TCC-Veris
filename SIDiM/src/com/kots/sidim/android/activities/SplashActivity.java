@@ -1,13 +1,11 @@
 package com.kots.sidim.android.activities;
 
 import com.kots.sidim.android.R;
-import com.kots.sidim.android.R.layout;
 import com.kots.sidim.android.config.ConfigGlobal;
 import com.kots.sidim.android.config.ValidacaoGeral;
 import com.kots.sidim.android.exception.SiDIMException;
 import com.kots.sidim.android.server.SiDIMControllerServer;
 import com.kots.sidim.android.util.SessionUserSidim;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -45,7 +43,7 @@ public class SplashActivity extends Activity {
 
         final long now = System.currentTimeMillis();
         final long finalMinMillisToShowSplash = minMillisToShowSplash;
-        final boolean lastSent = globalPrefs.getBoolean(ConfigGlobal.SHARED_PREFERENCES_SENT_USER_PROFILE, true);
+        final boolean lastSent = globalPrefs.getBoolean(ConfigGlobal.SHARED_PREFERENCES_SENT_USER_PROFILE, false);
         
         final SiDIMControllerServer controller = SiDIMControllerServer.getInstance(instance);
         
@@ -71,18 +69,27 @@ public class SplashActivity extends Activity {
 								controller
 								.atualizarConta(SessionUserSidim
 										.getContaCliente(instance));
+								
+								SharedPreferences.Editor editor = globalPrefs.edit();
+								editor.putBoolean(ConfigGlobal.SHARED_PREFERENCES_SENT_USER_PROFILE,true);
+								editor.commit();
 							} catch (SiDIMException e) {
-								// TODO Auto-generated catch block
+								
+								if(e.getMessage().contains("n‹o cadastrado")){
+									SharedPreferences.Editor editor = globalPrefs.edit();
+									editor.putBoolean(ConfigGlobal.SHARED_PREFERENCES_SENT_USER_PROFILE,true);
+									editor.commit();
+								}
+								
 								e.printStackTrace();
 							}
      						
-     						SharedPreferences.Editor editor = globalPrefs
-     								.edit();
-     						editor.putBoolean(
-     								ConfigGlobal.SHARED_PREFERENCES_SENT_USER_PROFILE,
-     								false);
-     						editor.commit();
+ 
      						
+                    	 } else {
+                    		 SharedPreferences.Editor editor = globalPrefs.edit();
+								editor.putBoolean(ConfigGlobal.SHARED_PREFERENCES_SENT_USER_PROFILE,true);
+								editor.commit();
                     	 }
 
                         Intent intent = null;
