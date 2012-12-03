@@ -122,7 +122,7 @@ public class LoginActivity extends Activity {
 
 							}
 						} catch (SiDIMException e) {
-							if (e.getMessage().contains("Inválido")) {
+							if (e.getMessage().contains("Inv√°lido")) {
 								if (sentLastUpdate) {
 									SessionUserSidim.removerClienteCelular(instance);
 									Bundle data = new Bundle();
@@ -153,7 +153,7 @@ public class LoginActivity extends Activity {
 									} else {
 										Bundle data = new Bundle();
 										data.putString("msgerror",
-												"Login ou Senha Inválido");
+												"Login ou Senha Inv√°lido");
 										Message msg = new Message();
 										msg.setData(data);
 										handler.sendMessage(msg);
@@ -172,7 +172,7 @@ public class LoginActivity extends Activity {
 								} else {
 									Bundle data = new Bundle();
 									data.putString("msgerror",
-											"Login ou Senha Inválido");
+											"Login ou Senha Inv√°lido");
 									Message msg = new Message();
 									msg.setData(data);
 									handler.sendMessage(msg);

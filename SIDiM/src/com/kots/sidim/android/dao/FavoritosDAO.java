@@ -120,7 +120,7 @@ public class FavoritosDAO {
 	     }
 			catch(Exception e)
 	     {
-	    	 throw new SiDIMException("Seu SDCard não está disponível para salvar as fotos");
+	    	 throw new SiDIMException("Seu SDCard n√£o est√° dispon√≠vel para salvar as fotos");
 	     }
 		
 		

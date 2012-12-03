@@ -14,9 +14,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
+import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -25,6 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -50,7 +54,7 @@ import de.neofonie.mobile.app.android.widget.crouton.Crouton;
 import de.neofonie.mobile.app.android.widget.crouton.Style;
 
 @SuppressLint("HandlerLeak")
-public class PesquisarImovelActivity extends MainBarActivity {
+public class PesquisarImovelActivity extends Activity {
 
 	Activity instance;
 
@@ -81,7 +85,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 	String[] ufs = { "SP" };
 	String[] sIntencao = { "Comprar", "Alugar" };
 
-	
+	Handler handler = new Handler();
 
 	Button btDorm, btSuite, btGarag;
 	
@@ -95,13 +99,48 @@ public class PesquisarImovelActivity extends MainBarActivity {
 	int faixaPreco;
 	
 	int valueNumberPicker;
+	
+	View menu;
+    View app;
+    View bar;
+    ImageButton btnSlide;
+	
+	private void addBar(int layoutResID){
+		LayoutInflater inflater = LayoutInflater.from(this);
+		
+		app = inflater.inflate(layoutResID, null);
+        bar = inflater.inflate(R.layout.layout_bar_app, null);
+		
+		LinearLayout linear = new LinearLayout(this);
+	    linear.setOrientation(LinearLayout.VERTICAL);
+	    linear.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+	    linear.addView(bar);
+	    linear.addView(app);
+	    linear.setBackgroundColor(R.color.color_background_screens);
+	    
+	    ViewGroup tabBar = (ViewGroup) bar.findViewById(R.id.layoutBarApp);
+	    btnSlide = (ImageButton) tabBar.findViewById(R.id.barImgBtSlideMenu);	   
+	    btnSlide.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				startActivity(new Intent(getBaseContext(), MenuPrincipalActivity.class));
+				
+			}
+		});
+	    
+	    TextView currentScreen = (TextView) tabBar.findViewById(R.id.barTextCurrentScreen);
+	    currentScreen.setText("Pesquisar");
+	    
+	    setContentView(linear);
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_pesquisarimovel,
-				ConfigGlobal.MENU_INDEX_PESQUISAR_IMOVEL);
+		addBar(R.layout.activity_pesquisarimovel);
 
 		instance = this;
 		
@@ -155,22 +194,22 @@ public class PesquisarImovelActivity extends MainBarActivity {
 					boolean fromUser) {
 
 				if (progress < 20) {
-					txtPreco.setText("Até R$ 100.000,00");
+					txtPreco.setText("At√© R$ 100.000,00");
 					faixaPreco = 1;
 				} else if (progress >= 20 && progress < 40) {
-					txtPreco.setText("Até R$ 150.000,00");
+					txtPreco.setText("At√© R$ 150.000,00");
 					faixaPreco = 2;
 				} else if (progress >= 40 && progress < 60) {
-					txtPreco.setText("Até R$ 200.000,00");
+					txtPreco.setText("At√© R$ 200.000,00");
 					faixaPreco = 3;
 				} else if (progress >= 60 && progress < 75) {
-					txtPreco.setText("Até R$ 500.000,00");
+					txtPreco.setText("At√© R$ 500.000,00");
 					faixaPreco = 4;
 				} else if (progress >= 75 && progress < 85) {
-					txtPreco.setText("Até R$ 800.000,00");
+					txtPreco.setText("At√© R$ 800.000,00");
 					faixaPreco = 5;
 				} else if (progress >= 85 && progress < 95) {
-					txtPreco.setText("Até R$ 1.000.000,00");
+					txtPreco.setText("At√© R$ 1.000.000,00");
 					faixaPreco = 6;
 				} else if (progress >= 95) {
 					txtPreco.setText("Acima de R$ 1.000.000,00");
@@ -274,7 +313,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 		final Dialog dialog = new Dialog(this, R.style.myDialogStyleSearch);
 
 		dialog.setContentView(R.layout.dialog_tipoimovel);
-		dialog.setTitle("Tipos Imóveis");
+		dialog.setTitle("Tipos Im√≥veis");
 
 		final ListView list = (ListView) dialog
 				.findViewById(R.id.dialogTipoImovelList);
@@ -286,7 +325,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 			@Override
 			public void onDismiss(DialogInterface dialog) {
 
-				String sTipos = "Tipos Imóveis : ";
+				String sTipos = "Tipos Im√≥veis : ";
 				newListTipoImovelMobile = getTiposCheckeds(tipos);
 
 				if (newListTipoImovelMobile.size() == 0) {
@@ -362,7 +401,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 
 	private void showDialogBairros() {
 
-		fixMenu();
+		
 		
 		final Dialog dialog = new Dialog(this, R.style.myDialogStyleSearch);
 
@@ -391,7 +430,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 					}
 				}
 				txtBairros.setText(sBairros);
-				fixMenuAppear();
+				
 			}
 		});
 
@@ -407,7 +446,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 			@Override
 			public void onClick(View v) {
 				
-				setMenuOn(true);
+				
 				
 				
 			}
@@ -425,7 +464,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 				String bairro = autoEditBairros.getText().toString();
 				if (ValidacaoGeral.validaCampoVazio(bairro)) {
 					if (bairros.contains(bairro)) {
-						Crouton.makeText(instance, "Bairro já inserido", Style.ALERT).show();						
+						Crouton.makeText(instance, "Bairro j√° inserido", Style.ALERT).show();						
 					} else {
 						bairros.add(0, bairro);
 						updateBairros(list);
@@ -494,7 +533,16 @@ public class PesquisarImovelActivity extends MainBarActivity {
 			}
 		});
 		dialog.show();
-		loadBairros(spinnerCidade.getSelectedItem().toString());
+		
+		String cidadeBairro = "Campinas";
+		
+		try{
+			cidadeBairro = spinnerCidade.getSelectedItem().toString();
+		} catch (Exception e){
+			cidadeBairro = "Campinas";
+		}
+		
+		loadBairros(cidadeBairro);
 	}
 
 	private void updateBairros(ListView listView) {
@@ -835,7 +883,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 					valueNumberPicker = 0;
 				}
 				
-				showDialogNumberPicker(btDorm,"Quantidade Dormitóros");
+				showDialogNumberPicker(btDorm,"Quantidade Dormit√≥rios");
 							
 			}
 				
@@ -853,7 +901,7 @@ public class PesquisarImovelActivity extends MainBarActivity {
 					valueNumberPicker = 0;
 				}
 				
-				showDialogNumberPicker(btSuite,"Quantidade Suítes");
+				showDialogNumberPicker(btSuite,"Quantidade Su√≠tes");
 							
 			}
 				

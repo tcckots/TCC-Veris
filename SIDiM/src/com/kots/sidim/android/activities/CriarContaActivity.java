@@ -153,7 +153,7 @@ public class CriarContaActivity extends Activity {
 			return true;
 
 		} else {
-			Crouton.makeText(instance, "Campo Nome é obrigatório", Style.ALERT).show();			
+			Crouton.makeText(instance, "Campo Nome √© obrigat√≥rio", Style.ALERT).show();			
 			return false;
 		}
 
@@ -165,13 +165,13 @@ public class CriarContaActivity extends Activity {
 			if (ValidacaoGeral.validate(email))
 				return true;
 			else {
-				Crouton.makeText(instance, "Não é um e-mail válido", Style.ALERT).show();
+				Crouton.makeText(instance, "N√£o √© um e-mail v√°lido", Style.ALERT).show();
 				
 				return false;
 				
 			}
 		} else {			
-			Crouton.makeText(instance, "Campo e-mail é obrigatório", Style.ALERT).show();
+			Crouton.makeText(instance, "Campo e-mail √© obrigat√≥rio", Style.ALERT).show();
 			return false;
 		}
 
@@ -183,7 +183,7 @@ public class CriarContaActivity extends Activity {
 				&& ValidacaoGeral.validaCampoVazio(confirmarSenha)) {
 
 			if (senha.length() < 6) {
-				Crouton.makeText(instance, "Campo Senha precisa ter no minímo 6 caracteres", Style.ALERT).show();				
+				Crouton.makeText(instance, "Campo Senha precisa ter no min√≠mo 6 caracteres", Style.ALERT).show();				
 				return false;
 
 			}
@@ -191,13 +191,13 @@ public class CriarContaActivity extends Activity {
 			if (senha.equals(confirmarSenha)) {
 				return true;
 			} else {
-				Crouton.makeText(instance, "Campo Senha e Confirmar Senha não conferem", Style.ALERT).show();
+				Crouton.makeText(instance, "Campo Senha e Confirmar Senha n√£o conferem", Style.ALERT).show();
 				
 				return false;
 			}
 
 		} else {
-			Crouton.makeText(instance, "Campo Senha e Confirmar Senha são obrigatório", Style.ALERT).show();			
+			Crouton.makeText(instance, "Campo Senha e Confirmar Senha s√£o obrigat√≥rio", Style.ALERT).show();			
 			return false;
 		}
 

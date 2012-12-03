@@ -73,7 +73,7 @@ public class ImovelFavoritoAdapter extends BaseAdapter {
 		View v = inflater.inflate(R.layout.item_list, null);
 	
 		TextView txtTitleContent = (TextView) v.findViewById(R.id.favorItemInputTitle);
-		txtTitleContent.setText(imovel.getBairro().getNome() + ", " + imovel.getTipoImovel().getDescricao() + imovel.getDormitorios() + " Dorm");
+		txtTitleContent.setText(imovel.getBairro().getNome() + ", " + imovel.getTipoImovel().getDescricao() + " " + imovel.getDormitorios() + " Dorm");
 		
 		TextView txtDescriptionContent = (TextView) v.findViewById(R.id.favorItemInputCity);
 		txtDescriptionContent.setText(imovel.getCidade().getNome() + "-" + imovel.getEstado().getUf());				
@@ -209,7 +209,7 @@ public class ImovelFavoritoAdapter extends BaseAdapter {
 	}
 	
 	private void showDialog() {
-		progressDialog = ProgressDialog.show(context, "", "Verificando Atualização Imóvel...",
+		progressDialog = ProgressDialog.show(context, "", "Verificando Atualiza√ß√£o Im√≥vel...",
 				true, false);
 	}
 	

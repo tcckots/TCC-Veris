@@ -42,7 +42,7 @@ public class ContatoActivity extends MainBarActivity {
 			@Override
 			public void onClick(View v) {
 			
-				insert("Imobiliária", "Pádua Imóveis", "01932525659", null,"paduaimoveis@paduaimovies.com.br","http://www.paduaimoveis.com.br","Campinas","Brasil","R. Barreto Leme, 2345 - Cambuí","13025-085","São Paulo");
+				insert("Imobili√°ria", "P√°dua Im√≥veis", "01932525659", null,"paduaimoveis@paduaimovies.com.br","http://www.paduaimoveis.com.br","Campinas","Brasil","R. Barreto Leme, 2345 - Cambu√≠","13025-085","S√£o Paulo");
 				
 			}
 		});
@@ -174,7 +174,7 @@ public class ContatoActivity extends MainBarActivity {
 		    }
 		    return 0;
 		} else {
-			Crouton.makeText(instance, "Contato Já Existe em sua Agenda", Style.ALERT).show();
+			Crouton.makeText(instance, "Contato J√° Existe em sua Agenda", Style.ALERT).show();
 			
 		}
 		return 0;

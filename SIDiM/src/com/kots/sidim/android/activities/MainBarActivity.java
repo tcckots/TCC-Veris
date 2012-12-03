@@ -3,6 +3,7 @@ package com.kots.sidim.android.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -50,26 +51,6 @@ public class MainBarActivity extends Activity {
 		SessionUserSidim.clearImages();
 	}
 	
-	public void fixMenu(){
-		
-		scrollView.setScrollingEnabled(false);
-		scrollView.setVisibility(View.INVISIBLE);
-		//btnSlide.performClick();
-	}
-	
-	public void fixMenuAppear(){
-		
-		scrollView.setVisibility(View.VISIBLE);	
-		if(menuOn){
-			btnSlide.performClick();
-			
-		}
-	}
-	
-	public void setMenuOn(boolean value){
-		menuOn = value;
-		
-	}
 
 	@Override
 	public void setContentView(int layoutResID) {		

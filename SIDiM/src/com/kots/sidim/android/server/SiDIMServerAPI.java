@@ -9,6 +9,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.kots.sidim.android.R;
 import com.kots.sidim.android.exception.SiDIMException;
 import com.kots.sidim.android.model.Bairro;
 import com.kots.sidim.android.model.Cidade;
@@ -25,8 +26,8 @@ public class SiDIMServerAPI {
 	//public static final String BASE_URL_PHOTOS = "http://sidim.no-ip.info/";
 	//private static final String URL_SERVER_API = "http://23.22.250.78/sidim/ws/service";
 	//public static final String URL_SERVER = "http://10.1.1.3/";
-	public static final String URL_SERVER = "http://23.22.250.78/";
-	public static final String URL_SERVER_API = URL_SERVER + "sidim/ws/service";
+	public  String URL_SERVER = "Sidim";
+	public  String URL_SERVER_API = URL_SERVER + "sidim/ws/service";
 	
 	
 	private static Gson GSON = new Gson();
@@ -43,7 +44,8 @@ public class SiDIMServerAPI {
 	
 
 	public SiDIMServerAPI(Context context) {
-
+		URL_SERVER = context.getString(R.string.hostserver);
+		URL_SERVER_API = URL_SERVER + "sidim/ws/service";
 	}
 
 	public boolean criarConta(Cliente conta) throws SiDIMException {
@@ -92,7 +94,7 @@ public class SiDIMServerAPI {
         	if(cliente != null && cliente.getMensagem() != null)
         		throw new SiDIMException(cliente.getMensagem());
         	else
-        		throw new SiDIMException("Servidor Indisponível, tente mais tarde");
+        		throw new SiDIMException("Servidor Indispon√≠vel, tente mais tarde");
         }				
 	}
 	
@@ -116,7 +118,7 @@ public class SiDIMServerAPI {
         	if(cliente != null && cliente.getMensagem() != null)
         		throw new SiDIMException(cliente.getMensagem());
         	else
-        		throw new SiDIMException("Servidor Indisponível, tente mais tarde");
+        		throw new SiDIMException("Servidor Indispon√≠vel, tente mais tarde");
         }				
 	}
 
@@ -137,7 +139,7 @@ public class SiDIMServerAPI {
         }
         
         if(imoveis == null){
-        	throw new SiDIMException("Você não está conectado, conecte-se a uma rede");
+        	throw new SiDIMException("Voc√™ n√£o est√° conectado, conecte-se a uma rede");
         } else if (imoveis.size() == 0){
         	throw new SiDIMException("Nenhum Resultado Encontrado");
         } else {
@@ -166,7 +168,7 @@ public class SiDIMServerAPI {
         	if(result != null){
         		throw new SiDIMException(result.getMensagem());
         	} else {
-        		throw new SiDIMException("Houve um problema na conexão, tente novamente ou vá em nossa área de contatos e clique em Ligar");
+        		throw new SiDIMException("Houve um problema na conex√£o, tente novamente ou v√° em nossa √°rea de contatos e clique em Ligar");
         	}
         	
         }
@@ -213,7 +215,7 @@ public class SiDIMServerAPI {
         if(cidades != null && cidades.size() > 0){
 	        return cidades;
         } else {
-        	throw new SiDIMException("Você não está conectado, conecte-se a uma rede");
+        	throw new SiDIMException("Voc√™ n√£o est√° conectado, conecte-se a uma rede");
         }
 		
 		
@@ -236,7 +238,7 @@ public class SiDIMServerAPI {
         if(imovel != null){
 	        return imovel;
         } else {
-        	throw new SiDIMException("Você não está conectado, conecte-se a uma rede");
+        	throw new SiDIMException("Voc√™ n√£o est√° conectado, conecte-se a uma rede");
         }
 		
 		
@@ -264,7 +266,7 @@ public class SiDIMServerAPI {
         	if(result != null){
         		throw new SiDIMException(result.getMensagem());
         	} else {
-        		throw new SiDIMException("Você não está conectado a uma rede.");
+        		throw new SiDIMException("Voc√™ n√£o est√© conectado a uma rede.");
         	}
         }
 
@@ -288,7 +290,7 @@ public class SiDIMServerAPI {
         if(bairros != null && bairros.size() > 0){
 	        return bairros;
         } else {
-        	throw new SiDIMException("Você não está conectado, conecte-se a uma rede");
+        	throw new SiDIMException("Voc√™ n√£o est√© conectado a uma rede.");
         }
 		
 	}

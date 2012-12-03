@@ -209,15 +209,15 @@ public class ConfiguracoesActivity extends MainBarActivity {
 						editor.commit();
 						valid = true;
 					} else {
-						Crouton.makeText(instance, "Nova Senha e Campo Confirmar senha não conferem", Style.ALERT).show();
+						Crouton.makeText(instance, "Nova Senha e Campo Confirmar senha n√£o conferem", Style.ALERT).show();
 						
 						valid = false;
 					}
 				} else {
-					Crouton.makeText(instance, "Senha precisa ter no minímo 6 caracteres", Style.ALERT).show();					
+					Crouton.makeText(instance, "Senha precisa ter no min√≠mo 6 caracteres", Style.ALERT).show();					
 				}
 			} else {
-				Crouton.makeText(instance, "Senha Atual Digitada não é válida", Style.ALERT).show();
+				Crouton.makeText(instance, "Senha Atual Digitada n√£o √© v√°lida", Style.ALERT).show();
 				
 				valid = false;
 			}

@@ -13,9 +13,9 @@ import com.kots.sidim.android.server.SiDIMServerAPI;
 public class ConfigGlobal {
 			
 	public static final String MENU_HOME = "Home";
-	public static final String MENU_PESQUISAR_IMOVEL = "Pesquisar Imóvel";
+	public static final String MENU_PESQUISAR_IMOVEL = "Pesquisar Im√≥vel";
 	public static final String MENU_FAVORITOS = "Favoritos";	
-	public static final String MENU_CONFIGURACOES = "Configurações";
+	public static final String MENU_CONFIGURACOES = "Configura√ß√µes";
 	public static final String MENU_CONTATO = "Contato";
 	
 	public static final int MENU_INDEX_HOME = 0;
@@ -25,7 +25,7 @@ public class ConfigGlobal {
 	public static final int MENU_INDEX_CONTATO = 4;
 	
 	
-	public static final String BASE_URL_PHOTOS = SiDIMServerAPI.URL_SERVER;
+	public static  String BASE_URL_PHOTOS;
 	
 public static final String[] menuList = {MENU_HOME,MENU_PESQUISAR_IMOVEL,MENU_FAVORITOS,MENU_CONFIGURACOES,MENU_CONTATO};
 	
@@ -76,6 +76,11 @@ public static final String[] menuList = {MENU_HOME,MENU_PESQUISAR_IMOVEL,MENU_FA
 		
 		return resourcesImages.get(menu);				
 		
+	}
+	
+	public static void init(Context context){
+		SiDIMServerAPI api = new SiDIMServerAPI(context);
+		BASE_URL_PHOTOS = api.URL_SERVER;
 	}
 	
 	

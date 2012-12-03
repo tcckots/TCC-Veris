@@ -279,8 +279,8 @@ public class VisualizarImovelFavoritosActivity extends MainBarActivity {
 		txtCidadeEstado.setText(imovel.getCidade().getNome() + "-"
 				+ imovel.getEstado().getUf());
 		txtQtdsDorm.setText(imovel.getDormitorios() + ", sendo "
-				+ imovel.getSuites() + " suíte");
-		txtAreaConstruida.setText(imovel.getAreaConstruida() + "m2 Construído");
+				+ imovel.getSuites() + " su√≠te");
+		txtAreaConstruida.setText(imovel.getAreaConstruida() + "m2 Constru√≠do");
 		txtAreaTotal.setText(imovel.getAreaTotal() + "m2 Total");
 	
 		txtObservacao.setText(imovel.getDescricao());
@@ -308,7 +308,7 @@ public class VisualizarImovelFavoritosActivity extends MainBarActivity {
 				if (ValidacaoGeral.validaCampoVazio(msgerror)) {
 					Crouton.makeText(instance, msgerror, Style.ALERT).show();
 				}else {
-					Crouton.makeText(instance, "Imóvel adicionado aos favoritos", Style.CONFIRM).show();
+					Crouton.makeText(instance, "Im√≥vel adicionado aos favoritos", Style.CONFIRM).show();
 					
 					addFavoritos.setText("- Favoritos");
 					cameFavoritosScreen = true;
@@ -374,7 +374,7 @@ public class VisualizarImovelFavoritosActivity extends MainBarActivity {
 					
 				}else {
 					
-					Crouton.makeText(instance, "Imóvel removido dos favoritos", Style.CONFIRM).show();					
+					Crouton.makeText(instance, "Im√≥vel removido dos favoritos", Style.CONFIRM).show();					
 					addFavoritos.setText("+Favoritos");
 					cameFavoritosScreen = false;
 					wasAddFavor = false;

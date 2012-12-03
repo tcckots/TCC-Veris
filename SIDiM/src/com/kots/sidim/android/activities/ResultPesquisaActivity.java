@@ -277,7 +277,7 @@ public class ResultPesquisaActivity extends MainBarActivity {
 	
 	
 	private void showDialog() {
-		progressDialog = ProgressDialog.show(this, "", "Buscando Imóveis...",
+		progressDialog = ProgressDialog.show(this, "", "Buscando Im√≥veis...",
 				true, false);
 	}
 	

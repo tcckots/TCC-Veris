@@ -36,7 +36,7 @@ public class SplashActivity extends Activity {
         instance = this;
         globalPrefs = getSharedPreferences(ConfigGlobal.GLOBAL_SHARED_PREFERENCES, MODE_PRIVATE);
         
-
+        ConfigGlobal.init(instance);
         setContentView(R.layout.activity_splash);
 
         int minMillisToShowSplash = 2000;
@@ -75,7 +75,7 @@ public class SplashActivity extends Activity {
 								editor.commit();
 							} catch (SiDIMException e) {
 								
-								if(e.getMessage().contains("não cadastrado")){
+								if(e.getMessage().contains("n√£o cadastrado")){
 									SharedPreferences.Editor editor = globalPrefs.edit();
 									editor.putBoolean(ConfigGlobal.SHARED_PREFERENCES_SENT_USER_PROFILE,true);
 									editor.commit();
